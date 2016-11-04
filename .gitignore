@@ -5,3 +5,4 @@ src/bower_components
 dist
 .tmp
 **/.DS_Store
+.publish

@@ -3,7 +3,7 @@ import del from 'del';
 import config from '../config';
 
 gulp.task('clean', () => {
-    return del([`${config.paths.dist}/`], {
+    return del([`${config.paths.dist}/`, '.publish'], {
         force: true
     });
 });
@@ -25,4 +25,3 @@ gulp.task('clean:generated', ['usemin'], () => {
         force: true
     });
 });
-

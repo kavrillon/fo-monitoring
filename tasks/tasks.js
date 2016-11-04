@@ -2,6 +2,7 @@ import './6to5';
 import './bower';
 import './build';
 import './clean';
+import './deploy';
 import './fonts';
 import './image';
 import './lint';
