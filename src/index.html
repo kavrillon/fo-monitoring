@@ -8,8 +8,15 @@
         <title>PWA Monitoring</title>
 
         <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
-        <link rel="stylesheet" type="text/css" href="app.css">
         <link rel="manifest" href="/manifest.json">
+
+        <!-- build:cssVendor vendor.css -->
+        <!-- bower:css -->
+        <!-- endbower -->
+        <!-- endbuild -->
+        <!-- build:cssApp app.css -->
+        <link rel="stylesheet" href="app.css">
+        <!-- endbuild -->
     </head>
     <body>
         <header class="header">
@@ -36,6 +43,12 @@
             </svg>
         </div>
 
+        <!-- build:jsVendor vendor.js -->
+        <!-- bower:js -->
+        <!-- endbower -->
+        <!-- endbuild -->
+        <!-- build:jsApp app.js -->
         <script src="app.js" async></script>
+        <!-- endbuild -->
     </body>
 </html>

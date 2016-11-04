@@ -16,6 +16,7 @@ const paths = {
 };
 
 const globs = {
+    bower: `${paths.bowerComponents}/**/*`,
     fonts: `${paths.fonts}/**/*`,
     html: `${paths.app}/**/*.html`,
     images: `${paths.images}/**/*`,
