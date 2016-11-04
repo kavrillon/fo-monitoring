@@ -1,0 +1,29 @@
+{
+  "name": "pwa-monitoring",
+  "version": "0.0.1",
+  "description": "Progressive Web App for Frontend Team Monitoring",
+  "main": "src/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kavrillon/pwa-monitoring.git"
+  },
+  "author": "Kevin Avrillon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kavrillon/pwa-monitoring/issues"
+  },
+  "homepage": "https://github.com/kavrillon/pwa-monitoring#readme",
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-core": "^6.18.2",
+    "babel-plugin-transform-object-assign": "^6.8.0",
+    "babel-preset-es2015": "^6.18.0",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^1.1.1",
+    "gulp-help": "^1.6.1",
+    "gulp-sass-lint": "^1.2.0"
+  }
+}

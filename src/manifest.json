@@ -1,0 +1,8 @@
+{
+    "name": "PWA Monitoring",
+    "short_name": "PWA Monitoring",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#3e4eB8",
+    "theme_color": "#2f3ba2"
+}

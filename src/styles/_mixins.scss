@@ -1,0 +1,21 @@
+
+//------------------------------------------------------------------
+// MIXINS
+//-------------------------------------------------------------------
+
+@mixin clear {
+    &:after {
+        display: block;
+        clear: both;
+        visibility: hidden;
+        height: 0;
+        font-size: 0;
+        content: ' ';
+    }
+}
+
+@mixin ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
