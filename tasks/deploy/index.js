@@ -2,6 +2,7 @@ import gulp from 'gulp';
 import ghPages from 'gulp-gh-pages';
 import release from 'gulp-git-release';
 import config from '../config';
+import pjson from '../../package.json';
 
 gulp.task('deploy:ghPages', ['build:dist'], () => {
     return gulp.src(`${config.paths.dist}/**/*`)
@@ -14,6 +15,10 @@ gulp.task('deploy:release', ['build:dist'], () => {
             prefix: config.paths.dist,
             release: true,
             debug: false,
-            repository: config.globs.repo
+            repository: pjson.repository.url
+        }))
+        .pipe(gulp.src(`${config.paths.dist}/**/*`))
+        .pipe(ghPages({
+            message: 'release ' + pjson.version
         }));
 });
