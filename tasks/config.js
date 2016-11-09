@@ -16,6 +16,7 @@ const paths = {
 };
 
 const globs = {
+    repo: 'https://github.com/kavrillon/pwa-monitoring.git',
     bower: `${paths.bowerComponents}/**/*`,
     fonts: `${paths.fonts}/**/*`,
     html: `${paths.app}/**/*.html`,
