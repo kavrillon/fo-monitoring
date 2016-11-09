@@ -1,6 +1,6 @@
 {
     "name": "pwa-monitoring",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Progressive Web App for Frontend Team Monitoring",
     "main": "src/index.html",
     "scripts": {
