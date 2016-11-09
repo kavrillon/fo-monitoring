@@ -12,12 +12,14 @@ Technical
 - Trello connection
 
 Gulp
-- correct deploy:ghPages
-- add serve:dist
-- remove Bower stuff
-- add task for GIT release ?
+- 1/ add task for GIT release
+- 3/ deploy manifest.json
+- 6/ deploy services workers
 
 PWA
-- add manifest.json
-- add service worker
-- init pwa
+- 2/ add manifest.json
+- 5/ add service worker
+- 4/ init pwa
+
+TO TEST
+- deploy:ghPages when bower deps (for this reactivate bower in gulp tasks imagemin, 6to5, build & co)

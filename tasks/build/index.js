@@ -6,7 +6,7 @@ gulp.task('build:dev', [
     'sass',
     'fonts',
     'image:dev',
-    'bower',
+    // 'bower',
     '6to5'
 ]);
 
@@ -16,7 +16,7 @@ gulp.task('build:dist', [
     'sass',
     'fonts',
     'image:dist',
-    'bower',
+    // 'bower',
     '6to5',
     'usemin',
     'clean:generated'

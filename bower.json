@@ -6,8 +6,5 @@
     "Kevin Avrillon"
   ],
   "license": "ISC",
-  "homepage": "https://github.com/kavrillon/pwa-monitoring",
-  "devDependencies": {
-    "moment": "^2.15.2"
-  }
+  "homepage": "https://github.com/kavrillon/pwa-monitoring"
 }
