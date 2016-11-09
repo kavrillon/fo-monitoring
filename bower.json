@@ -1,10 +1,11 @@
 {
-  "name": "pwa-monitoring",
-  "description": "Progressive Web App for Frontend Team Monitoring",
-  "main": "src/index.html",
-  "authors": [
-    "Kevin Avrillon"
-  ],
-  "license": "ISC",
-  "homepage": "https://github.com/kavrillon/pwa-monitoring"
+    "name": "pwa-monitoring",
+    "description": "Progressive Web App for Frontend Team Monitoring",
+    "main": "src/index.html",
+    "authors": [
+        "Kevin Avrillon"
+    ],
+    "license": "ISC",
+    "homepage": "https://github.com/kavrillon/pwa-monitoring",
+    "version": null
 }
