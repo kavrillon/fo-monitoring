@@ -7,7 +7,7 @@ import pjson from '../../package.json';
 gulp.task('deploy:ghPages', ['build:dist'], () => {
     return gulp.src(`${config.paths.dist}/**/*`)
         .pipe(ghPages({
-            message: 'Release ' + pjson.version
+            message: 'Release ' + pjson.version + ' - ' + new Date().toISOString()
         }));
 });
 
