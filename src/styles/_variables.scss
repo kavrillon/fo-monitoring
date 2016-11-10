@@ -38,6 +38,7 @@ $loader-spinner-animation: line 1.6s cubic-bezier(.4, 0, .2, 1) infinite, rotate
 $sidebar-zindex: 200;
 $sidebar-transition: opacity .233s cubic-bezier(0, 0, .21, 1);
 $sidebar-bg: $black;
+$sidebar-content-width: 270px;
 $sidebar-content-bg: $globals-bg;
 $sidebar-content-transform: transform .233s cubic-bezier(0, 0, .21, 1);
 $sidebar-content-shadow-1: rgba(0, 0, 0, .14);

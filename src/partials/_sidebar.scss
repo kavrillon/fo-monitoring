@@ -45,7 +45,7 @@
         outline: 0;
         box-shadow: 0 0 4px $sidebar-content-shadow-1, 0 4px 8px $sidebar-content-shadow-2;
         background: $sidebar-content-bg;
-        width: 304px;
+        width: $sidebar-content-width;
         height: 100%;
         overflow: hidden;
         will-change: transform;
