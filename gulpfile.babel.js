@@ -11,6 +11,6 @@ gulp.task('lint', 'Inspect the code', ['lint:js', 'lint:scss']);
 gulp.task('serve', 'Start a server for dev and watch modifications', ['connect:dev', 'watch']);
 gulp.task('serve:dist', 'Start a server similar with prod', ['connect:dist']);
 gulp.task('build', 'Build prod version', ['build:dist']);
-gulp.task('deploy', 'Deploy prod version on gh-pages', ['deploy:ghPages']);
+gulp.task('deploy', 'Deploy prod version on gh-pages', ['deploy:release', 'deploy:ghPages']);
 gulp.task('default', ['help']);
 
