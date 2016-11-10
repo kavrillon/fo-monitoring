@@ -11,8 +11,7 @@ const paths = {
     fonts: `${base}/fonts`,
     images: `${base}/images`,
     index: `${base}/index.html`,
-    scripts: `${base}/scripts`,
-    styles: `${base}/styles`
+    scripts: `${base}/scripts`
 };
 
 const globs = {
@@ -22,12 +21,8 @@ const globs = {
     html: `${paths.app}/**/*.html`,
     manifest: `${paths.app}/manifest.json`,
     images: `${paths.images}/**/*`,
-    js: [
-        `${paths.scripts}/**/*.js`
-    ],
-    scss: [
-        `${paths.styles}/**/*.scss`
-    ]
+    js: `${paths.app}/**/*.js`,
+    scss: `${paths.app}/**/*.scss`
 };
 
 module.exports = {

@@ -38,13 +38,13 @@ rules:
   nesting-depth:
     - 1
     - max-depth: 10
-  no-color-literals: 0
+  no-color-literals: 1
   no-css-comments: 1
   no-debug: 1
   no-duplicate-properties: 1
   no-empty-rulesets: 1
-  no-ids: 0
-  no-important: 0
+  no-ids: 1
+  no-important: 1
   no-invalid-hex: 1
   no-mergeable-selectors: 1
   no-misspelled-properties:
@@ -54,7 +54,7 @@ rules:
     - 1
     - allow-element-with-attribute: true
   no-url-protocols: 1
-  placeholder-in-extend: 0
+  placeholder-in-extend: 1
   placeholder-name-format:
     - 1
     - convention: hyphenatedlowercase

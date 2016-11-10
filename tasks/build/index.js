@@ -12,6 +12,7 @@ gulp.task('build:dev', [
 ]);
 
 gulp.task('build:dist', [
+    'lint',
     'clean',
     'fileinclude',
     'copy:manifest',

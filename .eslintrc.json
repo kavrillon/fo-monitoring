@@ -9,9 +9,7 @@
     },
     "env": {
         "browser": true,
-        "jasmine": true,
-        "node": true,
-        "protractor": true
+        "node": true
     },
     "rules": {
         "strict": 2,
@@ -164,8 +162,6 @@
     },
     "globals": {
         "browser": true,
-        "angular": true,
-        "inject": true,
-        "moment": true
+        "inject": true
     }
 }
