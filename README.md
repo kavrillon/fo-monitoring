@@ -33,6 +33,7 @@ Technical
 Gulp
 - 3/ deploy services workers
 - minify html ?
+- postcss ?
 
 PWA
 - 2/ add service worker

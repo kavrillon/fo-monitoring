@@ -4,9 +4,58 @@
 //-------------------------------------------------------------------
 
 .header {
+    display: flex;
     position: fixed;
+    transition: $globals-transition;
+    z-index: $header-zindex;
+    box-shadow: 0 4px 5px 0 $header-shadow-1, 0 2px 9px 1px $header-shadow-2, 0 4px 2px -2px $header-shadow-3;
     background: $header-bg;
+    padding: 16px 16px 0;
     width: 100%;
     height: $header-height;
     color: $header-color;
+    font-size: 20px;
+
+    &__title {
+        @include ellipsis;
+
+        margin: 0;
+        font-size: 20px;
+        font-weight: 400;
+        flex: 1;
+
+        &__link {
+            text-decoration: none;
+            color: $header-color;
+
+            &:hover,
+            &:focus,
+            &:active,
+            &.active {
+                text-decoration: none;
+                color: $header-color;
+            }
+        }
+    }
+
+    &__button {
+        transition: $header-button-transition;
+        opacity: .54;
+        margin-right: 16px;
+        outline: 0;
+        border: 0;
+        cursor: pointer;
+        width: 24px;
+        height: 24px;
+        overflow: hidden;
+        text-indent: -30000px;
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        &--refresh {
+            background: url('/images/ic_refresh_white_24px.svg') center center no-repeat;
+        }
+    }
 }
