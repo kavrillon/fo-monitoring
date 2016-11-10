@@ -56,7 +56,13 @@ body {
 }
 
 body {
+    display: flex;
     background: $globals-bg;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
 }
 
 h1,

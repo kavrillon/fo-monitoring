@@ -4,11 +4,8 @@ Monitoring of Frontend sprints with reporting per week and per project.
 TODO
 
 Functional
-
-TOP Menu:
-- icon for left menu
-- name: PWA Monitoring
-- refresh icon
+- empty page
+- welcome page
 
 LEFT Menu:
 - Dashboard: make your own charts
@@ -28,23 +25,24 @@ LEFT Menu:
 
 
 Technical
-- Trello connection
+- 1/ Trello connection & data load
+- 2/ pages management
+- lint on libs
 
 Gulp
-- 3/ deploy services workers
-- livereload: images
-- minify html ?
+- 5/ deploy services workers
+- minify html
 - postcss ?
 
 PWA
-- 2/ add service worker
-- 1/ init pwa
+- 4/ add service worker
 
 CSS
 willchange review
 
 TO TEST
 - deploy:ghPages when bower deps (for this reactivate bower in gulp tasks imagemin, 6to5, build & co)
+- livereload: images
 
 
 RESSOURCES
