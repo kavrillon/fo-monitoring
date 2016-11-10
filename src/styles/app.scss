@@ -10,7 +10,7 @@
 // Globals
 @import 'globals';
 
-// Blocks
-@import 'header';
-@import 'sidebar';
-@import 'main';
+// Partials
+@import '../partials/header';
+@import '../partials/sidebar';
+@import '../partials/main';
