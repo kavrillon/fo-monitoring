@@ -32,12 +32,16 @@ Technical
 
 Gulp
 - 3/ deploy services workers
+- livereload: images
 - minify html ?
 - postcss ?
 
 PWA
 - 2/ add service worker
 - 1/ init pwa
+
+CSS
+willchange review
 
 TO TEST
 - deploy:ghPages when bower deps (for this reactivate bower in gulp tasks imagemin, 6to5, build & co)

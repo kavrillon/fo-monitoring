@@ -2,7 +2,7 @@ import gulp from 'gulp';
 
 gulp.task('build:dev', [
     'clean',
-    'fileinclude',
+    'htmlprocess',
     'copy:manifest',
     'sass',
     'fonts',
@@ -14,7 +14,7 @@ gulp.task('build:dev', [
 gulp.task('build:dist', [
     'lint',
     'clean',
-    'fileinclude',
+    'htmlprocess',
     'copy:manifest',
     'sass',
     'fonts',

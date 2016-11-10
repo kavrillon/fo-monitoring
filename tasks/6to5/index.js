@@ -39,7 +39,7 @@ function build(watching) {
     return bundle(bundler);
 }
 
-gulp.task('6to5', ['clean', /*'bower',*/ 'fileinclude'], () => {
+gulp.task('6to5', ['clean', /*'bower',*/ 'htmlprocess'], () => {
     return build(false);
 });
 

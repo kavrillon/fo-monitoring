@@ -1,5 +1,5 @@
 {
-    "name": "pwa-monitoring",
+    "name": "FO Sprint Monitoring",
     "description": "Progressive Web App for Frontend Team Monitoring",
     "main": "src/index.html",
     "authors": [

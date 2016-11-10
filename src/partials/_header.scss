@@ -16,6 +16,20 @@
     color: $header-color;
     font-size: 20px;
 
+    &__menu {
+        transition: $header-transition;
+        opacity: .54;
+        margin-right: 16px;
+        outline: 0;
+        border: 0;
+        background: url('/images/ic_menu_24px.svg') center center no-repeat;
+        cursor: pointer;
+        width: 24px;
+        height: 24px;
+        overflow: hidden;
+        text-indent: -30000px;
+    }
+
     &__title {
         @include ellipsis;
 
@@ -39,7 +53,7 @@
     }
 
     &__button {
-        transition: $header-button-transition;
+        transition: $header-transition;
         opacity: .54;
         margin-right: 16px;
         outline: 0;

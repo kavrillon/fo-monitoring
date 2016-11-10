@@ -5,7 +5,7 @@ import './clean';
 import './copy';
 import './connect';
 import './deploy';
-import './fileinclude';
+import './htmlprocess';
 import './fonts';
 import './image';
 import './lint';
