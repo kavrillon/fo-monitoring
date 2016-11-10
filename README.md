@@ -28,6 +28,7 @@ Technical
 - 1/ Trello connection & data load
 - 2/ pages management
 - lint on libs
+- remove /* eslint-disable */
 
 Gulp
 - 5/ deploy services workers
