@@ -4,13 +4,13 @@
 //-------------------------------------------------------------------
 
 // Tools & vars
-@import 'variables';
-@import 'mixins';
+@import 'styles/variables';
+@import 'styles/mixins';
 
 // Globals
-@import 'globals';
+@import 'styles/globals';
 
 // Partials
-@import '../partials/header';
-@import '../partials/sidebar';
-@import '../partials/main';
+@import 'partials/header';
+@import 'partials/sidebar';
+@import 'partials/main';

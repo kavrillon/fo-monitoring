@@ -29,10 +29,10 @@ LEFT Menu:
 
 Technical
 - Trello connection
-- minify html ?
 
 Gulp
 - 3/ deploy services workers
+- minify html ?
 
 PWA
 - 2/ add service worker
