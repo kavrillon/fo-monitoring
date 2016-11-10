@@ -20,6 +20,7 @@ const globs = {
     bower: `${paths.bowerComponents}/**/*`,
     fonts: `${paths.fonts}/**/*`,
     html: `${paths.app}/**/*.html`,
+    manifest: `${paths.app}/manifest.json`,
     images: `${paths.images}/**/*`,
     js: [
         `${paths.scripts}/**/*.js`

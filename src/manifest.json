@@ -1,8 +1,21 @@
 {
-    "name": "PWA Monitoring",
-    "short_name": "PWA Monitoring",
+    "short_name": "FO Sprint Monitoring",
+    "name": "FO Sprint Monitoring",
     "start_url": "/",
-    "display": "standalone",
+    "icons": [
+        {
+            "src": "/images/chrome-touch-icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/chrome-touch-icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+        }
+    ],
     "background_color": "#3e4eB8",
-    "theme_color": "#2f3ba2"
+    "theme_color": "#2f3ba2",
+    "display": "standalone",
+    "orientation": "portrait"
 }

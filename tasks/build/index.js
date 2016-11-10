@@ -3,6 +3,7 @@ import gulp from 'gulp';
 gulp.task('build:dev', [
     'clean',
     'copy:html',
+    'copy:manifest',
     'sass',
     'fonts',
     'image:dev',
@@ -13,6 +14,7 @@ gulp.task('build:dev', [
 gulp.task('build:dist', [
     'clean',
     'copy:html',
+    'copy:manifest',
     'sass',
     'fonts',
     'image:dist',
