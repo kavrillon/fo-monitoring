@@ -1,7 +1,7 @@
 const Config = {
-    name: 'fo-monitor',
-    shellCacheName: 'fo-monitor',
-    dataCacheName: 'fo-monitor-data',
+    name: 'fo-monitoring',
+    shellCacheName: 'fo-monitoring',
+    dataCacheName: 'fo-monitoring-data',
     version: 1,
     debug: true,
     trello: {
