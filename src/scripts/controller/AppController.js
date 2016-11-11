@@ -21,9 +21,7 @@ export default class AppController extends Controller {
 
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker
-                .register('./sw.js', {
-                    scope: '/'
-                })
+                .register('sw.js')
                 .then(() => {
                     // console.log('Service Worker Registered');
                 });
