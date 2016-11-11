@@ -29,7 +29,8 @@ Technical
 - 2/ pages management
 - lint on libs
 - remove /* eslint-disable */
-- critical css ?
+- release: how to do minor/major releases ?
+- inline/critical css
 
 Gulp
 - postcss ?
