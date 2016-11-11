@@ -21,7 +21,8 @@ const globs = {
     html: `${paths.app}/**/*.html`,
     manifest: `${paths.app}/manifest.json`,
     images: `${paths.images}/**/*`,
-    js: `${paths.app}/**/*.js`,
+    js: [`${paths.app}/**/*.js`, `!${paths.app}/sw.js`],
+    sw: `${paths.app}/sw.js`,
     scss: `${paths.app}/**/*.scss`
 };
 

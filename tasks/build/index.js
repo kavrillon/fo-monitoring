@@ -8,7 +8,8 @@ gulp.task('build:dev', [
     'fonts',
     'image:dev',
     // 'bower',
-    '6to5'
+    '6to5',
+    '6to5:sw'
 ]);
 
 gulp.task('build:dist', [
@@ -21,6 +22,7 @@ gulp.task('build:dist', [
     'image:dist',
     // 'bower',
     '6to5',
+    '6to5:sw',
     'usemin',
     'clean:generated'
 ]);

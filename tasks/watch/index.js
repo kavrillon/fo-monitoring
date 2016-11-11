@@ -6,6 +6,7 @@ gulp.task('watch', ['connect:dev'], () => {
     livereload.listen();
     gulp.watch(config.globs.html, ['htmlprocess:watch']);
     gulp.watch(config.globs.js, ['6to5:watch']);
+    gulp.watch(config.globs.sw, ['6to5:sw:watch']);
     gulp.watch(config.globs.images, ['image:dev:watch']);
     gulp.watch(config.globs.scss, ['sass:watch']);
 });

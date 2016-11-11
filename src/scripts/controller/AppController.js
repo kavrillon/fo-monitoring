@@ -18,6 +18,16 @@ export default class AppController extends Controller {
 
         this.bindEvents();
         this.loadData();
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker
+                .register('./sw.js', {
+                    scope: '/'
+                })
+                .then(() => {
+                    console.log('Service Worker Registered');
+                });
+        }
     }
 
     setLoader(loading = this.isLoading) {

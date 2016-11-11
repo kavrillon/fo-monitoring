@@ -29,6 +29,7 @@ Technical
 - 2/ pages management
 - lint on libs
 - remove /* eslint-disable */
+- critical css ?
 
 Gulp
 - 5/ deploy services workers

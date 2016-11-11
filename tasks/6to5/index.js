@@ -8,14 +8,14 @@ import watchify from 'watchify';
 import babel from 'babelify';
 import config from '../config';
 
-function bundle(bundler) {
+function bundle(bundler, sourceFile) {
     return bundler
         .bundle()
         .on('error', function(err) {
             console.error(err); /*eslint no-console: 0*/
             this.emit('end'); /*eslint no-invalid-this: 0*/
         })
-        .pipe(source('app.js'))
+        .pipe(source(sourceFile))
         .pipe(buffer())
         .pipe(sourcemaps.init({
             loadMaps: true
@@ -24,19 +24,19 @@ function bundle(bundler) {
         .pipe(gulp.dest(config.paths.dist));
 }
 
-function build(watching) {
-    let bundler = browserify(config.paths.scripts + '/app.js', {
+function build(watching, pathFile = config.paths.scripts, sourceFile = 'app.js') {
+    let bundler = browserify(`${pathFile}/${sourceFile}`, {
         debug: true
     }).transform(babel);
 
     if(watching) {
         bundler = watchify(bundler);
         bundler.on('update', () => {
-            bundle(bundler);
+            bundle(bundler, sourceFile);
         });
     }
 
-    return bundle(bundler);
+    return bundle(bundler, sourceFile);
 }
 
 gulp.task('6to5', ['clean', /*'bower',*/ 'htmlprocess'], () => {
@@ -45,4 +45,12 @@ gulp.task('6to5', ['clean', /*'bower',*/ 'htmlprocess'], () => {
 
 gulp.task('6to5:watch', () => {
     return build(true).pipe(livereload());
+});
+
+gulp.task('6to5:sw', () => {
+    return build(false, config.paths.app, 'sw.js');
+});
+
+gulp.task('6to5:sw:watch', () => {
+    return build(true, config.paths.app, 'sw.js').pipe(livereload());
 });
