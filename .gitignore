@@ -1,9 +1,0 @@
-node_modules
-npm-debug.log
-.sass-cache
-src/bower_components
-dist
-.tmp
-**/.DS_Store
-.publish
-.version.json
