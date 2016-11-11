@@ -39,7 +39,7 @@ function build(watching, pathFile = config.paths.scripts, sourceFile = 'app.js')
     return bundle(bundler, sourceFile);
 }
 
-gulp.task('6to5', ['clean', /*'bower',*/ 'htmlprocess'], () => {
+gulp.task('6to5', ['clean'], () => {
     return build(false);
 });
 
@@ -47,7 +47,7 @@ gulp.task('6to5:watch', () => {
     return build(true).pipe(livereload());
 });
 
-gulp.task('6to5:sw', () => {
+gulp.task('6to5:sw', ['clean'], () => {
     return build(false, config.paths.app, 'sw.js');
 });
 

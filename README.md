@@ -32,12 +32,7 @@ Technical
 - critical css ?
 
 Gulp
-- 5/ deploy services workers
-- minify html
 - postcss ?
-
-PWA
-- 4/ add service worker
 
 CSS
 willchange review
