@@ -25,7 +25,7 @@ export default class AppController extends Controller {
                     scope: '/'
                 })
                 .then(() => {
-                    console.log('Service Worker Registered');
+                    // console.log('Service Worker Registered');
                 });
         }
     }

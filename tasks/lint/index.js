@@ -4,11 +4,11 @@ import sassLint from 'gulp-sass-lint';
 import config from '../config';
 
 gulp.task('lint:js', () => {
-    return gulp.src([
-        config.globs.js,
-        'tasks/**/*.js'
-        // 'gulpfile.babel.js'
-    ])
+    return gulp.src(
+        config.globs.js.concat(config.globs.sw).concat([
+            'tasks/**/*.js',
+            'gulpfile.babel.js'
+        ]))
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());

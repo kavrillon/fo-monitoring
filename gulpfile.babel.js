@@ -13,4 +13,3 @@ gulp.task('serve:dist', 'Start a server similar with prod', ['connect:dist']);
 gulp.task('build', 'Build prod version', ['build:dist']);
 gulp.task('deploy', 'Deploy prod version on gh-pages', ['deploy:release', 'deploy:ghPages']);
 gulp.task('default', ['help']);
-
