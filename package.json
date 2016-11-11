@@ -1,6 +1,6 @@
 {
     "name": "FO Sprint Monitoring",
-    "version": "1.0.14",
+    "version": "1.0.15",
     "description": "Progressive Web App for Frontend Team Monitoring",
     "main": "src/index.html",
     "scripts": {
