@@ -1,6 +1,6 @@
 {
     "name": "fo-monitoring",
-    "version": "1.0.19",
+    "version": "1.0.20",
     "description": "Progressive Web App for Frontend Team Monitoring",
     "main": "src/index.html",
     "scripts": {
