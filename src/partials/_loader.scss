@@ -3,6 +3,8 @@
     position: fixed;
     top: 50%;
     left: 50%;
+    opacity: 0;
+    transition: opacity 333ms cubic-bezier(0, 0, .21, 1);
     transform: translate(-50%, -50%);
 
     &__spinner {
@@ -11,5 +13,9 @@
         stroke: $loader-spinner-color;
         stroke-width: 3px;
         transform-origin: 50%;
+    }
+
+    &.active {
+        opacity: 1;
     }
 }

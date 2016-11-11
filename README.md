@@ -47,3 +47,4 @@ RESSOURCES
 https://developers.google.com/web/progressive-web-apps/
 https://github.com/GoogleChrome/voice-memos
 https://voice-memos.appspot.com/
+https://developers.trello.com/authorize

@@ -1,16 +1,22 @@
 import Controller from './Controller';
 import AppModel from '../model/AppModel';
+import Trello from 'node-trello';
+import ConfigManagerInstance from '../libs/ConfigManager';
 
 export default class AppController extends Controller {
     constructor() {
         super();
 
         this.appModel = null;
+
+        this.trello = null;
+
         this.loader = document.querySelector('.js-loader');
-        this.main = document.querySelector('.js-main');
-        this.empty = document.querySelector('.js-empty');
+        this.isLoading = true;
+
+        this.pageConnect = document.querySelector('.js-page-connect');
+
         this.btnLoadData = document.querySelector('.js-load-data');
-        this.setLoader(true);
 
         this.sideNavToggleButton = document.querySelector('.js-sidebar-toggle');
         this.sideNav = document.querySelector('.js-sidebar');
@@ -18,7 +24,10 @@ export default class AppController extends Controller {
 
         this.bindEvents();
         this.loadData();
+        // this.registerSW();
+    }
 
+    registerSW() {
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker
                 .register('sw.js')
@@ -28,14 +37,12 @@ export default class AppController extends Controller {
         }
     }
 
-    setLoader(loading = this.isLoading) {
+    setLoader(loading) {
         if (loading) {
-            this.main.setAttribute('hidden', true);
-            this.loader.removeAttribute('hidden');
+            this.loader.classList.add('active');
             this.isLoading = loading;
         } else {
-            this.main.removeAttribute('hidden');
-            this.loader.setAttribute('hidden', true);
+            this.loader.classList.remove('active');
             this.isLoading = loading;
         }
     }
@@ -54,31 +61,59 @@ export default class AppController extends Controller {
         this.sideNavToggleButton.addEventListener('click', () => {
             this.toggleSideNav();
         });
+
+        this.pageConnect.addEventListener('click', () => {
+            this.connectToTrello();
+        });
     }
 
     loadData() {
         AppModel.get(1).then(appModel => {
             this.appModel = appModel;
 
-            if (typeof appModel === 'undefined') {
-                this.appModel = new AppModel();
-                this.appModel.put();
+            const hash = window.location.hash.match(/^#token=(.*)/);
+            let token = null;
+
+            if (hash !== null) {
+                token = hash[1];
             }
 
-            if (this.appModel.firstRun) {
-                this.setLoader(false);
-                this.setEmpty(true);
+            if (typeof appModel === 'undefined') {
+                this.appModel = new AppModel(1);
+                this.appModel.put();
+            } else if (this.appModel.firstRun) {
+                this.appModel.firstRun = false;
+            }
+
+            if (token !== null && token !== '') {
+                this.appModel.token = token;
+            }
+
+            this.appModel.put();
+            this.setLoader(false);
+
+            if (this.appModel.token !== null) {
+                this.setPage('empty');
+            } else {
+                this.setPage('connect');
             }
         });
     }
 
-    setEmpty(empty) {
-        if (empty) {
-            this.main.setAttribute('hidden', true);
-            this.empty.classList.add('active');
+    hidePages() {
+        document.querySelectorAll('.js-page').forEach((el) => {
+            el.classList.remove('active');
+        });
+    }
+
+    setPage(page) {
+        this.hidePages();
+
+        const domPage = document.querySelector(`.js-page-${page}`);
+        if (domPage !== null) {
+            domPage.classList.add('active');
         } else {
-            this.main.removeAttribute('hidden');
-            this.empty.classList.remove('active');
+            document.querySelector(`.js-page-main`).classList.add('active');
         }
     }
 
@@ -97,5 +132,12 @@ export default class AppController extends Controller {
 
     closeSideNav() {
         this.sideNav.classList.remove('active');
+    }
+
+    connectToTrello() {
+        ConfigManagerInstance().then(configManager => {
+            const connectUrl = `${configManager.config.trello.connectUrl}&key=${configManager.config.trello.key}&return_url=${window.location.origin}${window.location.pathname}`;
+            window.location.href = connectUrl;
+        });
     }
 }

@@ -56,7 +56,7 @@ export default class Model {
                         resultKey = undefined;
                     }
 
-                    return new this(result, resultKey);
+                    return new this(resultKey, result);
                 });
             });
     }
@@ -88,7 +88,7 @@ export default class Model {
                             key = undefined;
                         }
 
-                        results_.push(new this(result.value, key));
+                        results_.push(new this(key, result.value));
                     }
 
                     return results_;
