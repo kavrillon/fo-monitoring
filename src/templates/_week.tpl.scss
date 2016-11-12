@@ -1,0 +1,64 @@
+
+//------------------------------------------------------------------
+// WEEK TEMPLATE
+//-------------------------------------------------------------------
+
+.week {
+    padding: 16px;
+    position: relative;
+    box-sizing: border-box;
+    background: #fff;
+    border-radius: 2px;
+    margin: $globals-padding 0;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+
+    @media (min-width: $screen-sm) {
+        float: left;
+        margin: $globals-padding 1%;
+        width: 48%;
+
+        &:nth-child(2n + 1) {
+            clear: both;
+        }
+    }
+
+    &__key {
+        display: inline-block;
+        float: left;
+        position: relative;
+        z-index: 1;
+        padding: 5px;
+        font-size: 16px;
+        color: $white;
+        font-family: 'MuseoSansRounded-500', Arial, sans-serif;
+
+        &:before {
+            border-radius: 50%;
+            background: rgba($globals-color ,.6);
+            z-index: -1;
+            top: -4px;
+            left: -4px;
+            bottom: -4px;
+            right: -4px;
+            margin: auto;
+            padding: 4px;
+            position: absolute;
+            content: ' ';
+        }
+    }
+
+    &__date {
+        display: block;
+        text-align: right;
+    }
+
+    &__data {
+        display: flex;
+
+        &__cards,
+        &__points {
+            flex: 1;
+            text-align: center;
+        }
+    }
+}

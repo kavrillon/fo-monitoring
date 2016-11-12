@@ -33,18 +33,17 @@
         <link rel="stylesheet" href="app.css">
         <!-- endbuild -->
     </head>
-    <body>
+    <body class="app">
         @@include('./partials/_sidebar.html')
-
         @@include('./partials/_header.html')
-
-        @@include('./partials/_connect.html')
-
-        @@include('./partials/_empty.html')
-
-        @@include('./partials/_main.html')
-
         @@include('./partials/_loader.html')
+
+        <main class="app__pages">
+            @@include('./pages/_connect.html')
+            @@include('./pages/_empty.html')
+            @@include('./pages/_weeks.html')
+            @@include('./pages/_projects.html')
+        </main>
 
         <!-- build:jsVendor vendor.js -->
         <!-- bower:js -->

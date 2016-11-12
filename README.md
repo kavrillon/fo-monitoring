@@ -25,12 +25,13 @@ LEFT Menu:
 
 
 Technical
-- 1/ Trello connection & data load
-- 2/ pages management
-- lint on libs
-- remove /* eslint-disable */
+- pages management
+- remove /* eslint-disable */ & lint
 - release: how to do minor/major releases ?
 - inline/critical css
+- log
+- year management
+- replace .js- by data attr
 
 Gulp
 - postcss ?

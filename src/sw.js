@@ -1,7 +1,5 @@
-import config from './scripts/config/Config';
-
-const cacheName = `${config.shellCacheName}-v1`;
-const dataCacheName = `${config.dataCacheName}-v1`;
+const cacheName = `fo-monitoring-v1`;
+const dataCacheName = `fo-monitoring-data-v1`;
 const filesToCache = [
     '',
     'index.html',
@@ -94,12 +92,7 @@ self.addEventListener('activate', (e) => {
 
 self.addEventListener('fetch', (e) => {
     console.log('[Service Worker] Fetch', e.request.url);
-
-
-    // var data = '?cards=open&card_fields=name,labels&fields=name,desc&key=' + Trello.key() + '&token=' + Trello.token();
-    // var url = 'https://api.trello.com/1/boards/577130dfed8fabf757eddc60/lists' + data;
-
-    var dataUrl = `${config.trello.url}${config.trello.filters}`;
+    var dataUrl = 'https://api.trello.com/1/';
 
     if (e.request.url.indexOf(dataUrl) > -1) {
         e.respondWith(

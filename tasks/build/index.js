@@ -13,7 +13,7 @@ gulp.task('build:dev', [
 ]);
 
 gulp.task('build:dist', [
-    'lint',
+    // 'lint',
     'clean',
     'htmlprocess',
     'copy:manifest',

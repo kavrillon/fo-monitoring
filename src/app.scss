@@ -11,10 +11,16 @@
 // Globals
 @import 'styles/globals';
 
+// Pages
+@import 'pages/connect';
+@import 'pages/empty';
+@import 'pages/projects';
+@import 'pages/weeks';
+
 // Partials
-@import 'partials/connect';
-@import 'partials/empty';
 @import 'partials/header';
 @import 'partials/loader';
-@import 'partials/main';
 @import 'partials/sidebar';
+
+// Templates
+@import 'templates/week.tpl';

@@ -8,16 +8,17 @@ const Config = {
         key: 'd54e7add79eb871a615dcdb47033a99b',
         connectUrl: 'https://trello.com/1/authorize?name=fo-monitoring&scope=read&expiration=30days&response_type=token',
         url: 'https://api.trello.com/1/boards/577130dfed8fabf757eddc60/lists',
-        filters: 'cards=open&card_fields=name,labels&fields=name,desc'
+        filters: '?cards=open&card_fields=name,labels&fields=name,desc'
     },
     stores: {
-        TestModel: {
+        WeekModel: {
             properties: {
-                autoIncrement: true,
-                keyPath: 'url'
+                // autoIncrement: true,
+                // keyPath: 'url'
             },
             indexes: {
-                time: { unique: true }
+                // number: { unique: true }
+                // time: { unique: true }
             }
         },
         AppModel: {

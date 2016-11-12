@@ -17,17 +17,10 @@
     font-size: 20px;
 
     &__menu {
-        transition: $header-transition;
-        opacity: .54;
+        @include header-btn;
+
         margin-right: 16px;
-        outline: 0;
-        border: 0;
         background: url('images/ic_menu_24px.svg') center center no-repeat;
-        cursor: pointer;
-        width: 24px;
-        height: 24px;
-        overflow: hidden;
-        text-indent: -30000px;
     }
 
     &__title {
@@ -53,16 +46,8 @@
     }
 
     &__button {
-        transition: $header-transition;
-        opacity: .54;
+        @include header-btn;
         margin-right: 16px;
-        outline: 0;
-        border: 0;
-        cursor: pointer;
-        width: 24px;
-        height: 24px;
-        overflow: hidden;
-        text-indent: -30000px;
 
         &:last-child {
             margin-right: 0;
