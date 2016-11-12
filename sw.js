@@ -11,8 +11,10 @@ var Config = {
     version: 1,
     debug: true,
     trello: {
+        key: 'd54e7add79eb871a615dcdb47033a99b',
+        connectUrl: 'https://trello.com/1/authorize?name=fo-monitoring&scope=read&expiration=30days&response_type=token',
         url: 'https://api.trello.com/1/boards/577130dfed8fabf757eddc60/lists',
-        filters: 'cards=open&card_fields=name,labels&fields=name,desc'
+        filters: '?cards=open&card_fields=name,labels&fields=name,desc'
     },
     stores: {
         TestModel: {
@@ -46,7 +48,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var cacheName = _Config2.default.shellCacheName + '-v1';
 var dataCacheName = _Config2.default.dataCacheName + '-v1';
-var filesToCache = ['', 'index.html', 'app-9e6b8a370f.js', 'app-453f756821.css', 'fonts/303098_0_0.eot', 'fonts/303098_0_0.ttf', 'fonts/303098_0_0.woff', 'fonts/303098_0_0.woff2', 'fonts/303098_1_0.eot', 'fonts/303098_1_0.ttf', 'fonts/303098_1_0.woff', 'fonts/303098_1_0.woff2', 'fonts/303098_2_0.eot', 'fonts/303098_2_0.ttf', 'fonts/303098_2_0.woff', 'fonts/303098_2_0.woff2', 'fonts/303098_3_0.eot', 'fonts/303098_3_0.ttf', 'fonts/303098_3_0.woff', 'fonts/303098_3_0.woff2', 'fonts/303098_4_0.eot', 'fonts/303098_4_0.ttf', 'fonts/303098_4_0.woff', 'fonts/303098_4_0.woff2', 'fonts/303098_5_0.eot', 'fonts/303098_5_0.ttf', 'fonts/303098_5_0.woff', 'fonts/303098_5_0.woff2', 'fonts/303098_6_0.eot', 'fonts/303098_6_0.ttf', 'fonts/303098_6_0.woff', 'fonts/303098_6_0.woff2', 'fonts/303098_7_0.eot', 'fonts/303098_7_0.ttf', 'fonts/303098_7_0.woff', 'fonts/303098_7_0.woff2', 'fonts/303098_8_0.eot', 'fonts/303098_8_0.ttf', 'fonts/303098_8_0.woff', 'fonts/303098_8_0.woff2', 'fonts/303098_9_0.eot', 'fonts/303098_9_0.ttf', 'fonts/303098_9_0.woff', 'fonts/303098_9_0.woff2', 'fonts/303098_A_0.eot', 'fonts/303098_A_0.ttf', 'fonts/303098_A_0.woff', 'fonts/303098_A_0.woff2', 'fonts/303098_B_0.eot', 'fonts/303098_B_0.ttf', 'fonts/303098_B_0.woff', 'fonts/303098_B_0.woff2', 'images/icon-144x144.png', 'images/icon-152x152.png', 'images/icon-192x192.png', 'images/icon-384x384.png', 'images/favicon.ico', 'images/ic_add_white_24px.svg', 'images/ic_info_outline_24px.svg', 'images/ic_menu_24px.svg', 'images/ic_refresh_white_24px.svg', 'images/side-nav-bg@2x.jpg'];
+var filesToCache = ['', 'index.html', 'app-d16be5b46c.js', 'app-65ad6bfb9a.css', 'fonts/303098_0_0.eot', 'fonts/303098_0_0.ttf', 'fonts/303098_0_0.woff', 'fonts/303098_0_0.woff2', 'fonts/303098_1_0.eot', 'fonts/303098_1_0.ttf', 'fonts/303098_1_0.woff', 'fonts/303098_1_0.woff2', 'fonts/303098_2_0.eot', 'fonts/303098_2_0.ttf', 'fonts/303098_2_0.woff', 'fonts/303098_2_0.woff2', 'fonts/303098_3_0.eot', 'fonts/303098_3_0.ttf', 'fonts/303098_3_0.woff', 'fonts/303098_3_0.woff2', 'fonts/303098_4_0.eot', 'fonts/303098_4_0.ttf', 'fonts/303098_4_0.woff', 'fonts/303098_4_0.woff2', 'fonts/303098_5_0.eot', 'fonts/303098_5_0.ttf', 'fonts/303098_5_0.woff', 'fonts/303098_5_0.woff2', 'fonts/303098_6_0.eot', 'fonts/303098_6_0.ttf', 'fonts/303098_6_0.woff', 'fonts/303098_6_0.woff2', 'fonts/303098_7_0.eot', 'fonts/303098_7_0.ttf', 'fonts/303098_7_0.woff', 'fonts/303098_7_0.woff2', 'fonts/303098_8_0.eot', 'fonts/303098_8_0.ttf', 'fonts/303098_8_0.woff', 'fonts/303098_8_0.woff2', 'fonts/303098_9_0.eot', 'fonts/303098_9_0.ttf', 'fonts/303098_9_0.woff', 'fonts/303098_9_0.woff2', 'fonts/303098_A_0.eot', 'fonts/303098_A_0.ttf', 'fonts/303098_A_0.woff', 'fonts/303098_A_0.woff2', 'fonts/303098_B_0.eot', 'fonts/303098_B_0.ttf', 'fonts/303098_B_0.woff', 'fonts/303098_B_0.woff2', 'images/icon-144x144.png', 'images/icon-152x152.png', 'images/icon-192x192.png', 'images/icon-384x384.png', 'images/favicon.ico', 'images/ic_add_white_24px.svg', 'images/ic_info_outline_24px.svg', 'images/ic_menu_24px.svg', 'images/ic_refresh_white_24px.svg', 'images/side-nav-bg@2x.jpg'];
 
 self.addEventListener('install', function (e) {
     console.log('[ServiceWorker] Install');
