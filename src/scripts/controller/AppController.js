@@ -55,14 +55,14 @@ export default class AppController extends Controller {
     }
 
     bindEvents() {
-        document.querySelectorAll('[js-link]').forEach((elt) => {
-            elt.addEventListener('click', (e) => {
-                this.setPage(e.target.getAttribute('js-link'));
-                this.closeSideNav();
+        Array.from(document.querySelectorAll('[js-link]')).forEach((elt) => {
+                elt.addEventListener('click', (e) => {
+                    this.setPage(e.target.getAttribute('js-link'));
+                    this.closeSideNav();
+                });
             });
-        });
 
-        document.querySelectorAll('[js-refresh]').forEach((elt) => {
+        Array.from(document.querySelectorAll('[js-refresh]')).forEach((elt) => {
             elt.addEventListener('click', () => {
                 this.loadData();
             });

@@ -27,14 +27,16 @@
         float: left;
         position: relative;
         z-index: 1;
-        padding: 5px;
+        width: 30px;
+        height: 30px;
+        padding: 6px;
         font-size: 16px;
         color: $white;
         font-family: 'MuseoSansRounded-500', Arial, sans-serif;
 
         &:before {
             border-radius: 50%;
-            background: rgba($globals-color ,.6);
+            background: $globals-color;
             z-index: -1;
             top: -4px;
             left: -4px;

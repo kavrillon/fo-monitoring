@@ -5,7 +5,7 @@
 
 $white: #fff;
 $black: #000;
-$globals-color: #2f3ba2;
+$globals-color: #5d5785; //#2f3ba2; //201929 //3a3248
 
 $globals-bg: #fafafa;
 $globals-padding-large: 30px;
@@ -31,7 +31,7 @@ $header-shadow-2: rgba($black, .12);
 $header-shadow-3: rgba($black, .2);
 
 // LOADER
-$loader-spinner-color: #673ab7;
+$loader-spinner-color: $globals-color;
 $loader-spinner-animation: line 1.6s cubic-bezier(.4, 0, .2, 1) infinite, rotate 1.6s linear infinite;
 
 // SIDEBAR

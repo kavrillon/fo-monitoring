@@ -43,7 +43,17 @@
     box-sizing: border-box;
 }
 
-.app {
+body,
+body a,
+html {
+    text-rendering: geometricPrecision;
+    font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -moz-font-smoothing: antialiased;
+}
+
+body {
     margin: 0;
     padding: 0;
     width: 100%;

@@ -1,11 +1,11 @@
 {
-    "name": "fo-monitoring",
-    "description": "Progressive Web App for Frontend Team Monitoring",
+    "name": "fo-sprints",
+    "description": "Progressive Web App for Frontend Team Sprints Monitoring",
     "main": "src/index.html",
     "authors": [
         "Kevin Avrillon"
     ],
     "license": "ISC",
-    "homepage": "https://github.com/kavrillon/fo-monitoring",
+    "homepage": "https://github.com/kavrillon/fo-sprints",
     "version": "1.0.22"
 }

@@ -1,5 +1,5 @@
-const cacheName = `fo-monitoring-v1`;
-const dataCacheName = `fo-monitoring-data-v1`;
+const cacheName = `fo-sprints-v1`;
+const dataCacheName = `fo-sprints-data-v1`;
 const filesToCache = [
     '',
     'index.html',

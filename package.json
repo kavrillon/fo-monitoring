@@ -1,21 +1,21 @@
 {
-  "name": "fo-monitoring",
+  "name": "fo-sprints",
   "version": "1.0.22",
-  "description": "Progressive Web App for Frontend Team Monitoring",
+  "description": "Progressive Web App for Frontend Team Sprints Monitoring",
   "main": "src/index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kavrillon/fo-monitoring.git"
+    "url": "https://github.com/kavrillon/fo-sprints.git"
   },
   "author": "Kevin Avrillon",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/kavrillon/fo-monitoring/issues"
+    "url": "https://github.com/kavrillon/fo-sprints/issues"
   },
-  "homepage": "https://github.com/kavrillon/fo-monitoring#readme",
+  "homepage": "https://github.com/kavrillon/fo-sprints#readme",
   "devDependencies": {
     "autoprefixer": "^6.5.1",
     "babel": "^6.5.2",
