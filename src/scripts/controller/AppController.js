@@ -4,12 +4,17 @@ import AppModel from '../model/AppModel';
 import WeekModel from '../model/WeekModel';
 import Trello from 'node-trello';
 import moment from 'moment';
+import _ from 'lodash';
 import ConfigManagerInstance from '../libs/ConfigManager';
 
 
 export default class AppController extends Controller {
     constructor() {
         super();
+
+        // Controller vars
+        this.isLoading = true;
+        this.trello = null;
 
         this.appModel = null;
         this.weekModels = [];
@@ -18,17 +23,21 @@ export default class AppController extends Controller {
         this.weekList = document.querySelector('.js-weeks-list');
         this.weekTemplate = document.querySelector('[js-template-week]');
 
-        this.trello = null;
+        this.defaultAppTitle = document.querySelector('[js-title]').innerHTML;
 
+        this.pages = [
+            {name: 'weeks', title: 'Weeks'}, {name: 'projects', title: 'Projects'}
+        ];
+
+        // DOM vars
         this.loader = document.querySelector('.js-loader');
-        this.isLoading = true;
-
-        this.pageConnect = document.querySelector('.js-page-connect');
-
         this.sideNavToggleButton = document.querySelector('[js-sidebar-toggle]');
         this.sideNav = document.querySelector('[js-sidebar]');
         this.sideNavContent = document.querySelector('[js-sidebar-content]');
 
+        this.appTitle = document.querySelector('[js-title]');
+
+        // Init calls
         this.bindEvents();
         this.initApp();
         this.registerSW();
@@ -80,8 +89,10 @@ export default class AppController extends Controller {
             this.toggleSideNav();
         });
 
-        this.pageConnect.addEventListener('click', () => {
-            this.connectToTrello();
+        Array.from(document.querySelectorAll('[js-trello-connect]')).forEach((elt) => {
+            elt.addEventListener('click', () => {
+                this.connectToTrello();
+            });
         });
     }
 
@@ -195,14 +206,25 @@ export default class AppController extends Controller {
     }
 
     setPage(page) {
-        console.log(page);
         this.hidePages();
 
         const domPage = document.querySelector(`.js-page-${page}`);
         if (domPage !== null) {
+            let pageTitle = _.find(this.pages, function(o) {
+                return o.name === page;
+            });
+
+            if (typeof pageTitle == 'undefined') {
+                pageTitle = this.defaultAppTitle;
+            } else {
+                pageTitle = pageTitle.title;
+            }
+
+            this.appTitle.innerHTML = pageTitle;
             domPage.classList.add('active');
         } else {
-            document.querySelector(`.js-page-connect`).classList.add('active');
+            this.appTitle.innerHTML = this.defaultAppTitle;
+            document.querySelector('.js-page-connect').classList.add('active');
         }
     }
 

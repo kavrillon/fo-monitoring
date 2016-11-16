@@ -8,11 +8,12 @@ $black: #000;
 $globals-color: #362f5f; //#2f3ba2; //201929 //3a3248
 
 $globals-bg: #fafafa;
+$globals-transparency: rgba($black, .22);
 $globals-padding-large: 30px;
 $globals-font-size: 14px;
 $globals-padding: 15px;
 $globals-padding-small: 8px;
-$globals-transition: transform .233s cubic-bezier(0, 0, .21, 1) .1s;
+$globals-transition: all .233s cubic-bezier(0, 0, .21, 1) .1s;
 
 // MEDIAS
 $screen-xs: 480px;
@@ -29,6 +30,7 @@ $header-transition: opacity .333s cubic-bezier(0, 0, .21, 1);
 $header-shadow-1: rgba($black, .14);
 $header-shadow-2: rgba($black, .12);
 $header-shadow-3: rgba($black, .2);
+$header-shadow: 0 4px 5px 0 $header-shadow-1, 0 2px 9px 1px $header-shadow-2, 0 4px 2px -2px $header-shadow-3;
 
 // LOADER
 $loader-spinner-color: $globals-color;

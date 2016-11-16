@@ -5,8 +5,4 @@
 
 .weeks {
     @include page;
-
-    &__title {
-        @include title;
-    }
 }

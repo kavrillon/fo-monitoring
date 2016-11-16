@@ -6,9 +6,33 @@
 .connect {
     @include page;
 
-    &__text {
-        margin-top: $globals-padding;
-        color: $globals-color;
-        font-size: 20px;
+    &__button {
+        display: block;
+        border: 0;
+        margin: 100px auto;
+        background: transparent;
+        padding: 0;
+
+        &__text {
+            margin-top: $globals-padding;
+            color: $globals-color;
+            font-size: 20px;
+        }
+
+        &__svg {
+            &__round {
+                transition: $globals-transition;
+            }
+        }
+
+        &:hover,
+        &:active,
+        &.active,
+        &:focus {
+            outline: 0;
+            .connect__button__svg__round {
+                fill: darken(#64b5f6, 15%);
+            }
+        }
     }
 }

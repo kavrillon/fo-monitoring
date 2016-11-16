@@ -49,7 +49,7 @@ rules:
   no-mergeable-selectors: 1
   no-misspelled-properties:
     - 1
-    - extra-properties: []
+    - extra-properties: ['-webkit-overflow-scrolling']
   no-qualifying-elements:
     - 1
     - allow-element-with-attribute: true
