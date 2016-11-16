@@ -6,10 +6,6 @@
 .connect {
     @include page;
 
-    margin-top: 40%;
-    cursor: pointer;
-    text-align: center;
-
     &__text {
         margin-top: $globals-padding;
         color: $globals-color;
