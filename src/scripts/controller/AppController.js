@@ -26,7 +26,8 @@ export default class AppController extends Controller {
         this.defaultAppTitle = document.querySelector('[js-title]').innerHTML;
 
         this.pages = [
-            {name: 'weeks', title: 'Weeks'}, {name: 'projects', title: 'Projects'}
+            {name: 'weeks', title: 'Weeks'},
+            {name: 'projects', title: 'Projects'}
         ];
 
         // DOM vars
@@ -141,7 +142,7 @@ export default class AppController extends Controller {
                     this.setLoader(false);
                     if (data.length > 0) {
                         this.parseData(data);
-                        this.setPage('weeks');
+                        this.setPage('home');
                     } else {
                         this.setPage('empty');
                     }

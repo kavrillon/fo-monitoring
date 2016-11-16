@@ -25,13 +25,13 @@ LEFT Menu:
 
 
 Technical
-- pages management
 - remove /* eslint-disable */ & lint
 - release: how to do minor/major releases ?
 - inline/critical css
 - log
 - year management
 - replace .js- by data attr
+swipe management
 
 Gulp
 - postcss ?

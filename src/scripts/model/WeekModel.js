@@ -6,6 +6,10 @@ export default class WeekModel extends Model {
         this.points = null;
         this.startDate = null;
         this.endDate = null;
+        this.availablePoints = 0;
+        this.estimatedPoints = 0;
+        this.spentPoints = 0;
+        this.lastUpdate = null;
         this.cards = [];
 
         if (data) {
