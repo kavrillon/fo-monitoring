@@ -1,14 +1,47 @@
 <!-- Template week -->
 <div class="week" js-template-week hidden>
-    <div class="week__key" js-week-key></div>
-    <div class="week__last-updated" js-week-last-updated hidden></div>
-    <div class="week__date">
-        <span class="week__date__start" js-week-start></span>
-        to
-        <span class="week__date__end" js-week-end></span>
+    <div class="week__header" js-week-header>
+        <div class="week__header__key" js-week-key></div>
+        <div class="week__header__last-updated" js-week-last-updated hidden></div>
+        <div class="week__header__date">
+            <span class="week__header__date__start" js-week-start></span>
+            to
+            <span class="week__header__date__end" js-week-end></span>
+        </div>
+        <div class="week__header__total">
+            <div class="week__header__total__available">Available:</span><span js-week-available></span></div>
+            <div class="week__header__total__spent">Spent:<span js-week-spent></span></div>
+        </div>
+
+        <ul class="week__header__activity">
+            <li class="week__header__activity__monitoring" js-week-monitoring-percent-container>
+                <span class="week__header__activity__monitoring__label">Monitoring</span>
+                <span class="week__header__activity__monitoring__value" js-week-monitoring-percent></span>
+                <span class="week__header__activity__monitoring__points" js-week-monitoring></span>
+            </li>
+            <li class="week__header__activity__support" js-week-support-percent-container>
+                <span class="week__header__activity__support__label">Support</span>
+                <span class="week__header__activity__support__value" js-week-support-percent></span>
+                <span class="week__header__activity__support__points" js-week-support></span>
+            </li>
+            <li class="week__header__activity__delivery" js-week-delivery-percent-container>
+                <span class="week__header__activity__delivery__label">Delivery</span>
+                <span class="week__header__activity__delivery__value" js-week-delivery-percent></span>
+                <span class="week__header__activity__delivery__points" js-week-delivery></span>
+            </li>
+            <li class="week__header__activity__product" js-week-product-percent-container>
+                <span class="week__header__activity__product__label">Product</span>
+                <span class="week__header__activity__product__value" js-week-product-percent></span>
+                <span class="week__header__activity__product__points" js-week-product></span>
+            </li>
+
+            <li class="week__header__activity__total">
+                <span class="week__data__activity-total__label">Total</span>
+                <span class="week__data__activity-total__value" js-week-total-percent></span>
+            </li>
+        </ul>
     </div>
-    <div class="week__data">
-        <div class="week__data__cards" js-week-cards></div>
-        <div class="week__data__points" js-week-points></div>
+    <div class="week__cards" js-week-cards>
+        <div class="week__cards__cards-count" js-week-count></div>
     </div>
 </div>

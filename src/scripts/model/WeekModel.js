@@ -3,12 +3,24 @@ import Model from './Model';
 export default class WeekModel extends Model {
     constructor(key, data) {
         super(key);
-        this.points = null;
+        this.points = {
+            available: 0,
+            estimated: 0,
+            product: 0,
+            monitoring: 0,
+            support: 0,
+            delivery: 0,
+            spent: 0
+        };
+        this.activity = {
+            product: 0,
+            monitoring: 0,
+            support: 0,
+            delivery: 0,
+            total: 0
+        };
         this.startDate = null;
         this.endDate = null;
-        this.availablePoints = 0;
-        this.estimatedPoints = 0;
-        this.spentPoints = 0;
         this.lastUpdate = null;
         this.cards = [];
 

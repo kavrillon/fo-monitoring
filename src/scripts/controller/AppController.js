@@ -19,11 +19,9 @@ export default class AppController extends Controller {
         this.appModel = null;
         this.weekModels = [];
 
-        this.visibleWeeks = [];
-        this.weekList = document.querySelector('.js-weeks-list');
-        this.weekTemplate = document.querySelector('[js-template-week]');
-
         this.defaultAppTitle = document.querySelector('[js-title]').innerHTML;
+        this.visibleWeeks = [];
+
 
         this.pages = [
             {name: 'weeks', title: 'Weeks'},
@@ -31,6 +29,9 @@ export default class AppController extends Controller {
         ];
 
         // DOM vars
+        this.weekList = document.querySelector('.js-weeks-list');
+        this.cardTemplate = document.querySelector('[js-template-card]');
+        this.weekTemplate = document.querySelector('[js-template-week]');
         this.loader = document.querySelector('.js-loader');
         this.sideNavToggleButton = document.querySelector('[js-sidebar-toggle]');
         this.sideNav = document.querySelector('[js-sidebar]');
@@ -41,7 +42,7 @@ export default class AppController extends Controller {
         // Init calls
         this.bindEvents();
         this.initApp();
-        this.registerSW();
+        // this.registerSW();
     }
 
     registerSW() {
@@ -134,7 +135,7 @@ export default class AppController extends Controller {
 
                 this.trello.get('1/boards/577130dfed8fabf757eddc60/lists', {
                     cards: 'open',
-                    card_fields:'name,labels',
+                    card_fields:'name,labels,url',
                     fields:'name,desc'
                 }, (err, data) => {
                     if (err) throw err;
@@ -142,7 +143,7 @@ export default class AppController extends Controller {
                     this.setLoader(false);
                     if (data.length > 0) {
                         this.parseData(data);
-                        this.setPage('home');
+                        this.setPage('weeks');
                     } else {
                         this.setPage('empty');
                     }
@@ -157,26 +158,67 @@ export default class AppController extends Controller {
     parseData(data) {
         data.forEach(item => {
             const matches = item.name.match(/^W(\d+).*:\s*(\d+)/);
-            if (matches && matches.length > 0) {
+            if (!(matches && matches.length > 0)) {
+            } else {
                 const weekNumber = parseInt(matches[1]);
                 const weekPoints = parseInt(matches[2]);
 
                 const w = new WeekModel(weekNumber);
-                w.availablePoints = weekPoints;
-                w.cards = item.cards;
                 w.startDate = DateUtils.getDateOfISOWeek(weekNumber, 2016);
                 w.endDate = DateUtils.getDateOfISOWeek(weekNumber, 2016, 5);
-                w.estimatedPoints = 0;
-                w.spentPoints = 0;
+                w.points.available = weekPoints;
                 w.lastUpdate = new Date();
 
                 item.cards.forEach(c => {
-                    const matches = c.name.match(/^\((\d+)\).*\[(\d+)\]$/);
-                    if (matches && matches.length > 0) {
-                        w.estimatedPoints += parseInt(matches[1]);
-                        w.spentPoints += parseInt(matches[2]);
+                    let res;
+                    let estimatedPoints = (res = c.name.match(/\((([0-9]*[.])?[0-9]+)\)/)) === null ? 0 : parseFloat(res[1]);
+                    let spentPoints = (res = c.name.match(/\[(([0-9]*[.])?[0-9]+)\]/)) === null ? 0 : parseFloat(res[1]);
+
+                    const name = c.name.replace(/\((([0-9]*[.])?[0-9]+)\)/, '').replace(/\[(([0-9]*[.])?[0-9]+)\]/, '');
+
+                    let type = _.find(c.labels, (o) => {
+                        return o.name === 'Support' || o.name === 'Monitoring' || o.name === 'Product';
+                    });
+
+                    if (typeof type === 'undefined') {
+                        type = 'Delivery'; // default type
+                    } else {
+                        type = type.name;
                     }
+
+                    w.points.estimated += estimatedPoints;
+                    w.points.spent += spentPoints;
+
+                    switch (type) {
+                        case 'Delivery':
+                            w.points.delivery += spentPoints;
+                            break;
+                        case 'Product':
+                            w.points.product += spentPoints;
+                            break;
+                        case 'Monitoring':
+                            w.points.monitoring += spentPoints;
+                            break;
+                        case 'Support':
+                            w.points.support += spentPoints;
+                            break;
+                    }
+
+                    w.cards.push({
+                        name: name,
+                        type: type,
+                        url: c.url,
+                        labels: c.labels,
+                        estimated: estimatedPoints,
+                        spent: spentPoints
+                    });
                 });
+
+                w.activity.delivery = w.points.delivery * 100 / w.points.spent;
+                w.activity.product = w.points.product * 100 / w.points.spent;
+                w.activity.support = w.points.support * 100 / w.points.spent;
+                w.activity.monitoring = w.points.monitoring * 100 / w.points.spent;
+                w.activity.total = w.activity.delivery + w.activity.product + w.activity.support + w.activity.monitoring;
 
                 w.put();
 
@@ -189,8 +231,41 @@ export default class AppController extends Controller {
                     week.querySelector('[js-week-last-updated]').textContent = w.lastUpdate;
                     week.querySelector('[js-week-start]').textContent = moment(w.startDate).format('MMM DD');
                     week.querySelector('[js-week-end]').textContent = moment(w.endDate).format('ll');
-                    week.querySelector('[js-week-cards]').textContent = `${w.cards.length} cards`;
-                    week.querySelector('[js-week-points]').textContent = `${w.spentPoints} pts`;
+                    week.querySelector('[js-week-count]').textContent = `${w.cards.length} cards`;
+                    week.querySelector('[js-week-available]').textContent = `${w.points.available} pts`;
+                    week.querySelector('[js-week-spent]').textContent = `${w.points.spent} pts`;
+
+                    week.querySelector('[js-week-product]').textContent = `${w.points.product} pts`;
+                    week.querySelector('[js-week-support]').textContent = `${w.points.support} pts`;
+                    week.querySelector('[js-week-monitoring]').textContent = `${w.points.monitoring} pts`;
+                    week.querySelector('[js-week-delivery]').textContent = `${w.points.delivery} pts`;
+
+                    week.querySelector('[js-week-delivery-percent]').textContent = `${Math.round(w.activity.delivery)}%`;
+                    week.querySelector('[js-week-product-percent]').textContent = `${Math.round(w.activity.product)}%`;
+                    week.querySelector('[js-week-monitoring-percent]').textContent = `${Math.round(w.activity.monitoring)}%`;
+                    week.querySelector('[js-week-support-percent]').textContent = `${Math.round(w.activity.support)}%`;
+                    week.querySelector('[js-week-total-percent]').textContent = `${Math.round(w.activity.total)}%`;
+
+                    w.cards.forEach((c) => {
+                        const card = this.cardTemplate.cloneNode(true);
+
+                        card.querySelector('[js-card-name]').textContent = `${c.name}`;
+                        card.querySelector('[js-card-name]').setAttribute('href', `${c.url}`);
+                        card.querySelector('[js-card-type]').textContent = `${c.type}`;
+                        card.querySelector('[js-card-type]').classList.add(`card__type__value--${c.type.toLowerCase()}`);
+                        card.querySelector('[js-card-spent]').textContent = `${c.spent} pts`;
+
+                        week.querySelector('[js-week-cards]').appendChild(card);
+                    });
+
+                    week.querySelector('[js-week-header]').addEventListener('click', () => {
+                        if (week.classList.contains('active')) {
+                            week.classList.remove('active');
+                        } else {
+                            week.classList.add('active');
+                        }
+                    });
+
                     week.removeAttribute('hidden');
                     this.weekList.appendChild(week);
 

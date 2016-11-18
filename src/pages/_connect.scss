@@ -8,8 +8,8 @@
 
     &__button {
         display: block;
-        border: 0;
         margin: 100px auto;
+        border: 0;
         background: transparent;
         padding: 0;
 
@@ -30,8 +30,9 @@
         &.active,
         &:focus {
             outline: 0;
+
             .connect__button__svg__round {
-                fill: darken(#64b5f6, 15%);
+                fill: darken($connect-svg-hover, 15%);
             }
         }
     }

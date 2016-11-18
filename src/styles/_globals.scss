@@ -71,7 +71,6 @@ html {
     font-weight: 200;
 
     &__pages {
-        position: relative;
         flex: 1;
         -webkit-overflow-scrolling: touch;
     }
@@ -90,8 +89,8 @@ h6,
 .h4,
 .h5,
 .h6 {
-    font-family: 'MuseoSansRounded-300', Arial, sans-serif;
     color: $globals-color;
+    font-family: 'MuseoSansRounded-300', Arial, sans-serif;
 }
 
 button {

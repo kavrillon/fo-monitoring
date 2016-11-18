@@ -7,9 +7,8 @@
     position: relative;
     margin: $globals-padding 0;
     border-radius: 2px;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 2px 0 rgba($black, .14), 0 3px 1px -2px rgba($black, .2), 0 1px 5px 0 rgba($black, .12);
     background: $white;
-    padding: $globals-padding;
     box-sizing: border-box;
 
     @media (min-width: $screen-sm) {
@@ -22,45 +21,133 @@
         }
     }
 
-    &__key {
-        display: inline-block;
-        float: left;
-        position: relative;
-        z-index: 1;
-        width: 30px;
-        height: 30px;
-        padding: 6px;
-        font-size: 16px;
-        color: $white;
-        font-family: 'MuseoSansRounded-500', Arial, sans-serif;
+    &__header {
+        cursor: pointer;
+        padding: $globals-padding;
 
-        &:before {
-            position: absolute;
-            top: -4px;
-            right: -4px;
-            bottom: -4px;
-            left: -4px;
-            border-radius: 50%;
-            background: $globals-color;
-            z-index: -1;
-            margin: auto;
-            padding: 4px;
-            content: ' ';
+        &__key {
+            display: inline-block;
+            position: relative;
+            float: left;
+            z-index: 1;
+            margin-top: 6px;
+            padding: 6px;
+            width: 30px;
+            height: 30px;
+            color: $white;
+            font-family: 'MuseoSansRounded-500', Arial, sans-serif;
+            font-size: 16px;
+
+            &:before {
+                position: absolute;
+                top: -4px;
+                right: -4px;
+                bottom: -4px;
+                left: -4px;
+                z-index: -1;
+                margin: auto;
+                border-radius: 50%;
+                background: $globals-color;
+                padding: 4px;
+                content: ' ';
+            }
+        }
+
+        &__date {
+            display: block;
+            text-align: right;
+            font-size: 18px;
+        }
+
+        &__total {
+            padding-top: 5px;
+            text-align: right;
+
+            &__available,
+            &__spent {
+                display: inline-block;
+            }
+
+            &__available {
+                margin-right: $globals-padding;
+            }
+        }
+
+        &__activity {
+            @include clear;
+
+            display: block;
+            margin: $globals-padding 0 0;
+            border-top: 1px solid rgba($black, .14);
+            padding: $globals-padding 0 0;
+            list-style-type: none;
+
+            &__monitoring,
+            &__support,
+            &__delivery,
+            &__product {
+                float: left;
+                padding: 0;
+                width: 25%;
+                overflow: hidden;
+                text-align: center;
+
+                &__label {
+                    display: block;
+                }
+
+                &__value {
+                    display: inline-block;
+                    margin-top: $globals-padding;
+                    font-size: 26px;
+                }
+
+                &__points {
+                    display: none;
+                    margin-top: 5px;
+                }
+            }
+
+            &__total {
+                display: none;
+                float: left;
+                margin-top: $globals-padding;
+                width: 100%;
+                text-align: center;
+            }
         }
     }
 
-    &__date {
-        display: block;
-        text-align: right;
+    &__cards {
+        display: none;
+        margin: 0 $globals-padding;
+        border-top: 1px solid rgba($black, .14);
+        padding: $globals-padding 0;
+
+        &__cards-count {
+            margin-bottom: $globals-padding;
+            text-align: center;
+        }
     }
 
-    &__data {
-        display: flex;
+    &.active {
+        .week__header__activity {
+            &__monitoring,
+            &__support,
+            &__delivery,
+            &__product {
+                &__points {
+                    display: block;
+                }
+            }
 
-        &__cards,
-        &__points {
-            flex: 1;
-            text-align: center;
+            &__total {
+                display: block;
+            }
+        }
+
+        .week__cards {
+            display: block;
         }
     }
 }

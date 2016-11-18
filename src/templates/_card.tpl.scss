@@ -1,0 +1,41 @@
+
+//------------------------------------------------------------------
+// CARD TEMPLATE
+//-------------------------------------------------------------------
+
+.card {
+    display: flex;
+
+    padding: 5px 0;
+
+    &__name {
+        @include ellipsis;
+        flex: 6;
+        margin: 0 15px 0 0;
+
+        &__link {
+            @include ellipsis;
+            display: block;
+            transition: $globals-transition;
+            text-decoration: none;
+            color: $globals-color;
+
+            &:hover,
+            &:focus,
+            &:active,
+            &.active {
+                text-decoration: none;
+            }
+        }
+    }
+
+    &__type {
+        flex: 2;
+        text-align: center;
+    }
+
+    &__spent {
+        flex: 2;
+        text-align: right;
+    }
+}
