@@ -36,8 +36,8 @@ Monitoring of Frontend sprints with reporting per week and per project.
 - to test: livereload: images
 
 
-# resources
-https://developers.google.com/web/progressive-web-apps/
-https://github.com/GoogleChrome/voice-memos
-https://voice-memos.appspot.com/
-https://developers.trello.com/authorize
+# Resources
+- https://developers.google.com/web/progressive-web-apps/
+- https://github.com/GoogleChrome/voice-memos
+- https://voice-memos.appspot.com/
+- https://developers.trello.com/authorize
