@@ -30,11 +30,22 @@
     opacity: 0;
     margin: $header-height auto 0;
     padding: $globals-padding;
-    max-width: 1000px;
     will-change: opacity, scroll-position;
     pointer-events: none;
     overflow-x: hidden;
     overflow-y: auto;
+
+    @media (min-width: $screen-sm) {
+        padding: $globals-padding 30px;
+    }
+
+    @media (min-width: $screen-md) {
+        padding: $globals-padding 100px;
+    }
+
+    @media (min-width: $screen-lg) {
+        padding: $globals-padding 150px;
+    }
 
     &.active {
         opacity: 1;

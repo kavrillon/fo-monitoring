@@ -2,14 +2,16 @@ Monitoring of Frontend sprints with reporting per week and per project.
 
 # To implement
 ### New functionalities
+- home page: add data for weeks
+    - add avg velocity somewhere
+    - evolution of avg activities
+    - round values
+    - add dashboard init in a separated file
 - PWA: debug on iOS
 - pagination
 - welcome page
 - empty page
 - PWA: test on Android & Chrome & Windows
-- home page: add data for weeks
-    - global evolution of activities (chart)
-    - velocity
 - swipe management
 - project page: get data for projects & design
     - save user data for project start date & end date, list of projects he want to see

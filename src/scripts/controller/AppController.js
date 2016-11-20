@@ -80,75 +80,49 @@ export default class AppController extends Controller {
                 this.trello.getParsedData().then(data => {
                     if (data.length > 0) {
                         this.weeks = data;
-                        console.log(data);
 
                         const labels = _.orderBy(_.map(data, 'key'));
+
+                        const velocityValues = _.map(_.orderBy(data, 'key'), 'points.spent');
+                        let velocityAvg = 0;
+                        velocityValues.forEach((elt) => {
+                            velocityAvg += elt;
+                        });
+                        velocityAvg = Math.round(velocityAvg / velocityValues.length);
+
+                        let velocityAvgArray = [];
+                        for (let i = 0; i < velocityValues.length; i++) {
+                            velocityAvgArray.push(velocityAvg);
+                        }
 
                         // create charts
                         new Chart(document.getElementById('ChartVelocity'), {
                             type: 'line',
                             data: {
                                 labels: labels,
-                                datasets: [{
-                                    label: 'Velocity',
-                                    data: _.map(_.orderBy(data, 'key'), 'points.spent'),
-                                    borderWidth: 1
-                                }]
-                            },
-                            options: {
-                                legend: {
-                                    display: false
-                                },
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                scales: {
-                                    yAxes: [{
-                                        ticks: {
-                                            beginAtZero:true
-                                        }
-                                    }]
-                                }
-                            }
-                        });
-
-                        new Chart(document.getElementById('ChartWeeklyActivity'), {
-                            type: 'line',
-                            data: {
-                                labels: labels,
                                 datasets: [
                                     {
-                                        label: 'Monitoring',
-                                        data: _.map(_.orderBy(data, 'key'), 'activity.monitoring'),
-                                        backgroundColor: 'rgba(255,206,86,0.3)',
+                                        label: 'Velocity',
+                                        data: velocityValues,
                                         borderWidth: 1,
-                                        borderColor: '#ffce56'
+                                        borderColor: '#362f5f',
+                                        backgroundColor: 'rgba(54,47,95,0.3)',
+                                        pointRadius: 0
                                     },
                                     {
-                                        label: 'Support',
-                                        data: _.map(_.orderBy(data, 'key'), 'activity.support'),
-                                        backgroundColor: 'rgba(68,210,121,0.3)',
+                                        label: 'Average',
+                                        data: velocityAvgArray,
+                                        tooltip: false,
+                                        fill: false,
                                         borderWidth: 1,
-                                        borderColor: '#44d279'
-                                    },
-                                    {
-                                        label: 'Delivery',
-                                        data: _.map(_.orderBy(data, 'key'), 'activity.delivery'),
-                                        backgroundColor: 'rgba(255,99,132,0.3)',
-                                        borderWidth: 1,
-                                        borderColor: '#ff6384'
-                                    },
-                                    {
-                                        label: 'Product',
-                                        data: _.map(_.orderBy(data, 'key'), 'activity.product'),
-                                        backgroundColor: 'rgba(54,162,235,0.3)',
-                                        borderWidth: 1,
-                                        borderColor: '#36a2eb'
+                                        borderColor: '#cc0000',
+                                        pointRadius: 0
                                     }
                                 ]
                             },
                             options: {
                                 legend: {
-                                    position: 'bottom'
+                                    display: false
                                 },
                                 responsive: true,
                                 maintainAspectRatio: false,
@@ -226,6 +200,60 @@ export default class AppController extends Controller {
                             }
                         });
 
+                        new Chart(document.getElementById('ChartWeeklyActivity'), {
+                            type: 'line',
+                            data: {
+                                labels: labels,
+                                datasets: [
+                                    {
+                                        label: 'Monitoring',
+                                        data: _.map(_.orderBy(data, 'key'), 'activity.monitoring'),
+                                        backgroundColor: 'rgba(255,206,86,0.3)',
+                                        borderWidth: 1,
+                                        borderColor: '#ffce56',
+                                        pointRadius: 0
+                                    },
+                                    {
+                                        label: 'Support',
+                                        data: _.map(_.orderBy(data, 'key'), 'activity.support'),
+                                        backgroundColor: 'rgba(68,210,121,0.3)',
+                                        borderWidth: 1,
+                                        borderColor: '#44d279',
+                                        pointRadius: 0
+                                    },
+                                    {
+                                        label: 'Delivery',
+                                        data: _.map(_.orderBy(data, 'key'), 'activity.delivery'),
+                                        backgroundColor: 'rgba(255,99,132,0.3)',
+                                        borderWidth: 1,
+                                        borderColor: '#ff6384',
+                                        pointRadius: 0
+                                    },
+                                    {
+                                        label: 'Product',
+                                        data: _.map(_.orderBy(data, 'key'), 'activity.product'),
+                                        backgroundColor: 'rgba(54,162,235,0.3)',
+                                        borderWidth: 1,
+                                        borderColor: '#36a2eb',
+                                        pointRadius: 0
+                                    }
+                                ]
+                            },
+                            options: {
+                                legend: {
+                                    position: 'bottom'
+                                },
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero:true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
 
                         // show home once it's available
                         this.setLoader(false);
