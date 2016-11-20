@@ -6,7 +6,6 @@ Monitoring of Frontend sprints with reporting per week and per project.
 - pagination
 - welcome page
 - empty page
-- no access page
 - PWA: test on Android & Chrome & Windows
 - home page: add data for weeks
     - global evolution of activities (chart)

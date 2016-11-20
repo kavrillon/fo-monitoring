@@ -2,6 +2,7 @@ import Controller from './Controller';
 import AppModel from '../model/AppModel';
 import TrelloUtils from '../libs/TrelloUtils';
 import moment from 'moment';
+import Chart from 'chart.js';
 import _ from 'lodash';
 import ConfigManagerInstance from '../libs/ConfigManager';
 
@@ -38,7 +39,7 @@ export default class AppController extends Controller {
         // Init calls
         this.bindEvents();
         this.initApp();
-        this.registerSW();
+        // this.registerSW();
     }
 
     registerSW() {
@@ -79,15 +80,162 @@ export default class AppController extends Controller {
                 this.trello.getParsedData().then(data => {
                     if (data.length > 0) {
                         this.weeks = data;
+                        console.log(data);
 
-                        // Add in the view
+                        const labels = _.orderBy(_.map(data, 'key'));
+
+                        // create charts
+                        new Chart(document.getElementById('ChartVelocity'), {
+                            type: 'line',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: 'Velocity',
+                                    data: _.map(_.orderBy(data, 'key'), 'points.spent'),
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                legend: {
+                                    display: false
+                                },
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero:true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+
+                        new Chart(document.getElementById('ChartWeeklyActivity'), {
+                            type: 'line',
+                            data: {
+                                labels: labels,
+                                datasets: [
+                                    {
+                                        label: 'Monitoring',
+                                        data: _.map(_.orderBy(data, 'key'), 'activity.monitoring'),
+                                        backgroundColor: 'rgba(255,206,86,0.3)',
+                                        borderWidth: 1,
+                                        borderColor: '#ffce56'
+                                    },
+                                    {
+                                        label: 'Support',
+                                        data: _.map(_.orderBy(data, 'key'), 'activity.support'),
+                                        backgroundColor: 'rgba(68,210,121,0.3)',
+                                        borderWidth: 1,
+                                        borderColor: '#44d279'
+                                    },
+                                    {
+                                        label: 'Delivery',
+                                        data: _.map(_.orderBy(data, 'key'), 'activity.delivery'),
+                                        backgroundColor: 'rgba(255,99,132,0.3)',
+                                        borderWidth: 1,
+                                        borderColor: '#ff6384'
+                                    },
+                                    {
+                                        label: 'Product',
+                                        data: _.map(_.orderBy(data, 'key'), 'activity.product'),
+                                        backgroundColor: 'rgba(54,162,235,0.3)',
+                                        borderWidth: 1,
+                                        borderColor: '#36a2eb'
+                                    }
+                                ]
+                            },
+                            options: {
+                                legend: {
+                                    position: 'bottom'
+                                },
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero:true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+
+                        const monitoringPercents = _.map(data, 'activity.monitoring');
+                        let monitoringAvg = 0;
+                        monitoringPercents.forEach((elt) => {
+                            monitoringAvg += elt;
+                        });
+                        monitoringAvg = Math.round(monitoringAvg / monitoringPercents.length);
+
+                        const deliveryPercents = _.map(data, 'activity.delivery');
+                        let deliveryAvg = 0;
+                        deliveryPercents.forEach((elt) => {
+                            deliveryAvg += elt;
+                        });
+                        deliveryAvg = Math.round(deliveryAvg / deliveryPercents.length);
+
+                        const supportPercents = _.map(data, 'activity.support');
+                        let supportAvg = 0;
+                        supportPercents.forEach((elt) => {
+                            supportAvg += elt;
+                        });
+                        supportAvg = Math.round(supportAvg / supportPercents.length);
+
+                        const productPercents = _.map(data, 'activity.product');
+                        let productAvg = 0;
+                        productPercents.forEach((elt) => {
+                            productAvg += elt;
+                        });
+                        productAvg = Math.round(productAvg / productPercents.length);
+
+                        new Chart(document.getElementById('ChartGlobalActivity'), {
+                            type: 'doughnut',
+                            data: {
+                                labels: [
+                                    'Monitoring',
+                                    'Support',
+                                    'Delivery',
+                                    'Product'
+                                ],
+                                datasets: [
+                                    {
+                                        data: [monitoringAvg, supportAvg, deliveryAvg, productAvg],
+                                        backgroundColor: [
+                                            '#ffce56',
+                                            '#44d279',
+                                            '#ff6384',
+                                            '#36a2eb'
+                                        ],
+                                        hoverBackgroundColor: [
+                                            '#ffce56',
+                                            '#44d279',
+                                            '#ff6384',
+                                            '#36a2eb'
+                                        ]
+                                    }
+                                ]
+                            },
+                            options: {
+                                legend: {
+                                    position: 'bottom'
+                                },
+                                responsive: true,
+                                maintainAspectRatio: false
+                            }
+                        });
+
+
+                        // show home once it's available
+                        this.setLoader(false);
+                        this.setPage('home');
+
+                        // Add in the week list
                         this.weeks.forEach((w) => {
                             w.put();
                             this.createOrUpdateWeekCard(w);
                         });
-
-                        this.setLoader(false);
-                        this.setPage('weeks');
                     } else {
                         this.setLoader(false);
                         this.setPage('empty');
