@@ -38,7 +38,7 @@ export default class AppController extends Controller {
         // Init calls
         this.bindEvents();
         this.initApp();
-        this.registerSW();
+        // this.registerSW();
     }
 
     registerSW() {
@@ -82,6 +82,7 @@ export default class AppController extends Controller {
 
                         // Add in the view
                         this.weeks.forEach((w) => {
+                            w.put();
                             this.createOrUpdateWeekCard(w);
                         });
 
@@ -141,8 +142,20 @@ export default class AppController extends Controller {
 
         if (!this.weeksCards[w.key]) {
             week = this.weekTemplate.cloneNode(true);
+            this.weekList.appendChild(week);
+
+            week.querySelector('[js-week-header]').addEventListener('click', () => {
+                if (week.classList.contains('active')) {
+                    week.classList.remove('active');
+                } else {
+                    week.classList.add('active');
+                }
+            });
         } else {
             week = this.weeksCards[w.key];
+            week.querySelectorAll('[js-template-card]').forEach((elt) => {
+                elt.outerHTML = '';
+            });
         }
 
         week.querySelector('[js-week-key]').textContent = w.key;
@@ -176,16 +189,7 @@ export default class AppController extends Controller {
             week.querySelector('[js-week-cards]').appendChild(card);
         });
 
-        week.querySelector('[js-week-header]').addEventListener('click', () => {
-            if (week.classList.contains('active')) {
-                week.classList.remove('active');
-            } else {
-                week.classList.add('active');
-            }
-        });
-
         week.removeAttribute('hidden');
-        this.weekList.appendChild(week);
         this.weeksCards[w.key] = week;
     }
 

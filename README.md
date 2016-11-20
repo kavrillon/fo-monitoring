@@ -3,6 +3,7 @@ Monitoring of Frontend sprints with reporting per week and per project.
 # To implement
 ### New functionalities
 - weeks: animation when opening page
+- weeks: why total is not about 100% ?
 - PWA: debug on iOS
 - pagination
 - welcome page
