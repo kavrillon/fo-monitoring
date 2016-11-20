@@ -7,6 +7,7 @@ import ConfigManagerInstance from '../libs/ConfigManager';
 export default class TrelloUtils extends Trello {
     constructor(key, token) {
         super(key, token);
+        this.currentYear = 2016;
     }
 
     static connectToTrello() {
@@ -33,7 +34,7 @@ export default class TrelloUtils extends Trello {
     }
 
     parseData(data) {
-        let weeks = [];
+        const weeks = [];
 
         if (data.length > 0) {
             data.forEach(item => {
@@ -45,15 +46,15 @@ export default class TrelloUtils extends Trello {
                     const weekPoints = parseInt(matches[2]);
 
                     const w = new WeekModel(weekNumber);
-                    w.startDate = DateUtils.getDateOfISOWeek(weekNumber, 2016);
-                    w.endDate = DateUtils.getDateOfISOWeek(weekNumber, 2016, 5);
+                    w.startDate = DateUtils.getDateOfISOWeek(weekNumber, this.currentYear);
+                    w.endDate = DateUtils.getDateOfISOWeek(weekNumber, this.currentYear, 5);
                     w.points.available = weekPoints;
                     w.lastUpdate = new Date();
 
                     item.cards.forEach(c => {
                         let res;
-                        let estimatedPoints = (res = c.name.match(/\((([0-9]*[.])?[0-9]+)\)/)) === null ? 0 : parseFloat(res[1]);
-                        let spentPoints = (res = c.name.match(/\[(([0-9]*[.])?[0-9]+)\]/)) === null ? 0 : parseFloat(res[1]);
+                        const estimatedPoints = (res = c.name.match(/\((([0-9]*[.])?[0-9]+)\)/)) === null ? 0 : parseFloat(res[1]);
+                        const spentPoints = (res = c.name.match(/\[(([0-9]*[.])?[0-9]+)\]/)) === null ? 0 : parseFloat(res[1]);
 
                         const name = c.name.replace(/\((([0-9]*[.])?[0-9]+)\)/, '').replace(/\[(([0-9]*[.])?[0-9]+)\]/, '');
 
@@ -83,6 +84,8 @@ export default class TrelloUtils extends Trello {
                             case 'Support':
                                 w.points.support += spentPoints;
                                 break;
+                            default:
+                                break;
                         }
 
                         w.cards.push({
@@ -95,10 +98,10 @@ export default class TrelloUtils extends Trello {
                         });
                     });
 
-                    w.activity.delivery = w.points.delivery * 100 / w.points.spent;
-                    w.activity.product = w.points.product * 100 / w.points.spent;
-                    w.activity.support = w.points.support * 100 / w.points.spent;
-                    w.activity.monitoring = w.points.monitoring * 100 / w.points.spent;
+                    w.activity.delivery = w.points.delivery / w.points.spent * 100;
+                    w.activity.product = w.points.product / w.points.spent * 100;
+                    w.activity.support = w.points.support / w.points.spent * 100;
+                    w.activity.monitoring = w.points.monitoring / w.points.spent * 100;
                     w.activity.total = w.activity.delivery + w.activity.product + w.activity.support + w.activity.monitoring;
 
                     weeks.push(w);

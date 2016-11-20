@@ -21,8 +21,8 @@ export default class AppController extends Controller {
         this.defaultAppTitle = document.querySelector('[js-title]').innerHTML;
 
         this.pages = [
-            {name: 'weeks', title: 'Weeks'},
-            {name: 'projects', title: 'Projects'}
+            {name: 'weeks', title: 'All weeks'},
+            {name: 'projects', title: 'All projects'}
         ];
 
         // DOM vars
@@ -38,7 +38,7 @@ export default class AppController extends Controller {
         // Init calls
         this.bindEvents();
         this.initApp();
-        // this.registerSW();
+        this.registerSW();
     }
 
     registerSW() {
@@ -88,7 +88,6 @@ export default class AppController extends Controller {
 
                         this.setLoader(false);
                         this.setPage('weeks');
-
                     } else {
                         this.setLoader(false);
                         this.setPage('empty');
@@ -175,7 +174,6 @@ export default class AppController extends Controller {
         week.querySelector('[js-week-product-percent]').textContent = `${Math.round(w.activity.product)}%`;
         week.querySelector('[js-week-monitoring-percent]').textContent = `${Math.round(w.activity.monitoring)}%`;
         week.querySelector('[js-week-support-percent]').textContent = `${Math.round(w.activity.support)}%`;
-        week.querySelector('[js-week-total-percent]').textContent = `${Math.round(w.activity.total)}%`;
 
         w.cards.forEach((c) => {
             const card = this.cardTemplate.cloneNode(true);
@@ -228,11 +226,11 @@ export default class AppController extends Controller {
 
         const domPage = document.querySelector(`.js-page-${page}`);
         if (domPage !== null) {
-            let pageTitle = _.find(this.pages, function(o) {
+            let pageTitle = _.find(this.pages, (o) => {
                 return o.name === page;
             });
 
-            if (typeof pageTitle == 'undefined') {
+            if (typeof pageTitle === 'undefined') {
                 pageTitle = this.defaultAppTitle;
             } else {
                 pageTitle = pageTitle.title;

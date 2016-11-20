@@ -7,7 +7,7 @@
     position: relative;
     margin: $globals-padding 0;
     border-radius: 2px;
-    box-shadow: 0 2px 2px 0 rgba($black, .14), 0 3px 1px -2px rgba($black, .2), 0 1px 5px 0 rgba($black, .12);
+    box-shadow: $week-shadow;
     background: $white;
     box-sizing: border-box;
 
@@ -78,7 +78,7 @@
 
             display: block;
             margin: $globals-padding 0 0;
-            border-top: 1px solid rgba($black, .14);
+            border-top: $week-border;
             padding: $globals-padding 0 0;
             list-style-type: none;
 
@@ -103,29 +103,26 @@
                 }
 
                 &__points {
-                    display: none;
+                    display: block;
+                    transition: $globals-transition;
                     margin-top: 5px;
+                    max-height: 0;
+                    overflow: hidden;
                 }
-            }
-
-            &__total {
-                display: none;
-                float: left;
-                margin-top: $globals-padding;
-                width: 100%;
-                text-align: center;
             }
         }
     }
 
     &__cards {
-        display: none;
+        transition: $globals-transition;
         margin: 0 $globals-padding;
-        border-top: 1px solid rgba($black, .14);
-        padding: $globals-padding 0;
+        max-height: 0;
+        overflow: hidden;
 
         &__cards-count {
             margin-bottom: $globals-padding;
+            border-top: $week-border;
+            padding-top: $globals-padding;
             text-align: center;
         }
     }
@@ -137,17 +134,14 @@
             &__delivery,
             &__product {
                 &__points {
-                    display: block;
+                    max-height: 100px;
                 }
-            }
-
-            &__total {
-                display: block;
             }
         }
 
         .week__cards {
-            display: block;
+            padding-bottom: $globals-padding;
+            max-height: 800px;
         }
     }
 }

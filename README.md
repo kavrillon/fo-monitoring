@@ -2,8 +2,6 @@ Monitoring of Frontend sprints with reporting per week and per project.
 
 # To implement
 ### New functionalities
-- weeks: animation when opening page
-- weeks: why total is not about 100% ?
 - PWA: debug on iOS
 - pagination
 - welcome page
@@ -24,6 +22,7 @@ Monitoring of Frontend sprints with reporting per week and per project.
 - on desktop: always show the left menu
 - add trello account in the left menu
 - weeks: dedicated week page ?
+- weeks: problem on  total not about 100%
 
 ### Technical
 - remove `/* eslint-disable */` & lint
