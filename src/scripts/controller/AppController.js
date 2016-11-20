@@ -11,15 +11,14 @@ export default class AppController extends Controller {
         super();
 
         // Controller vars
+        this.appModel = null;
         this.isLoading = true;
         this.trello = null;
 
-        this.appModel = null;
         this.weeks = [];
+        this.weeksCards = [];
 
         this.defaultAppTitle = document.querySelector('[js-title]').innerHTML;
-        this.visibleWeeks = [];
-
 
         this.pages = [
             {name: 'weeks', title: 'Weeks'},
@@ -34,13 +33,12 @@ export default class AppController extends Controller {
         this.sideNavToggleButton = document.querySelector('[js-sidebar-toggle]');
         this.sideNav = document.querySelector('[js-sidebar]');
         this.sideNavContent = document.querySelector('[js-sidebar-content]');
-
         this.appTitle = document.querySelector('[js-title]');
 
         // Init calls
         this.bindEvents();
         this.initApp();
-        // this.registerSW();
+        this.registerSW();
     }
 
     registerSW() {
@@ -71,6 +69,9 @@ export default class AppController extends Controller {
     }
 
     loadData() {
+        this.setLoader(true);
+        this.hidePages();
+
         if (this.appModel.token !== null) {
             ConfigManagerInstance().then(configManager => {
                 this.trello = new TrelloUtils(configManager.config.trello.key, this.appModel.token);
@@ -81,7 +82,7 @@ export default class AppController extends Controller {
 
                         // Add in the view
                         this.weeks.forEach((w) => {
-                            this.displayWeekCard(w);
+                            this.createOrUpdateWeekCard(w);
                         });
 
                         this.setLoader(false);
@@ -135,8 +136,15 @@ export default class AppController extends Controller {
         });
     }
 
-    displayWeekCard(w) {
-        const week = this.weekTemplate.cloneNode(true);
+    createOrUpdateWeekCard(w) {
+        let week = null;
+
+        if (!this.weeksCards[w.key]) {
+            week = this.weekTemplate.cloneNode(true);
+        } else {
+            week = this.weeksCards[w.key];
+        }
+
         week.querySelector('[js-week-key]').textContent = w.key;
         week.querySelector('[js-week-last-updated]').textContent = w.lastUpdate;
         week.querySelector('[js-week-start]').textContent = moment(w.startDate).format('MMM DD');
@@ -178,6 +186,7 @@ export default class AppController extends Controller {
 
         week.removeAttribute('hidden');
         this.weekList.appendChild(week);
+        this.weeksCards[w.key] = week;
     }
 
     setLoader(loading) {

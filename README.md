@@ -2,7 +2,6 @@ Monitoring of Frontend sprints with reporting per week and per project.
 
 # To implement
 ### New functionalities
-- refresh
 - weeks: animation when opening page
 - PWA: debug on iOS
 - pagination
@@ -35,6 +34,7 @@ Monitoring of Frontend sprints with reporting per week and per project.
 - `willchange` review
 - to test: deploy:ghPages when bower deps (for this reactivate bower in gulp tasks imagemin, 6to5, build & co)
 - to test: livereload: images
+- refacto: move js for templates in dedicated js files ?
 - postcss ?
 
 
