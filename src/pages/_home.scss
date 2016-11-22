@@ -9,14 +9,16 @@
 
     &__velocity,
     &__activity,
-    &__weekly-activity {
+    &__weekly-activity,
+    &__monthly-activity {
         float: left;
         margin-top: 15px;
+        padding: 0 15px;
         width: 100%;
 
         @media (min-width: $screen-sm) {
-            margin-top: 30px;
             float: left;
+            margin-top: 30px;
             width: 50%;
         }
 
@@ -30,7 +32,8 @@
         }
     }
 
-    &__weekly-activity {
+    &__weekly-activity,
+    &__monthly-activity {
         @media (min-width: $screen-sm) {
             margin-top: 60px;
             width: 100%;

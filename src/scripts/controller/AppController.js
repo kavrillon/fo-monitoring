@@ -90,6 +90,8 @@ export default class AppController extends Controller {
                         });
                         velocityAvg = Math.round(velocityAvg / velocityValues.length);
 
+                        document.querySelector('[js-avg-velocity]').textContent = `${velocityAvg} pts`;
+
                         let velocityAvgArray = [];
                         for (let i = 0; i < velocityValues.length; i++) {
                             velocityAvgArray.push(velocityAvg);
@@ -200,14 +202,60 @@ export default class AppController extends Controller {
                             }
                         });
 
-                        new Chart(document.getElementById('ChartWeeklyActivity'), {
+                        let months = [];
+                        let monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                        for (let i = 0; i <= 11; i++) {
+                            months.push({
+                                key: i,
+                                label: monthLabels[i],
+                                activity: {
+                                    monitoring: 0,
+                                    support: 0,
+                                    delivery: 0,
+                                    product: 0
+                                },
+                                points: {
+                                    monitoring: 0,
+                                    support: 0,
+                                    delivery: 0,
+                                    product: 0,
+                                    spent: 0,
+                                    available: 0,
+                                    estimated: 0
+                                },
+                                weeks: []
+                            });
+                        }
+
+                        _.orderBy(data, 'key').forEach((w) => {
+                            const monthKey = parseInt(moment(w.startDate).format('M')) - 1;
+                            if (months[monthKey]) {
+                                months[monthKey].weeks.push(w);
+                                months[monthKey].points.product += w.points.product;
+                                months[monthKey].points.monitoring += w.points.monitoring;
+                                months[monthKey].points.support += w.points.support;
+                                months[monthKey].points.delivery += w.points.delivery;
+                                months[monthKey].points.spent += w.points.spent;
+                                months[monthKey].points.available += w.points.available;
+                                months[monthKey].points.estimated += w.points.estimated;
+                            }
+                        });
+
+                        months.forEach((m) => {
+                            m.activity.product = m.points.product * 100 / m.points.spent;
+                            m.activity.monitoring = m.points.monitoring * 100 / m.points.spent;
+                            m.activity.support = m.points.support * 100 / m.points.spent;
+                            m.activity.delivery = m.points.delivery * 100 / m.points.spent;
+                        });
+
+                        new Chart(document.getElementById('ChartMonthlyActivity'), {
                             type: 'line',
                             data: {
-                                labels: labels,
+                                labels: monthLabels,
                                 datasets: [
                                     {
                                         label: 'Monitoring',
-                                        data: _.map(_.orderBy(data, 'key'), 'activity.monitoring'),
+                                        data: _.map(months, 'activity.monitoring'),
                                         backgroundColor: 'rgba(255,206,86,0.3)',
                                         borderWidth: 1,
                                         borderColor: '#ffce56',
@@ -215,7 +263,7 @@ export default class AppController extends Controller {
                                     },
                                     {
                                         label: 'Support',
-                                        data: _.map(_.orderBy(data, 'key'), 'activity.support'),
+                                        data: _.map(months, 'activity.support'),
                                         backgroundColor: 'rgba(68,210,121,0.3)',
                                         borderWidth: 1,
                                         borderColor: '#44d279',
@@ -223,7 +271,7 @@ export default class AppController extends Controller {
                                     },
                                     {
                                         label: 'Delivery',
-                                        data: _.map(_.orderBy(data, 'key'), 'activity.delivery'),
+                                        data: _.map(months, 'activity.delivery'),
                                         backgroundColor: 'rgba(255,99,132,0.3)',
                                         borderWidth: 1,
                                         borderColor: '#ff6384',
@@ -231,7 +279,7 @@ export default class AppController extends Controller {
                                     },
                                     {
                                         label: 'Product',
-                                        data: _.map(_.orderBy(data, 'key'), 'activity.product'),
+                                        data: _.map(months, 'activity.product'),
                                         backgroundColor: 'rgba(54,162,235,0.3)',
                                         borderWidth: 1,
                                         borderColor: '#36a2eb',

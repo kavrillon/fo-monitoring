@@ -3,9 +3,8 @@ Monitoring of Frontend sprints with reporting per week and per project.
 # To implement
 ### New functionalities
 - home page: add data for weeks
-    - add avg velocity somewhere
-    - evolution of avg activities
     - round values
+    - add % in label
     - add dashboard init in a separated file
 - PWA: debug on iOS
 - pagination
