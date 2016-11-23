@@ -1,11 +1,16 @@
 Monitoring of Frontend sprints with reporting per week and per project.
 
+# Next things
+- JS 15000 fois trop gros
+- home page: round values
+- home page: add % in label
+- add dashboard init, charts & template in a separated file
+- replace .js- by data attr
+- refacto: move js for templates in dedicated js files ?
+- menu desktop: always displayed
+
 # To implement
 ### New functionalities
-- home page: add data for weeks
-    - round values
-    - add % in label
-    - add dashboard init in a separated file
 - PWA: debug on iOS
 - pagination
 - welcome page
@@ -23,6 +28,10 @@ Monitoring of Frontend sprints with reporting per week and per project.
 - add trello account in the left menu
 - weeks: dedicated week page ?
 - weeks: problem on  total not about 100%
+- product page: get data for product
+    - based on regex on []: templates, V3, V2
+- support page: get data for support
+    - based on regex on [], Jeremie, Laetitia, etc.
 
 ### Technical
 - remove `/* eslint-disable */` & lint
@@ -30,11 +39,9 @@ Monitoring of Frontend sprints with reporting per week and per project.
 - release: how to do minor/major releases ?
 - log
 - PWA testing: perfs of appshell/cache
-- replace .js- by data attr
 - `willchange` review
 - to test: deploy:ghPages when bower deps (for this reactivate bower in gulp tasks imagemin, 6to5, build & co)
 - to test: livereload: images
-- refacto: move js for templates in dedicated js files ?
 - postcss ?
 
 

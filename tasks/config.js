@@ -8,10 +8,9 @@ const paths = {
     app: `${base}/`,
     bowerComponents: `${base}/bower_components`,
     dist: 'dist',
-    fonts: `${base}/fonts`,
-    images: `${base}/images`,
-    index: `${base}/index.html`,
-    scripts: `${base}/scripts`
+    fonts: `${base}/assets/fonts`,
+    images: `${base}/assets/images`,
+    index: `${base}/index.html`
 };
 
 const globs = {
@@ -21,7 +20,6 @@ const globs = {
     html: `${paths.app}/**/*.html`,
     manifest: `${paths.app}/manifest.json`,
     images: `${paths.images}/**/*`,
-    // allJs: `${paths.app}/**/*.js`,
     js: [`${paths.app}/**/*.js`, `!${paths.app}/sw.js`],
     sw: `${paths.app}/sw.js`,
     scss: `${paths.app}/**/*.scss`

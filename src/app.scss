@@ -12,17 +12,17 @@
 @import 'styles/globals';
 
 // Pages
-@import 'pages/connect';
-@import 'pages/empty';
-@import 'pages/home';
-@import 'pages/projects';
-@import 'pages/weeks';
+@import 'components/pages/connect';
+@import 'components/pages/empty';
+@import 'components/pages/home';
+@import 'components/pages/projects';
+@import 'components/pages/weeks';
 
 // Partials
-@import 'partials/header';
-@import 'partials/loader';
-@import 'partials/sidebar';
+@import 'components/partials/header';
+@import 'components/partials/loader';
+@import 'components/partials/sidebar';
 
 // Templates
-@import 'templates/week.tpl';
-@import 'templates/card.tpl';
+@import 'components/templates/week.tpl';
+@import 'components/templates/card.tpl';

@@ -24,7 +24,7 @@ function bundle(bundler, sourceFile) {
         .pipe(gulp.dest(config.paths.dist));
 }
 
-function build(watching, pathFile = config.paths.scripts, sourceFile = 'app.js') {
+function build(watching, pathFile = config.paths.app, sourceFile = 'app.js') {
     let bundler = browserify(`${pathFile}/${sourceFile}`, {
         debug: true
     }).transform(babel);

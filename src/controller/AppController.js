@@ -38,7 +38,7 @@ export default class AppController extends Controller {
 
         // Init calls
         this.bindEvents();
-        this.initApp();
+        this.init();
         // this.registerSW();
     }
 
@@ -52,7 +52,7 @@ export default class AppController extends Controller {
         }
     }
 
-    initApp() {
+    init() {
         AppModel.get(1).then(appModel => {
             this.appModel = appModel;
 
