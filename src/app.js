@@ -1,5 +1,4 @@
-import AppController from './controller/AppController';
+import AppController from './AppController';
 
-/* eslint-disable */
+// Launch
 new AppController();
-/* eslint-enable */

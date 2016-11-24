@@ -1,13 +1,21 @@
 import Trello from 'node-trello';
-import DateUtils from '../libs/DateUtils';
+import DateUtils from './DateUtils';
+import ConfigManagerInstance from './ConfigManager';
 import WeekModel from '../model/WeekModel';
-import _ from 'lodash';
-import ConfigManagerInstance from '../libs/ConfigManager';
+import CardModel from '../model/CardModel';
+import _find from 'lodash/find';
 
 export default class TrelloUtils extends Trello {
     constructor(key, token) {
         super(key, token);
         this.currentYear = 2016;
+        this.data = {
+            weeks: [],
+            monitoring: [],
+            support: [],
+            delivery: [],
+            product: []
+        };
     }
 
     static connectToTrello() {
@@ -21,7 +29,7 @@ export default class TrelloUtils extends Trello {
         return new Promise((resolve, reject) => {
             this.get('1/boards/577130dfed8fabf757eddc60/lists', {
                 cards: 'open',
-                card_fields:'name,labels,url',
+                card_fields:'id,idShort,name,labels,url,shortUrl',
                 fields:'name,desc'
             }, (err, data) => {
                 if (err) {
@@ -34,14 +42,10 @@ export default class TrelloUtils extends Trello {
     }
 
     parseData(data) {
-        const weeks = [];
-
         if (data.length > 0) {
             data.forEach(item => {
                 const matches = item.name.match(/^W(\d+).*:\s*(\d+)/);
-                if (!(matches && matches.length > 0)) {
-                    //TODO: no match: what to do ?
-                } else {
+                if (matches && matches.length > 0) {
                     const weekNumber = parseInt(matches[1]);
                     const weekPoints = parseInt(matches[2]);
 
@@ -52,50 +56,12 @@ export default class TrelloUtils extends Trello {
                     w.lastUpdate = new Date();
 
                     item.cards.forEach(c => {
-                        let res;
-                        const estimatedPoints = (res = c.name.match(/\((([0-9]*[.])?[0-9]+)\)/)) === null ? 0 : parseFloat(res[1]);
-                        const spentPoints = (res = c.name.match(/\[(([0-9]*[.])?[0-9]+)\]/)) === null ? 0 : parseFloat(res[1]);
+                        const card = this.parseCardData(c);
+                        w.cards.push(card);
 
-                        const name = c.name.replace(/\((([0-9]*[.])?[0-9]+)\)/, '').replace(/\[(([0-9]*[.])?[0-9]+)\]/, '');
-
-                        let type = _.find(c.labels, (o) => {
-                            return o.name === 'Support' || o.name === 'Monitoring' || o.name === 'Product';
-                        });
-
-                        if (typeof type === 'undefined') {
-                            type = 'Delivery'; // default type
-                        } else {
-                            type = type.name;
-                        }
-
-                        w.points.estimated += estimatedPoints;
-                        w.points.spent += spentPoints;
-
-                        switch (type) {
-                            case 'Delivery':
-                                w.points.delivery += spentPoints;
-                                break;
-                            case 'Product':
-                                w.points.product += spentPoints;
-                                break;
-                            case 'Monitoring':
-                                w.points.monitoring += spentPoints;
-                                break;
-                            case 'Support':
-                                w.points.support += spentPoints;
-                                break;
-                            default:
-                                break;
-                        }
-
-                        w.cards.push({
-                            name: name,
-                            type: type,
-                            url: c.url,
-                            labels: c.labels,
-                            estimated: estimatedPoints,
-                            spent: spentPoints
-                        });
+                        w.points.estimated += card.estimated;
+                        w.points.spent += card.spent;
+                        w.points[card.type] += card.spent;
                     });
 
                     w.activity.delivery = w.points.delivery / w.points.spent * 100;
@@ -104,11 +70,40 @@ export default class TrelloUtils extends Trello {
                     w.activity.monitoring = w.points.monitoring / w.points.spent * 100;
                     w.activity.total = w.activity.delivery + w.activity.product + w.activity.support + w.activity.monitoring;
 
-                    weeks.push(w);
+                    this.data.weeks.push(w);
                 }
             });
         }
 
-        return weeks;
+        return this.data;
+    }
+
+    parseCardData(card) {
+        let res;
+        let c = new CardModel(card.idShort);
+
+        c.name = card.name.replace(/\((([0-9]*[.])?[0-9]+)\)/, '').replace(/\[(([0-9]*[.])?[0-9]+)\]/, '');
+        c.estimated = (res = card.name.match(/\((([0-9]*[.])?[0-9]+)\)/)) === null ? 0 : parseFloat(res[1]);
+        c.spent = (res = card.name.match(/\[(([0-9]*[.])?[0-9]+)\]/)) === null ? 0 : parseFloat(res[1]);
+        c.url  = card.shortUrl;
+
+        // Card type
+        let type = _find(card.labels, (o) => {
+            return o.name === 'Support' || o.name === 'Monitoring' || o.name === 'Product';
+        });
+
+        if (typeof type === 'undefined') {
+            c.type = 'delivery'; // default type
+        } else {
+            c.type = type.name.toLowerCase();
+        }
+
+        // Card category
+        res = c.name.match(/\[([^\]]*)\]/);
+        if(res) {
+            c.category = res[1];
+        }
+
+        return c;
     }
 }
