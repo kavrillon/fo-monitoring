@@ -1,4 +1,4 @@
-import Config from '../config/Config';
+import Config from '../../config/Config';
 
 class ConfigManager {
     constructor() {

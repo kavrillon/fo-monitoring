@@ -35,20 +35,20 @@
         <!-- endbuild -->
     </head>
     <body class="app">
-        @@include('./partials/_sidebar.html')
-        @@include('./partials/_header.html')
-        @@include('./partials/_loader.html')
+        @@include('./app/partials/_sidebar.html')
+        @@include('./app/partials/_header.html')
+        @@include('./app/partials/_loader.html')
 
         <main class="app__pages">
-            @@include('./pages/connect/connect.html')
-            @@include('./pages/empty/empty.html')
-            @@include('./pages/home/home.html')
-            @@include('./pages/projects/projects.html')
-            @@include('./pages/weeks/weeks.html')
+            @@include('./app/pages/connect/connect.html')
+            @@include('./app/pages/empty/empty.html')
+            @@include('./app/pages/home/home.html')
+            @@include('./app/pages/projects/projects.html')
+            @@include('./app/pages/weeks/weeks.html')
         </main>
 
-        @@include('./templates/_week.tpl.html')
-        @@include('./templates/_card.tpl.html')
+        @@include('./app/templates/week/week.html')
+        @@include('./app/templates/card/card.html')
 
 
         <!-- build:jsVendor vendor.js -->

@@ -2,7 +2,7 @@ import Controller from './libs/Controller';
 import ConfigManagerInstance from './libs/ConfigManager';
 import TrelloUtils from './libs/TrelloUtils';
 import HomeController from './pages/home/HomeController';
-import WeekController from './pages/weeks/WeeksController';
+import WeeksController from './pages/weeks/WeeksController';
 import AppModel from './model/AppModel';
 import _find from 'lodash/find';
 
@@ -77,9 +77,9 @@ export default class AppController extends Controller {
                         this.data = data;
 
                         new HomeController(this.data);
-                        new WeekController(this.data);
+                        new WeeksController(this.data.weeks);
 
-                        // Add in the database
+                        // Add each week in the database
                         this.data.weeks.forEach((w) => {
                             w.put();
                         });

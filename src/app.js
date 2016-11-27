@@ -1,4 +1,4 @@
-import AppController from './AppController';
+import AppController from './app/AppController';
 
 // Launch
 new AppController();

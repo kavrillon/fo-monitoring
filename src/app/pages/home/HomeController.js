@@ -2,6 +2,7 @@ import Controller from '../../libs/Controller';
 import _orderBy from 'lodash/orderBy';
 import _map from 'lodash/map';
 import Chart from 'chart.js';
+import WeekTemplate from '../../templates/week/WeekTemplate';
 import moment from 'moment';
 
 export default class HomeController extends Controller {
@@ -11,29 +12,27 @@ export default class HomeController extends Controller {
         // Controller vars
         this.data = data;
 
-        // DOM vars
-        this.velocityTitle = document.querySelector('[js-avg-velocity]');
-
-        this.init();
+        // Home init
+        this.displayVelocity();
+        this.displayGlobalActivities();
+        this.displayMonthlyActivities();
     }
 
-    init() {
-        const labels = _orderBy(_map(this.data.weeks, 'key'));
+    displayVelocity() {
+        let labels = _orderBy(_map(this.data.weeks, 'key'));
+        let values = _map(_orderBy(this.data.weeks, 'key'), 'points.spent');
 
-        const velocityValues = _map(_orderBy(this.data.weeks, 'key'), 'points.spent');
-
-        let velocityAvg = 0;
-        velocityValues.forEach((elt) => {
-            velocityAvg += elt;
+        let avg = 0;
+        values.forEach((elt) => {
+            avg += elt;
         });
-        velocityAvg = Math.round(velocityAvg / velocityValues.length);
+        avg = Math.round(avg / values.length);
 
+        document.querySelector('[js-avg-velocity]').textContent = `${avg} pts`;
 
-        this.velocityTitle.textContent = `${velocityAvg} pts`;
-
-        let velocityAvgArray = [];
-        for (let i = 0; i < velocityValues.length; i++) {
-            velocityAvgArray.push(velocityAvg);
+        let avgValues = [];
+        for (let i = 0; i < values.length; i++) {
+            avgValues.push(avg);
         }
 
         // create charts
@@ -44,7 +43,7 @@ export default class HomeController extends Controller {
                 datasets: [
                     {
                         label: 'Velocity',
-                        data: velocityValues,
+                        data: values,
                         borderWidth: 1,
                         borderColor: '#362f5f',
                         backgroundColor: 'rgba(54,47,95,0.3)',
@@ -52,7 +51,7 @@ export default class HomeController extends Controller {
                     },
                     {
                         label: 'Average',
-                        data: velocityAvgArray,
+                        data: avgValues,
                         tooltip: false,
                         fill: false,
                         borderWidth: 1,
@@ -76,7 +75,9 @@ export default class HomeController extends Controller {
                 }
             }
         });
+    }
 
+    displayGlobalActivities() {
         const monitoringPercents = _map(this.data.weeks, 'activity.monitoring');
         let monitoringAvg = 0;
         monitoringPercents.forEach((elt) => {
@@ -140,13 +141,15 @@ export default class HomeController extends Controller {
                 maintainAspectRatio: false
             }
         });
+    }
 
-        let months = [];
-        let monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    displayMonthlyActivities() {
+        let values = [];
+        let labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         for (let i = 0; i <= 11; i++) {
-            months.push({
+            values.push({
                 key: i,
-                label: monthLabels[i],
+                label: labels[i],
                 activity: {
                     monitoring: 0,
                     support: 0,
@@ -168,19 +171,19 @@ export default class HomeController extends Controller {
 
         _orderBy(this.data.weeks, 'key').forEach((w) => {
             const monthKey = parseInt(moment(w.startDate).format('M')) - 1;
-            if (months[monthKey]) {
-                months[monthKey].weeks.push(w);
-                months[monthKey].points.product += w.points.product;
-                months[monthKey].points.monitoring += w.points.monitoring;
-                months[monthKey].points.support += w.points.support;
-                months[monthKey].points.delivery += w.points.delivery;
-                months[monthKey].points.spent += w.points.spent;
-                months[monthKey].points.available += w.points.available;
-                months[monthKey].points.estimated += w.points.estimated;
+            if (values[monthKey]) {
+                values[monthKey].weeks.push(w);
+                values[monthKey].points.product += w.points.product;
+                values[monthKey].points.monitoring += w.points.monitoring;
+                values[monthKey].points.support += w.points.support;
+                values[monthKey].points.delivery += w.points.delivery;
+                values[monthKey].points.spent += w.points.spent;
+                values[monthKey].points.available += w.points.available;
+                values[monthKey].points.estimated += w.points.estimated;
             }
         });
 
-        months.forEach((m) => {
+        values.forEach((m) => {
             m.activity.product = m.points.product * 100 / m.points.spent;
             m.activity.monitoring = m.points.monitoring * 100 / m.points.spent;
             m.activity.support = m.points.support * 100 / m.points.spent;
@@ -190,11 +193,11 @@ export default class HomeController extends Controller {
         new Chart(document.getElementById('ChartMonthlyActivity'), {
             type: 'line',
             data: {
-                labels: monthLabels,
+                labels: labels,
                 datasets: [
                     {
                         label: 'Monitoring',
-                        data: _map(months, 'activity.monitoring'),
+                        data: _map(values, 'activity.monitoring'),
                         backgroundColor: 'rgba(255,206,86,0.3)',
                         borderWidth: 1,
                         borderColor: '#ffce56',
@@ -202,7 +205,7 @@ export default class HomeController extends Controller {
                     },
                     {
                         label: 'Support',
-                        data: _map(months, 'activity.support'),
+                        data: _map(values, 'activity.support'),
                         backgroundColor: 'rgba(68,210,121,0.3)',
                         borderWidth: 1,
                         borderColor: '#44d279',
@@ -210,7 +213,7 @@ export default class HomeController extends Controller {
                     },
                     {
                         label: 'Delivery',
-                        data: _map(months, 'activity.delivery'),
+                        data: _map(values, 'activity.delivery'),
                         backgroundColor: 'rgba(255,99,132,0.3)',
                         borderWidth: 1,
                         borderColor: '#ff6384',
@@ -218,7 +221,7 @@ export default class HomeController extends Controller {
                     },
                     {
                         label: 'Product',
-                        data: _map(months, 'activity.product'),
+                        data: _map(values, 'activity.product'),
                         backgroundColor: 'rgba(54,162,235,0.3)',
                         borderWidth: 1,
                         borderColor: '#36a2eb',

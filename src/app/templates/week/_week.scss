@@ -5,25 +5,17 @@
 
 .week {
     position: relative;
-    margin: $globals-padding 0;
     border-radius: 2px;
     box-shadow: $week-shadow;
     background: $white;
     box-sizing: border-box;
 
-    @media (min-width: $screen-sm) {
-        float: left;
-        margin: $globals-padding 1%;
-        width: 48%;
-
-        &:nth-child(2n + 1) {
-            clear: both;
-        }
-    }
-
     &__header {
-        cursor: pointer;
         padding: $globals-padding;
+
+        &--clickable {
+            cursor: pointer;
+        }
 
         &__key {
             display: inline-block;
