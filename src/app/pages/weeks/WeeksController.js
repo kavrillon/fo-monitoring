@@ -2,11 +2,11 @@ import Controller from '../../libs/Controller';
 import WeekTemplate from '../../templates/week/WeekTemplate';
 
 export default class WeeksController extends Controller {
-    constructor(weeks) {
+    constructor(data) {
         super();
 
         // Controller vars
-        this.weeks = weeks;
+        this.weeks = data;
         this.weeksList = [];
 
         // DOM vars

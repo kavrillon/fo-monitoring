@@ -13,9 +13,9 @@
 
 // Pages
 @import 'app/pages/connect/connect';
+@import 'app/pages/delivery/delivery';
 @import 'app/pages/empty/empty';
 @import 'app/pages/home/home';
-@import 'app/pages/projects/projects';
 @import 'app/pages/weeks/weeks';
 
 // Partials
@@ -26,3 +26,4 @@
 // Templates
 @import 'app/templates/week/week';
 @import 'app/templates/card/card';
+@import 'app/templates/project/project';

@@ -9,13 +9,7 @@ export default class TrelloUtils extends Trello {
     constructor(key, token) {
         super(key, token);
         this.currentYear = 2016;
-        this.data = {
-            weeks: [],
-            monitoring: [],
-            support: [],
-            delivery: [],
-            product: []
-        };
+        this.data = [];
     }
 
     static connectToTrello() {
@@ -56,9 +50,10 @@ export default class TrelloUtils extends Trello {
                     w.lastUpdate = new Date();
 
                     item.cards.forEach(c => {
-                        const card = this.parseCardData(c);
-                        w.cards.push(card);
+                        const card = this.parseCardData(weekNumber, c);
 
+                        // weeks data
+                        w.cards.push(card);
                         w.points.estimated += card.estimated;
                         w.points.spent += card.spent;
                         w.points[card.type] += card.spent;
@@ -70,7 +65,7 @@ export default class TrelloUtils extends Trello {
                     w.activity.monitoring = w.points.monitoring / w.points.spent * 100;
                     w.activity.total = w.activity.delivery + w.activity.product + w.activity.support + w.activity.monitoring;
 
-                    this.data.weeks.push(w);
+                    this.data.push(w);
                 }
             });
         }
@@ -78,7 +73,7 @@ export default class TrelloUtils extends Trello {
         return this.data;
     }
 
-    parseCardData(card) {
+    parseCardData(week, card) {
         let res;
         let c = new CardModel(card.idShort);
 
@@ -86,8 +81,9 @@ export default class TrelloUtils extends Trello {
         c.estimated = (res = card.name.match(/\((([0-9]*[.])?[0-9]+)\)/)) === null ? 0 : parseFloat(res[1]);
         c.spent = (res = card.name.match(/\[(([0-9]*[.])?[0-9]+)\]/)) === null ? 0 : parseFloat(res[1]);
         c.url  = card.shortUrl;
+        c.week = week;
 
-        // Card type
+        // Card type: from labels, delivery by default
         let type = _find(card.labels, (o) => {
             return o.name === 'Support' || o.name === 'Monitoring' || o.name === 'Product';
         });
@@ -98,10 +94,18 @@ export default class TrelloUtils extends Trello {
             c.type = type.name.toLowerCase();
         }
 
-        // Card category
+        // Card subtype: from labels
+        let subtype = _find(card.labels, (o) => {
+            return o.name === 'Implementation' || o.name === 'Review';
+        });
+        if (typeof subtype !== 'undefined') {
+            c.subtype = subtype.name.toLowerCase();
+        }
+
+        // Card project: from regex on name
         res = c.name.match(/\[([^\]]*)\]/);
         if(res) {
-            c.category = res[1];
+            c.project = res[1];
         }
 
         return c;

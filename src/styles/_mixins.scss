@@ -98,3 +98,10 @@
         }
     }
 }
+
+@mixin card {
+    position: relative;
+    border-radius: 2px;
+    box-shadow: $globals-card-shadow;
+    background: $globals-card-bg;
+}

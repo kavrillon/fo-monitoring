@@ -4,11 +4,7 @@
 //-------------------------------------------------------------------
 
 .week {
-    position: relative;
-    border-radius: 2px;
-    box-shadow: $week-shadow;
-    background: $white;
-    box-sizing: border-box;
+    @include card;
 
     &__header {
         padding: $globals-padding;

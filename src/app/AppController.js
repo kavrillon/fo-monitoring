@@ -3,6 +3,7 @@ import ConfigManagerInstance from './libs/ConfigManager';
 import TrelloUtils from './libs/TrelloUtils';
 import HomeController from './pages/home/HomeController';
 import WeeksController from './pages/weeks/WeeksController';
+import DeliveryController from './pages/delivery/DeliveryController';
 import AppModel from './model/AppModel';
 import _find from 'lodash/find';
 
@@ -20,8 +21,8 @@ export default class AppController extends Controller {
         this.defaultAppTitle = document.querySelector('[js-title]').innerHTML;
 
         this.pages = [
-            {name: 'weeks', title: 'All weeks'},
-            {name: 'projects', title: 'All projects'}
+            {name: 'weeks', title: 'Weeks'},
+            {name: 'delivery', title: 'Delivery'}
         ];
 
         // DOM vars
@@ -77,10 +78,11 @@ export default class AppController extends Controller {
                         this.data = data;
 
                         new HomeController(this.data);
-                        new WeeksController(this.data.weeks);
+                        new WeeksController(this.data);
+                        new DeliveryController(this.data);
 
                         // Add each week in the database
-                        this.data.weeks.forEach((w) => {
+                        this.data.forEach((w) => {
                             w.put();
                         });
 

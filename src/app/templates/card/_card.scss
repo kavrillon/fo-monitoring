@@ -10,7 +10,7 @@
 
     &__name {
         @include ellipsis;
-        flex: 6;
+        flex: 5;
         margin: 0 15px 0 0;
 
         &__link {
@@ -34,8 +34,18 @@
         text-align: center;
     }
 
-    &__spent {
+    &__subtype {
         flex: 2;
+        text-align: center;
+    }
+
+    &__week {
+        flex: 1;
+        text-align: center;
+    }
+
+    &__spent {
+        flex: 1;
         text-align: right;
     }
 }

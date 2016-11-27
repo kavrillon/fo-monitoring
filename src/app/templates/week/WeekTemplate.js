@@ -17,7 +17,7 @@ export default class WeekTemplate {
         this.bind();
 
         // Content update
-        this.update();
+        this.update(this.data);
 
         // Displaying item
         this.content.setAttribute('js-template-week-instance', '');
@@ -42,30 +42,30 @@ export default class WeekTemplate {
     }
 
     update(data) {
-        this.content.querySelector('[js-week-key]').textContent = this.data.key;
-        this.content.querySelector('[js-week-last-updated]').textContent = this.data.lastUpdate;
-        this.content.querySelector('[js-week-start]').textContent = moment(this.data.startDate).format('MMM DD');
-        this.content.querySelector('[js-week-end]').textContent = moment(this.data.endDate).format('ll');
-        this.content.querySelector('[js-week-count]').textContent = `${this.data.cards.length} cards`;
-        this.content.querySelector('[js-week-available]').textContent = `${this.data.points.available} pts`;
-        this.content.querySelector('[js-week-spent]').textContent = `${this.data.points.spent} pts`;
+        this.content.querySelector('[js-week-key]').textContent = data.key;
+        this.content.querySelector('[js-week-last-updated]').textContent = data.lastUpdate;
+        this.content.querySelector('[js-week-start]').textContent = moment(data.startDate).format('MMM DD');
+        this.content.querySelector('[js-week-end]').textContent = moment(data.endDate).format('ll');
+        this.content.querySelector('[js-week-count]').textContent = `${data.cards.length} cards`;
+        this.content.querySelector('[js-week-available]').textContent = `${data.points.available} pts`;
+        this.content.querySelector('[js-week-spent]').textContent = `${data.points.spent} pts`;
 
-        this.content.querySelector('[js-week-product]').textContent = `${this.data.points.product} pts`;
-        this.content.querySelector('[js-week-support]').textContent = `${this.data.points.support} pts`;
-        this.content.querySelector('[js-week-monitoring]').textContent = `${this.data.points.monitoring} pts`;
-        this.content.querySelector('[js-week-delivery]').textContent = `${this.data.points.delivery} pts`;
+        this.content.querySelector('[js-week-product]').textContent = `${data.points.product} pts`;
+        this.content.querySelector('[js-week-support]').textContent = `${data.points.support} pts`;
+        this.content.querySelector('[js-week-monitoring]').textContent = `${data.points.monitoring} pts`;
+        this.content.querySelector('[js-week-delivery]').textContent = `${data.points.delivery} pts`;
 
-        this.content.querySelector('[js-week-delivery-percent]').textContent = `${Math.round(this.data.activity.delivery)}%`;
-        this.content.querySelector('[js-week-product-percent]').textContent = `${Math.round(this.data.activity.product)}%`;
-        this.content.querySelector('[js-week-monitoring-percent]').textContent = `${Math.round(this.data.activity.monitoring)}%`;
-        this.content.querySelector('[js-week-support-percent]').textContent = `${Math.round(this.data.activity.support)}%`;
+        this.content.querySelector('[js-week-delivery-percent]').textContent = `${Math.round(data.activity.delivery)}%`;
+        this.content.querySelector('[js-week-product-percent]').textContent = `${Math.round(data.activity.product)}%`;
+        this.content.querySelector('[js-week-monitoring-percent]').textContent = `${Math.round(data.activity.monitoring)}%`;
+        this.content.querySelector('[js-week-support-percent]').textContent = `${Math.round(data.activity.support)}%`;
 
         // Reset if cards exists
         this.content.querySelector('[js-week-cards]').innerHTML = '';
 
         if (this.showCards) {
-            this.data.cards.forEach((c) => {
-                const card = new CardTemplate(c);
+            data.cards.forEach((c) => {
+                const card = new CardTemplate(c, true, true, false);
                 this.cardsContainer.appendChild(card.getContent());
             });
         }

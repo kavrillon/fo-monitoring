@@ -4,9 +4,11 @@ export default class CardModel extends Model {
     constructor(key, data) {
         super(key);
 
+        this.week = null;
         this.name = null;
         this.type = null;
-        this.category = null;
+        this.subtype = null;
+        this.project = null;
         this.url = null;
         this.labels = [];
         this.estimated = 0;

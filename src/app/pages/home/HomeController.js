@@ -19,8 +19,8 @@ export default class HomeController extends Controller {
     }
 
     displayVelocity() {
-        let labels = _orderBy(_map(this.data.weeks, 'key'));
-        let values = _map(_orderBy(this.data.weeks, 'key'), 'points.spent');
+        let labels = _orderBy(_map(this.data, 'key'));
+        let values = _map(_orderBy(this.data, 'key'), 'points.spent');
 
         let avg = 0;
         values.forEach((elt) => {
@@ -78,28 +78,28 @@ export default class HomeController extends Controller {
     }
 
     displayGlobalActivities() {
-        const monitoringPercents = _map(this.data.weeks, 'activity.monitoring');
+        const monitoringPercents = _map(this.data, 'activity.monitoring');
         let monitoringAvg = 0;
         monitoringPercents.forEach((elt) => {
             monitoringAvg += elt;
         });
         monitoringAvg = Math.round(monitoringAvg / monitoringPercents.length);
 
-        const deliveryPercents = _map(this.data.weeks, 'activity.delivery');
+        const deliveryPercents = _map(this.data, 'activity.delivery');
         let deliveryAvg = 0;
         deliveryPercents.forEach((elt) => {
             deliveryAvg += elt;
         });
         deliveryAvg = Math.round(deliveryAvg / deliveryPercents.length);
 
-        const supportPercents = _map(this.data.weeks, 'activity.support');
+        const supportPercents = _map(this.data, 'activity.support');
         let supportAvg = 0;
         supportPercents.forEach((elt) => {
             supportAvg += elt;
         });
         supportAvg = Math.round(supportAvg / supportPercents.length);
 
-        const productPercents = _map(this.data.weeks, 'activity.product');
+        const productPercents = _map(this.data, 'activity.product');
         let productAvg = 0;
         productPercents.forEach((elt) => {
             productAvg += elt;
@@ -169,7 +169,7 @@ export default class HomeController extends Controller {
             });
         }
 
-        _orderBy(this.data.weeks, 'key').forEach((w) => {
+        _orderBy(this.data, 'key').forEach((w) => {
             const monthKey = parseInt(moment(w.startDate).format('M')) - 1;
             if (values[monthKey]) {
                 values[monthKey].weeks.push(w);

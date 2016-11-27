@@ -1,0 +1,99 @@
+
+//------------------------------------------------------------------
+// PROJECT TEMPLATE
+//-------------------------------------------------------------------
+
+.project {
+    @include card;
+
+    &__header {
+        padding: $globals-padding;
+
+        &--clickable {
+            cursor: pointer;
+        }
+
+        &__name {
+            display: inline-block;
+            position: relative;
+            float: left;
+            z-index: 1;
+            border-radius: 15px;
+            padding: 6px 0;
+            font-family: 'MuseoSansRounded-500', Arial, sans-serif;
+            font-size: 16px;
+        }
+
+        &__date {
+            display: block;
+            text-align: right;
+            font-size: 14px;
+        }
+
+        &__total {
+            padding-top: 5px;
+            text-align: right;
+
+            &__available,
+            &__spent {
+                display: inline-block;
+            }
+
+            &__available {
+                margin-right: $globals-padding;
+            }
+        }
+
+        &__infos {
+            display: flex;
+            margin-top: $globals-padding;
+            text-align: center;
+
+            &__imple {
+                flex: 1;
+                margin-right: $globals-padding;
+                padding: $globals-padding;
+                background: $project-info-bg;
+            }
+
+            &__review {
+                flex: 1;
+                margin-left: $globals-padding;
+                padding: $globals-padding;
+                background: $project-info-bg;
+            }
+        }
+    }
+
+    &__cards {
+        transition: $globals-transition;
+        margin: 0 $globals-padding;
+        max-height: 0;
+        overflow: hidden;
+
+        &__cards-count {
+            margin-bottom: $globals-padding;
+            border-top: $week-border;
+            padding-top: $globals-padding;
+            text-align: center;
+        }
+    }
+
+    &.active {
+        .project__header__activity {
+            &__monitoring,
+            &__support,
+            &__delivery,
+            &__product {
+                &__points {
+                    max-height: 100px;
+                }
+            }
+        }
+
+        .project__cards {
+            padding-bottom: $globals-padding;
+            max-height: 800px;
+        }
+    }
+}
