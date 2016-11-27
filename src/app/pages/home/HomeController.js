@@ -47,7 +47,7 @@ export default class HomeController extends Controller {
                         borderWidth: 1,
                         borderColor: '#362f5f',
                         backgroundColor: 'rgba(54,47,95,0.3)',
-                        pointRadius: 0
+                        pointRadius: 1
                     },
                     {
                         label: 'Average',
@@ -184,10 +184,10 @@ export default class HomeController extends Controller {
         });
 
         values.forEach((m) => {
-            m.activity.product = m.points.product * 100 / m.points.spent;
-            m.activity.monitoring = m.points.monitoring * 100 / m.points.spent;
-            m.activity.support = m.points.support * 100 / m.points.spent;
-            m.activity.delivery = m.points.delivery * 100 / m.points.spent;
+            m.activity.product = Math.round(m.points.product * 100 / m.points.spent);
+            m.activity.monitoring = Math.round(m.points.monitoring * 100 / m.points.spent);
+            m.activity.support = Math.round(m.points.support * 100 / m.points.spent);
+            m.activity.delivery = Math.round(m.points.delivery * 100 / m.points.spent);
         });
 
         new Chart(document.getElementById('ChartMonthlyActivity'), {
@@ -201,7 +201,7 @@ export default class HomeController extends Controller {
                         backgroundColor: 'rgba(255,206,86,0.3)',
                         borderWidth: 1,
                         borderColor: '#ffce56',
-                        pointRadius: 0
+                        pointRadius: 1
                     },
                     {
                         label: 'Support',
@@ -209,7 +209,7 @@ export default class HomeController extends Controller {
                         backgroundColor: 'rgba(68,210,121,0.3)',
                         borderWidth: 1,
                         borderColor: '#44d279',
-                        pointRadius: 0
+                        pointRadius: 1
                     },
                     {
                         label: 'Delivery',
@@ -217,7 +217,7 @@ export default class HomeController extends Controller {
                         backgroundColor: 'rgba(255,99,132,0.3)',
                         borderWidth: 1,
                         borderColor: '#ff6384',
-                        pointRadius: 0
+                        pointRadius: 1
                     },
                     {
                         label: 'Product',
@@ -225,7 +225,7 @@ export default class HomeController extends Controller {
                         backgroundColor: 'rgba(54,162,235,0.3)',
                         borderWidth: 1,
                         borderColor: '#36a2eb',
-                        pointRadius: 0
+                        pointRadius: 1
                     }
                 ]
             },

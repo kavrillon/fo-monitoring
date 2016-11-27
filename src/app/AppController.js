@@ -25,7 +25,7 @@ export default class AppController extends Controller {
         ];
 
         // DOM vars
-        this.loader = document.querySelector('.js-loader');
+        this.loader = document.querySelector('[js-loader]');
         this.sideNavToggleButton = document.querySelector('[js-sidebar-toggle]');
         this.sideNav = document.querySelector('[js-sidebar]');
         this.sideNavContent = document.querySelector('[js-sidebar-content]');
@@ -160,7 +160,7 @@ export default class AppController extends Controller {
     }
 
     hidePages() {
-        document.querySelectorAll('.js-page').forEach((el) => {
+        Array.from(document.querySelectorAll('[js-page]')).forEach((el) => {
             el.classList.remove('active');
         });
     }
@@ -168,7 +168,7 @@ export default class AppController extends Controller {
     setPage(page) {
         this.hidePages();
 
-        const domPage = document.querySelector(`.js-page-${page}`);
+        const domPage = document.querySelector(`[js-page="${page}"]`);
         if (domPage !== null) {
             let pageTitle = _find(this.pages, (o) => {
                 return o.name === page;
@@ -184,7 +184,7 @@ export default class AppController extends Controller {
             domPage.classList.add('active');
         } else {
             this.appTitle.innerHTML = this.defaultAppTitle;
-            document.querySelector('.js-page-connect').classList.add('active');
+            document.querySelector('[js-page="connect"]').classList.add('active');
         }
     }
 
