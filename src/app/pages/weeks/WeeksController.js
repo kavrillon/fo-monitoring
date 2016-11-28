@@ -26,5 +26,8 @@ export default class WeeksController extends Controller {
 
             this.weeksList[w.key] = week;
         });
+
+        document.querySelector('[js-weeks-count]').innerHTML = `${this.weeks.length} weeks`;
+
     }
 }

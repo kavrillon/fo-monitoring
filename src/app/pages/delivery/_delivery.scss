@@ -6,6 +6,11 @@
 .delivery {
     @include page;
 
+    &__count {
+        margin: $globals-padding 0;
+        text-align: center;
+    }
+
     .project {
         margin: $globals-padding 0;
 

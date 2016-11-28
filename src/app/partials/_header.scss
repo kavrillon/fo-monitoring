@@ -21,6 +21,10 @@
 
         margin-right: 16px;
         background: url('images/ic_menu_24px.svg') center center no-repeat;
+
+        @media (min-width: $screen-md) {
+            display: none;
+        }
     }
 
     &__title {

@@ -162,6 +162,10 @@ export default class AppController extends Controller {
     }
 
     hidePages() {
+        Array.from(document.querySelectorAll('[js-link]')).forEach((el) => {
+            el.classList.remove('active');
+        });
+
         Array.from(document.querySelectorAll('[js-page]')).forEach((el) => {
             el.classList.remove('active');
         });
@@ -181,6 +185,10 @@ export default class AppController extends Controller {
             } else {
                 pageTitle = pageTitle.title;
             }
+
+            Array.from(document.querySelectorAll(`[js-link="${page}"]`)).forEach((el) => {
+                el.classList.add('active');
+            });
 
             this.appTitle.innerHTML = pageTitle;
             domPage.classList.add('active');

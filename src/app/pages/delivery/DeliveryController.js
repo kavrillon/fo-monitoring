@@ -30,6 +30,8 @@ export default class DeliveryController extends Controller {
 
             this.projectsList[p.key] = project;
         });
+
+        document.querySelector('[js-delivery-count]').innerHTML = `${this.projects.length} projects`;
     }
 
     parseDataForDelivery(data) {

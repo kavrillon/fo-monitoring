@@ -6,6 +6,11 @@
 .weeks {
     @include page;
 
+    &__count {
+        margin: $globals-padding 0;
+        text-align: center;
+    }
+
     .week {
         margin: $globals-padding 0;
 
