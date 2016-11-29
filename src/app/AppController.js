@@ -41,7 +41,7 @@ export default class AppController extends Controller {
         // Init calls
         this.bindEvents();
         this.init();
-        // this.registerSW();
+        this.registerSW();
     }
 
     registerSW() {

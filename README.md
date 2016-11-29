@@ -1,10 +1,6 @@
 Monitoring of Frontend sprints with reporting per week and per project.
 
 # Next things
-- dashboard
-- support: moy/semaine passée + pie chart
-- monitoring: pie chart
-- product: pie chart
 - delivery:
     order: alphabet/spent/date
     filter: text/spent/spent imple&review/duration imple&review 
