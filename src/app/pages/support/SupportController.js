@@ -4,6 +4,9 @@ import TopicModel from '../../model/TopicModel';
 import DateUtils from '../../libs/DateUtils';
 import _find from 'lodash/find';
 import _orderBy from 'lodash/orderBy';
+import _map from 'lodash/map';
+import Chart from 'chart.js';
+import moment from 'moment';
 
 export default class SupportController extends Controller {
     constructor(data) {
@@ -16,6 +19,10 @@ export default class SupportController extends Controller {
         // DOM vars
         this.supportsContainer = document.querySelector('[js-support-list]');
 
+        this.displayData();
+    }
+
+    displayData() {
         // Displaying supports
         _orderBy(this.supports, 'name').forEach((p) => {
             let support = null;
@@ -31,11 +38,47 @@ export default class SupportController extends Controller {
             this.supportsList[p.key] = support;
         });
 
-        document.querySelector('[js-support-count]').innerHTML = `${this.supports.length} topics`;
+        const labels = _map(this.supports, 'name');
+        const values = [];
+        this.supports.forEach((elt) => {
+            values.push(Math.round(elt.points.spent * 10 / (elt.endWeek - elt.startWeek)) / 10);
+        });
+
+        // Display chart
+        new Chart(document.getElementById('ChartSupportRepartition'), {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        data: values,
+                        backgroundColor: [
+                            '#ffce56',
+                            '#44d279',
+                            '#ff6384',
+                            '#36a2eb'
+                        ],
+                        hoverBackgroundColor: [
+                            '#ffce56',
+                            '#44d279',
+                            '#ff6384',
+                            '#36a2eb'
+                        ]
+                    }
+                ]
+            },
+            options: {
+                legend: {
+                    position: 'bottom'
+                },
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
     }
 
     parseDataForSupport(data) {
-        let supports = [];
+        const supports = [];
 
         data.forEach((w) => {
             const starts = DateUtils.getDateOfISOWeek(w.key, 2016);
@@ -43,7 +86,7 @@ export default class SupportController extends Controller {
 
             w.cards.forEach((c) => {
                 if (c.type === 'support' && c.spent > 0) {
-                    let p = _find(supports, (o) => {
+                    const p = _find(supports, (o) => {
                         return o.key === c.project;
                     });
 
@@ -75,6 +118,11 @@ export default class SupportController extends Controller {
                         supports.push(newSupport);
                     }
                 }
+            });
+
+            supports.forEach((elt) => {
+                elt.startWeek = moment(elt.startDate).isoWeek();
+                elt.endWeek = moment(elt.endDate).isoWeek();
             });
         });
 

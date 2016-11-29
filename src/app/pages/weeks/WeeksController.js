@@ -28,6 +28,5 @@ export default class WeeksController extends Controller {
         });
 
         document.querySelector('[js-weeks-count]').innerHTML = `${this.weeks.length} weeks`;
-
     }
 }

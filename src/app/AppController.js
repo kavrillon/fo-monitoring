@@ -25,7 +25,10 @@ export default class AppController extends Controller {
 
         this.pages = [
             {name: 'weeks', title: 'Weeks'},
-            {name: 'delivery', title: 'Delivery'}
+            {name: 'delivery', title: 'Delivery'},
+            {name: 'support', title: 'Support'},
+            {name: 'monitoring', title: 'Monitoring'},
+            {name: 'product', title: 'Product'}
         ];
 
         // DOM vars

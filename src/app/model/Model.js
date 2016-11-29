@@ -1,7 +1,6 @@
 import DatabaseInstance from '../libs/Database';
 import ConfigManagerInstance from '../libs/ConfigManager';
 
-/* eslint-disable */
 export default class Model {
 
     constructor(key) {
@@ -175,4 +174,3 @@ export default class Model {
         });
     }
 }
-/* eslint-enable */

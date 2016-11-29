@@ -3,7 +3,6 @@ import moment from 'moment';
 
 export default class ProjectTemplate {
     constructor(data, showCards = true) {
-
         // Template cards
         this.template = document.querySelector('[js-template-project]');
         this.data = data;

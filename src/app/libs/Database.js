@@ -1,6 +1,5 @@
 import ConfigManagerInstance from './ConfigManager';
 
-/* eslint-disable */
 class Database {
     constructor() {
         ConfigManagerInstance().then((configManager) => {
@@ -232,4 +231,3 @@ export default function DatabaseInstance() {
 
     return Promise.resolve(window.DatabaseInstance_);
 }
-/* eslint-enable */

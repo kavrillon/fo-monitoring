@@ -6,9 +6,17 @@
 .product {
     @include page;
 
-    &__count {
+    &__repartition {
         margin: $globals-padding 0;
         text-align: center;
+
+        &__chart {
+            height: $globals-chart-height;
+        }
+    }
+
+    &__list {
+        margin-top: 60px;
     }
 
     .topic {

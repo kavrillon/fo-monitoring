@@ -3,7 +3,9 @@ import TopicTemplate from '../../templates/Topic/TopicTemplate';
 import TopicModel from '../../model/TopicModel';
 import DateUtils from '../../libs/DateUtils';
 import _find from 'lodash/find';
+import _map from 'lodash/map';
 import _orderBy from 'lodash/orderBy';
+import Chart from 'chart.js';
 
 export default class MonitoringController extends Controller {
     constructor(data) {
@@ -16,6 +18,10 @@ export default class MonitoringController extends Controller {
         // DOM vars
         this.monitoringsContainer = document.querySelector('[js-monitoring-list]');
 
+        this.displayData();
+    }
+
+    displayData() {
         // Displaying monitorings
         _orderBy(this.monitorings, 'name').forEach((p) => {
             let monitoring = null;
@@ -31,11 +37,44 @@ export default class MonitoringController extends Controller {
             this.monitoringsList[p.key] = monitoring;
         });
 
-        document.querySelector('[js-monitoring-count]').innerHTML = `${this.monitorings.length} topics`;
+        const labels = _map(this.monitorings, 'name');
+        const values = _map(this.monitorings, 'points.spent');
+
+        // Display chart
+        new Chart(document.getElementById('ChartMonitoringRepartition'), {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        data: values,
+                        backgroundColor: [
+                            '#ffce56',
+                            '#44d279',
+                            '#ff6384',
+                            '#36a2eb'
+                        ],
+                        hoverBackgroundColor: [
+                            '#ffce56',
+                            '#44d279',
+                            '#ff6384',
+                            '#36a2eb'
+                        ]
+                    }
+                ]
+            },
+            options: {
+                legend: {
+                    position: 'bottom'
+                },
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
     }
 
     parseDataForMonitoring(data) {
-        let monitorings = [];
+        const monitorings = [];
 
         data.forEach((w) => {
             const starts = DateUtils.getDateOfISOWeek(w.key, 2016);
@@ -43,7 +82,7 @@ export default class MonitoringController extends Controller {
 
             w.cards.forEach((c) => {
                 if (c.type === 'monitoring' && c.spent > 0) {
-                    let p = _find(monitorings, (o) => {
+                    const p = _find(monitorings, (o) => {
                         return o.key === c.project;
                     });
 

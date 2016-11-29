@@ -12,15 +12,15 @@ class Router {
     }
 
     add(path, callbackIn, callbackOut, callbackUpdate) {
-
         // Assume the first part of the path is the
         // verb we want to action, with the rest of the path
         // being the data to pass to the handler.
-        var pathParts = path.split('/');
-        var action = pathParts.shift();
+        const pathParts = path.split('/');
+        const action = pathParts.shift();
 
-        if (this.routes[action])
-            throw "A handler already exists for this action: " + action;
+        if (this.routes[action]) {
+            throw 'A handler already exists for this action: ' + action;
+        }
 
         this.routes[action] = {
             in: callbackIn,
@@ -37,34 +37,35 @@ class Router {
     }
 
     remove(path) {
+        const pathParts = path.split('/');
+        const action = pathParts.shift();
 
-        var pathParts = path.split('/');
-        var action = pathParts.shift();
-
-        if (!this.routes[action])
+        if (!this.routes[action]) {
             return;
+        }
 
         delete this.routes[action];
     }
 
     manageState() {
-
-        var path = document.location.pathname.replace(/^\//, '');
+        const path = document.location.pathname.replace(/^\//, '');
 
         // Assume the first part of the path is the
         // verb we want to action, with the rest of the path
         // being the data to pass to the handler.
-        var pathParts = path.split('/');
-        var action = pathParts.shift();
-        var data = pathParts.join('/');
+        const pathParts = path.split('/');
+        let action = pathParts.shift();
+        const data = pathParts.join('/');
 
         // Add a special case for the root.
-        if (action === '')
+        if (action === '') {
             action = '_root';
+        }
 
         // Remove any deeplink covers.
-        if (document.body.classList.contains('app-deeplink'))
+        if (document.body.classList.contains('app-deeplink')) {
             document.body.classList.remove('app-deeplink');
+        }
 
         // Hide the loader.
         this.loader.classList.add('hidden');
@@ -80,9 +81,9 @@ class Router {
         }
 
         if (!this.routes[action]) {
-
-            if (this.currentAction)
+            if (this.currentAction) {
                 this.currentAction.out();
+            }
 
             this.currentAction = null;
             document.body.focus();
@@ -90,17 +91,17 @@ class Router {
         }
 
         // Set the new action going.
-        var delay = this.routes[action].in(data) || 0;
+        const delay = this.routes[action].in(data) || 0;
 
         // Remove the old action and update the reference.
         if (this.currentAction) {
-
             // Allow the incoming view to delay the outgoing one
             // so that we don't get too much overlapping animation.
-            if (delay === 0)
+            if (delay === 0) {
                 this.currentAction.out();
-            else
+            } else {
                 setTimeout(this.currentAction.out, delay);
+            }
         }
 
         this.currentAction = this.routes[action];
@@ -109,10 +110,10 @@ class Router {
     }
 
     go(path) {
-
         // Only process real changes.
-        if (path === window.location.pathname)
+        if (path === window.location.pathname) {
             return;
+        }
 
         history.pushState(undefined, "", path);
         requestAnimationFrame(() => {
@@ -129,9 +130,9 @@ class Router {
 }
 
 export default function RouterInstance() {
-
-    if (typeof window.RouterInstance_ !== 'undefined')
+    if (typeof window.RouterInstance_ !== 'undefined') {
         return Promise.resolve(window.RouterInstance_);
+    }
 
     window.RouterInstance_ = new Router();
 

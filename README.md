@@ -30,7 +30,6 @@ Monitoring of Frontend sprints with reporting per week and per project.
 ### Technical
 - PWA: debug on iOS
 - JS 15000 fois trop gros
-- remove `/* eslint-disable */` & lint
 - inline critical css
 - release: how to do minor/major releases ?
 - PWA testing: perfs of appshell/cache

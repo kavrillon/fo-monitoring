@@ -2,7 +2,6 @@ import Controller from '../../libs/Controller';
 import _orderBy from 'lodash/orderBy';
 import _map from 'lodash/map';
 import Chart from 'chart.js';
-import WeekTemplate from '../../templates/week/WeekTemplate';
 import moment from 'moment';
 
 export default class HomeController extends Controller {
@@ -19,8 +18,8 @@ export default class HomeController extends Controller {
     }
 
     displayVelocity() {
-        let labels = _orderBy(_map(this.data, 'key'));
-        let values = _map(_orderBy(this.data, 'key'), 'points.spent');
+        const labels = _orderBy(_map(this.data, 'key'));
+        const values = _map(_orderBy(this.data, 'key'), 'points.spent');
 
         let avg = 0;
         values.forEach((elt) => {
@@ -30,7 +29,7 @@ export default class HomeController extends Controller {
 
         document.querySelector('[js-avg-velocity]').textContent = `${avg} pts`;
 
-        let avgValues = [];
+        const avgValues = [];
         for (let i = 0; i < values.length; i++) {
             avgValues.push(avg);
         }
@@ -69,7 +68,7 @@ export default class HomeController extends Controller {
                 scales: {
                     yAxes: [{
                         ticks: {
-                            beginAtZero:true
+                            beginAtZero: true
                         }
                     }]
                 }
@@ -144,8 +143,8 @@ export default class HomeController extends Controller {
     }
 
     displayMonthlyActivities() {
-        let values = [];
-        let labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const values = [];
+        const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         for (let i = 0; i <= 11; i++) {
             values.push({
                 key: i,
@@ -238,7 +237,7 @@ export default class HomeController extends Controller {
                 scales: {
                     yAxes: [{
                         ticks: {
-                            beginAtZero:true
+                            beginAtZero: true
                         }
                     }]
                 }

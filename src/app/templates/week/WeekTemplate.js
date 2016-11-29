@@ -3,7 +3,6 @@ import moment from 'moment';
 
 export default class WeekTemplate {
     constructor(data, showCards = true) {
-
         // Template vars
         this.template = document.querySelector('[js-template-week]');
         this.data = data;
