@@ -15,10 +15,10 @@
 
     @media (min-width: $screen-md) {
         top: $header-height;
-        width: $sidebar-content-width;
-        pointer-events: auto;
-        height: auto;
         bottom: 0;
+        width: $sidebar-content-width;
+        height: auto;
+        pointer-events: auto;
     }
 
     &:before {
@@ -94,9 +94,9 @@
 
             &__button {
                 display: block;
+                transition: $globals-transition;
                 outline: 0;
                 border: 0;
-                transition: $globals-transition;
                 background: url('images/ic_info_outline_24px.svg') 16px 12px no-repeat;
                 cursor: pointer;
                 padding-left: 72px;

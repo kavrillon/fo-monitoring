@@ -2,8 +2,11 @@ import Controller from './libs/Controller';
 import ConfigManagerInstance from './libs/ConfigManager';
 import TrelloUtils from './libs/TrelloUtils';
 import HomeController from './pages/home/HomeController';
-import WeeksController from './pages/weeks/WeeksController';
 import DeliveryController from './pages/delivery/DeliveryController';
+import MonitoringController from './pages/monitoring/MonitoringController';
+import ProductController from './pages/product/ProductController';
+import SupportController from './pages/support/SupportController';
+import WeeksController from './pages/weeks/WeeksController';
 import AppModel from './model/AppModel';
 import _find from 'lodash/find';
 
@@ -80,6 +83,9 @@ export default class AppController extends Controller {
                         new HomeController(this.data);
                         new WeeksController(this.data);
                         new DeliveryController(this.data);
+                        new ProductController(this.data);
+                        new MonitoringController(this.data);
+                        new SupportController(this.data);
 
                         // Add each week in the database
                         this.data.forEach((w) => {

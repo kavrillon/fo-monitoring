@@ -42,7 +42,6 @@ export default class ProjectTemplate {
     }
 
     update(data) {
-        console.log(data);
         this.content.querySelector('[js-project-key]').textContent = data.key;
         this.content.querySelector('[js-project-name]').textContent = data.name;
         this.content.querySelector('[js-project-last-updated]').textContent = data.lastUpdate;

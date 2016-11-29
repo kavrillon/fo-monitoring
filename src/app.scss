@@ -16,6 +16,9 @@
 @import 'app/pages/delivery/delivery';
 @import 'app/pages/empty/empty';
 @import 'app/pages/home/home';
+@import 'app/pages/monitoring/monitoring';
+@import 'app/pages/product/product';
+@import 'app/pages/support/support';
 @import 'app/pages/weeks/weeks';
 
 // Partials
@@ -27,3 +30,4 @@
 @import 'app/templates/week/week';
 @import 'app/templates/card/card';
 @import 'app/templates/project/project';
+@import 'app/templates/topic/topic';

@@ -1,9 +1,9 @@
 
 //------------------------------------------------------------------
-// PROJECT TEMPLATE
+// TOPIC TEMPLATE
 //-------------------------------------------------------------------
 
-.project {
+.topic {
     @include card;
 
     &__header {
@@ -43,26 +43,6 @@
                 margin-right: $globals-padding;
             }
         }
-
-        &__infos {
-            display: flex;
-            margin-top: $globals-padding;
-            text-align: center;
-
-            &__imple {
-                flex: 1;
-                margin-right: $globals-padding;
-                background: $project-info-bg;
-                padding: $globals-padding;
-            }
-
-            &__review {
-                flex: 1;
-                margin-left: $globals-padding;
-                background: $project-info-bg;
-                padding: $globals-padding;
-            }
-        }
     }
 
     &__cards {
@@ -80,7 +60,7 @@
     }
 
     &.active {
-        .project__header__activity {
+        .topic__header__activity {
             &__monitoring,
             &__support,
             &__delivery,
@@ -91,7 +71,7 @@
             }
         }
 
-        .project__cards {
+        .topic__cards {
             padding-bottom: $globals-padding;
             max-height: 800px;
         }

@@ -1,9 +1,9 @@
 
 //------------------------------------------------------------------
-// WEEKS
+// SUPPORT
 //-------------------------------------------------------------------
 
-.weeks {
+.support {
     @include page;
 
     &__count {
@@ -11,7 +11,7 @@
         text-align: center;
     }
 
-    .week {
+    .topic {
         margin: $globals-padding 0;
 
         @media (min-width: $screen-sm) {

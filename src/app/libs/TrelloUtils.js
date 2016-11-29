@@ -19,6 +19,20 @@ export default class TrelloUtils extends Trello {
         });
     }
 
+    getUserData() {
+        return new Promise((resolve, reject) => {
+            this.get('1/members/me', {
+                // fields:'username,fullname,url'
+            }, (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            });
+        });
+    }
+
     getParsedData() {
         return new Promise((resolve, reject) => {
             this.get('1/boards/577130dfed8fabf757eddc60/lists', {
