@@ -11,17 +11,58 @@
         text-align: center;
     }
 
+    &__globals {
+        display: flex;
+        margin: $globals-padding 0;
+        color: $white;
+        text-align: center;
+        font-size: 18px;
+
+        @media (min-width: $screen-sm) {
+            font-size: 22px;
+        }
+
+        @media (min-width: $screen-md) {
+            font-size: 32px;
+        }
+
+        &__monitoring {
+            @include weeks-globals-item($globals-monitoring-color);
+        }
+
+        &__support {
+            @include weeks-globals-item($globals-support-color);
+        }
+
+        &__delivery {
+            @include weeks-globals-item($globals-delivery-color);
+        }
+
+        &__product {
+            @include weeks-globals-item($globals-product-color);
+            margin-right: 0;
+
+            @media(min-width: $screen-sm) {
+                margin-right: 0;
+            }
+        }
+    }
+
+    &__list {
+        @include clear;
+    }
+
     .week {
         margin: $globals-padding 0;
 
         @media (min-width: $screen-sm) {
             float: left;
-            margin: $globals-padding 0 $globals-padding 1%;
+            margin: $globals-padding 0 $globals-padding 2%;
             width: 48%;
 
             &:nth-child(2n + 1) {
                 clear: both;
-                margin: $globals-padding 1% $globals-padding 0;
+                margin: $globals-padding 2% $globals-padding 0;
             }
         }
     }

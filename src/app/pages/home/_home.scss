@@ -28,7 +28,7 @@
         }
 
         &__chart {
-            height: $globals-chart-height;
+            @include chart;
         }
     }
 

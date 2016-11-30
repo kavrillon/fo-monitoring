@@ -5,6 +5,10 @@
 
 $white: #fff;
 $black: #000;
+$globals-red: #ff6384;
+$globals-blue: #36a2eb;
+$globals-yellow: #ffce56;
+$globals-green: #44d279;
 $globals-color: #362f5f; //#2f3ba2; //201929 //3a3248
 
 $globals-bg: #fafafa;
@@ -14,12 +18,13 @@ $globals-font-size: 13px;
 $globals-padding: 15px;
 $globals-padding-small: 8px;
 $globals-transition: all .233s cubic-bezier(0, 0, .21, 1) .1s;
-$globals-monitoring-color: #ffce56;
-$globals-support-color: #44d279;
-$globals-delivery-color: #ff6384;
-$globals-product-color: #36a2eb;
+$globals-monitoring-color: $globals-yellow;
+$globals-support-color: $globals-green;
+$globals-delivery-color: $globals-red;
+$globals-product-color: $globals-blue;
 $globals-card-shadow: 0 2px 2px 0 rgba($black, .14), 0 3px 1px -2px rgba($black, .2), 0 1px 5px 0 rgba($black, .12);
 $globals-card-bg: $white;
+$globals-chart-xs-height: 250px;
 $globals-chart-height: 180px;
 
 // MEDIAS
@@ -47,7 +52,7 @@ $loader-spinner-animation: line 1.6s cubic-bezier(.4, 0, .2, 1) infinite, rotate
 $sidebar-zindex: 200;
 $sidebar-transition: opacity .233s cubic-bezier(0, 0, .21, 1);
 $sidebar-bg: $black;
-$sidebar-content-width: 270px;
+$sidebar-content-width: 250px;
 $sidebar-content-bg: $globals-bg;
 $sidebar-content-transform: transform .233s cubic-bezier(0, 0, .21, 1);
 $sidebar-content-shadow-1: rgba(0, 0, 0, .14);
@@ -55,6 +60,7 @@ $sidebar-content-shadow-2: rgba(0, 0, 0, .28);
 $sidebar-title-color: $white;
 $sidebar-button-color: #afafaf;
 $sidebar-button-hover-color: $globals-color;
+$sidebar-height-height: 140px;
 $sidebar-footer-color: #999;
 
 // CONNECT
@@ -64,4 +70,4 @@ $connect-svg-hover: #64b5f6;
 $week-border: 1px solid rgba($black, .14);
 
 // PROJECT
-$project-info-bg: #f0f0f0;
+$project-info-bg: rgba($globals-color, .1);

@@ -11,9 +11,10 @@ export default class ProjectModel extends Model {
             implementation: 0,
             review: 0
         };
+        this.implementationStarts = null;
+        this.implementationEnds = null;
+        this.reviewsCount = 0;
         this.cards = [];
-        this.startDate = null;
-        this.endDate = null;
         this.lastUpdate = null;
 
         if (data) {

@@ -16,12 +16,12 @@
 
         @media (min-width: $screen-sm) {
             float: left;
-            margin: $globals-padding 0 $globals-padding 1%;
+            margin: $globals-padding 0 $globals-padding 2%;
             width: 48%;
 
             &:nth-child(2n + 1) {
                 clear: both;
-                margin: $globals-padding 1% $globals-padding 0;
+                margin: $globals-padding 2% $globals-padding 0;
             }
         }
     }

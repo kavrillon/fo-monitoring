@@ -38,9 +38,6 @@ export default class DeliveryController extends Controller {
         let projects = [];
 
         data.forEach((w) => {
-            const starts = DateUtils.getDateOfISOWeek(w.key, 2016);
-            const ends = DateUtils.getDateOfISOWeek(w.key, 2016, 5);
-
             w.cards.forEach((c) => {
                 if (c.type === 'delivery' && c.spent > 0) {
                     let p = _find(projects, (o) => {
@@ -56,13 +53,6 @@ export default class DeliveryController extends Controller {
                         } else if (c.subtype === 'review') {
                             p.points.review += c.spent;
                         }
-
-                        if (p.startDate > starts) {
-                            p.startDate = starts;
-                        }
-                        if (p.endDate < ends) {
-                            p.endDate = ends;
-                        }
                         p.lastUpdate = new Date();
                     } else {
                         const newProject = new ProjectModel(c.project, {
@@ -74,8 +64,9 @@ export default class DeliveryController extends Controller {
                                 implementation: (c.subtype === 'implementation' ? c.spent : 0),
                                 review: (c.subtype === 'review' ? c.spent : 0)
                             },
-                            startDate: starts,
-                            endDate: ends,
+                            implementationStarts: null,
+                            implementationEnds: null,
+                            reviewsCount: 0,
                             lastUpdate: new Date()
                         });
 

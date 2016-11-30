@@ -6,6 +6,7 @@ export default class CardTemplate {
 
         this.content.querySelector('[js-card-name]').textContent = `${this.data.name}`;
         this.content.querySelector('[js-card-name]').setAttribute('href', `${this.data.url}`);
+        this.content.querySelector('[js-card-name]').setAttribute('title', `${this.data.name}`);
 
         if (showType) {
             this.content.querySelector('[js-card-type]').removeAttribute('hidden');

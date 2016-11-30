@@ -64,7 +64,7 @@ export default class WeekTemplate {
 
         if (this.showCards) {
             data.cards.forEach((c) => {
-                const card = new CardTemplate(c, true, true, false);
+                const card = new CardTemplate(c, true, false, false);
                 this.cardsContainer.appendChild(card.getContent());
             });
         }

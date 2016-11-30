@@ -1,5 +1,4 @@
 import CardTemplate from '../card/CardTemplate';
-import moment from 'moment';
 
 export default class ProjectTemplate {
     constructor(data, showCards = true) {
@@ -44,10 +43,25 @@ export default class ProjectTemplate {
         this.content.querySelector('[js-project-key]').textContent = data.key;
         this.content.querySelector('[js-project-name]').textContent = data.name;
         this.content.querySelector('[js-project-last-updated]').textContent = data.lastUpdate;
-        this.content.querySelector('[js-project-start]').textContent = moment(data.startDate).format('ll');
-        this.content.querySelector('[js-project-end]').textContent = moment(data.endDate).format('ll');
-        this.content.querySelector('[js-project-imple]').textContent = `${data.points.implementation} pts`;
-        this.content.querySelector('[js-project-review]').textContent = `${data.points.review} pts`;
+        this.content.querySelector('[js-project-imple-start]').textContent = data.implementationStarts;
+        this.content.querySelector('[js-project-imple-end]').textContent = data.implementationEnds;
+        this.content.querySelector('[js-project-imple-value]').textContent = `${data.points.implementation} pts`;
+
+        if (data.points.implementation == 0) {
+            this.content.querySelector('[js-project-imple]').classList.add('project__header__infos__imple--inactive');
+        } else if (data.points.implementation > 15) {
+            this.content.querySelector('[js-project-imple]').classList.add('project__header__infos__imple--highlight');
+        }
+
+        this.content.querySelector('[js-project-review-value]').textContent = `${data.points.review} pts`;
+
+        if (data.points.review == 0) {
+            this.content.querySelector('[js-project-review]').classList.add('project__header__infos__review--inactive');
+        } else if (data.points.review > 10) {
+            this.content.querySelector('[js-project-review]').classList.add('project__header__infos__review--highlight');
+        }
+
+        this.content.querySelector('[js-project-review-count]').textContent = `${data.reviewsCount}`;
         this.content.querySelector('[js-project-spent]').textContent = `${data.points.spent} pts`;
         this.content.querySelector('[js-project-count]').textContent = `${data.cards.length} cards`;
 
