@@ -1,7 +1,6 @@
 import Controller from '../../libs/Controller';
 import ProjectTemplate from '../../templates/project/ProjectTemplate';
 import ProjectModel from '../../model/ProjectModel';
-import DateUtils from '../../libs/DateUtils';
 import _find from 'lodash/find';
 import _orderBy from 'lodash/orderBy';
 
@@ -12,12 +11,74 @@ export default class DeliveryController extends Controller {
         // Controller vars
         this.projects = this.parseDataForDelivery(data);
         this.projectsList = [];
+        this.activeSort = 'alpha';
+        this.activeOrder = 'asc';
+
+        const activeSorter = document.querySelector('[js-delivery-sort].active');
+        if (activeSorter) {
+            this.activeSort = activeSorter.getAttribute('js-delivery-sort');
+            this.activeOrder = activeSorter.getAttribute('js-delivery-sort-order');
+        }
 
         // DOM vars
         this.projectsContainer = document.querySelector('[js-delivery-list]');
+        this.sorters = document.querySelectorAll('[js-delivery-sort]');
+
+        this.displayProjects();
+        this.bind();
+
+    }
+
+    bind() {
+        // Sorting
+        Array.from(this.sorters).forEach((elt) => {
+           elt.addEventListener('click', (e) => {
+               let requestedSort = e.target;
+               if (!requestedSort.hasAttribute('js-delivery-sort')) {
+                   requestedSort = requestedSort.parentElement;
+               }
+
+               const requestedSortValue = requestedSort.getAttribute('js-delivery-sort');
+               let activeSort = null;
+               let activeOrder = null;
+               const activeSorter = document.querySelector('[js-delivery-sort].active');
+
+               if (activeSorter) {
+                   activeSort = activeSorter.getAttribute('js-delivery-sort');
+                   activeOrder = activeSorter.getAttribute('js-delivery-sort-order');
+               }
+
+               if (requestedSortValue === activeSort) {
+                   if (activeOrder === 'asc') {
+                       activeOrder = 'desc';
+                   } else {
+                       activeOrder = 'asc';
+                   }
+               } else {
+                   activeOrder = 'asc';
+                   if (activeSorter) {
+                       activeSorter.classList.remove('active');
+                   }
+               }
+
+               requestedSort.classList.add('active');
+               document.querySelector('[js-delivery-sort].active').setAttribute('js-delivery-sort-order', activeOrder);
+
+               this.activeSort = requestedSortValue;
+               this.activeOrder = activeOrder;
+
+               this.displayProjects();
+           });
+        });
+    }
+
+    displayProjects() {
+        document.querySelector('[js-delivery-count]').innerHTML = `${this.projects.length} projects`;
 
         // Displaying projects
-        _orderBy(this.projects, 'name').forEach((p) => {
+        this.projectsContainer.innerHTML = '';
+        this.projectsList = [];
+        _orderBy(this.projects, this.activeSort, this.activeOrder).forEach((p) => {
             let project = null;
 
             if (!this.projectsList[p.key]) {
@@ -30,8 +91,6 @@ export default class DeliveryController extends Controller {
 
             this.projectsList[p.key] = project;
         });
-
-        document.querySelector('[js-delivery-count]').innerHTML = `${this.projects.length} projects`;
     }
 
     parseDataForDelivery(data) {

@@ -6,9 +6,83 @@
 .delivery {
     @include page;
 
+    &__sort {
+        display: flex;
+        box-shadow: $globals-card-shadow;
+        margin: -$globals-padding;
+        margin-bottom: 30px;
+
+        @media (min-width: $screen-sm) {
+            float: left;
+            width: 48%;
+            margin: 0 0 30px 0;
+        }
+
+        &__alpha,
+        &__points,
+        &__date {
+            flex: 1;
+            border: 0;
+            background: $white;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            outline: 0;
+            transition: $globals-transition;
+
+            &:focus,
+            &:active,
+            &:hover {
+                outline: 0;
+            }
+
+            &__order {
+                display: inline-block;
+                opacity: 0;
+                transition: $globals-transition;
+            }
+
+            &.active {
+                background: rgba($globals-color, .1);
+
+                .delivery__sort {
+                    &__alpha,
+                    &__points,
+                    &__date {
+                        &__order {
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+
+            &[js-delivery-sort-order="asc"] {
+                .delivery__sort {
+                    &__alpha,
+                    &__points,
+                    &__date {
+                        &__order {
+                            transform: rotate(180deg);
+                        }
+                    }
+                }
+            }
+        }
+
+        &__alpha {
+            border-left: 0;
+        }
+    }
+
     &__count {
         margin: $globals-padding 0;
         text-align: center;
+
+        @media (min-width: $screen-sm) {
+            width: 48%;
+            float: right;
+            text-align: right;
+        }
     }
 
     .project {
