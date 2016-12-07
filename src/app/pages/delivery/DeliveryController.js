@@ -109,6 +109,14 @@ export default class DeliveryController extends Controller {
                         p.points.spent += c.spent;
                         if(c.subtype === 'implementation') {
                             p.points.implementation += c.spent;
+
+                            if (p.implementationStarts == 0 || w.key < p.implementationStarts) {
+                                p.implementationStarts = w.key;
+                            }
+
+                            if (w.key > p.implementationEnds) {
+                                p.implementationEnds = w.key;
+                            }
                         } else if (c.subtype === 'review') {
                             p.points.review += c.spent;
                         }
@@ -123,8 +131,8 @@ export default class DeliveryController extends Controller {
                                 implementation: (c.subtype === 'implementation' ? c.spent : 0),
                                 review: (c.subtype === 'review' ? c.spent : 0)
                             },
-                            implementationStarts: null,
-                            implementationEnds: null,
+                            implementationStarts: (c.subtype === 'implementation' ? w.key : 0),
+                            implementationEnds: (c.subtype === 'implementation' ? w.key : 0),
                             reviewsCount: 0,
                             lastUpdate: new Date()
                         });

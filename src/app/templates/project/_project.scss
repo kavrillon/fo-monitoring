@@ -50,6 +50,7 @@
                 }
 
                 &__value {
+                    margin-bottom: $globals-padding;
                     font-size: 22px;
                 }
 
@@ -59,6 +60,20 @@
 
                 &--highlight {
                     background: rgba($globals-red, .3);
+                }
+            }
+
+            &__imple {
+                &__start {
+                    float: left;
+                    width: 50%;
+                    text-align: left;
+                }
+
+                &__end {
+                    float: right;
+                    width: 50%;
+                    text-align: right;
                 }
             }
 

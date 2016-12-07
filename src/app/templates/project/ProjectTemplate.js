@@ -43,8 +43,20 @@ export default class ProjectTemplate {
         this.content.querySelector('[js-project-key]').textContent = data.key;
         this.content.querySelector('[js-project-name]').textContent = data.name;
         this.content.querySelector('[js-project-last-updated]').textContent = data.lastUpdate;
-        this.content.querySelector('[js-project-imple-start]').textContent = data.implementationStarts;
-        this.content.querySelector('[js-project-imple-end]').textContent = data.implementationEnds;
+
+        if (data.implementationStarts > 0) {
+            this.content.querySelector('[js-project-imple-start]').textContent = `W${data.implementationStarts}`;
+        } else {
+            this.content.querySelector('[js-project-imple-start]').textContent = `No date`;
+        }
+
+        if (data.implementationEnds > 0) {
+            this.content.querySelector('[js-project-imple-end]').textContent = `W${data.implementationEnds}`;
+
+        } else {
+            this.content.querySelector('[js-project-imple-end]').textContent = `No date`;
+        }
+
         this.content.querySelector('[js-project-imple-value]').textContent = `${data.points.implementation} pts`;
 
         if (data.points.implementation == 0) {
