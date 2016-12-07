@@ -63,17 +63,22 @@
                 }
             }
 
-            &__imple {
+            &__imple,
+            &__review {
                 &__start {
-                    float: left;
-                    width: 50%;
-                    text-align: left;
+                    @media (min-width: $screen-sm) {
+                        float: left;
+                        width: 50%;
+                        text-align: left;
+                    }
                 }
 
                 &__end {
-                    float: right;
-                    width: 50%;
-                    text-align: right;
+                    @media (min-width: $screen-sm) {
+                        float: right;
+                        width: 50%;
+                        text-align: right;
+                    }
                 }
             }
 

@@ -44,17 +44,30 @@ export default class ProjectTemplate {
         this.content.querySelector('[js-project-name]').textContent = data.name;
         this.content.querySelector('[js-project-last-updated]').textContent = data.lastUpdate;
 
-        if (data.implementationStarts > 0) {
-            this.content.querySelector('[js-project-imple-start]').textContent = `W${data.implementationStarts}`;
+        if (data.implementationStart > 0) {
+            this.content.querySelector('[js-project-imple-start]').textContent = `W${data.implementationStart}`;
         } else {
             this.content.querySelector('[js-project-imple-start]').textContent = `No date`;
         }
 
-        if (data.implementationEnds > 0) {
-            this.content.querySelector('[js-project-imple-end]').textContent = `W${data.implementationEnds}`;
+        if (data.implementationEnd > 0) {
+            this.content.querySelector('[js-project-imple-end]').textContent = `W${data.implementationEnd}`;
 
         } else {
             this.content.querySelector('[js-project-imple-end]').textContent = `No date`;
+        }
+
+        if (data.reviewStart > 0) {
+            this.content.querySelector('[js-project-review-start]').textContent = `W${data.reviewStart}`;
+        } else {
+            this.content.querySelector('[js-project-review-start]').textContent = `No date`;
+        }
+
+        if (data.reviewEnd > 0) {
+            this.content.querySelector('[js-project-review-end]').textContent = `W${data.reviewEnd}`;
+
+        } else {
+            this.content.querySelector('[js-project-review-end]').textContent = `No date`;
         }
 
         this.content.querySelector('[js-project-imple-value]').textContent = `${data.points.implementation} pts`;
@@ -73,7 +86,6 @@ export default class ProjectTemplate {
             this.content.querySelector('[js-project-review]').classList.add('project__header__infos__review--highlight');
         }
 
-        this.content.querySelector('[js-project-review-count]').textContent = `${data.reviewsCount}`;
         this.content.querySelector('[js-project-spent]').textContent = `${data.points.spent} pts`;
         this.content.querySelector('[js-project-count]').textContent = `${data.cards.length} cards`;
 

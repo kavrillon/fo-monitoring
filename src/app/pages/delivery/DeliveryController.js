@@ -107,18 +107,27 @@ export default class DeliveryController extends Controller {
                         p.cards.push(c);
                         p.points.estimated += c.estimated;
                         p.points.spent += c.spent;
+
                         if(c.subtype === 'implementation') {
                             p.points.implementation += c.spent;
 
-                            if (p.implementationStarts == 0 || w.key < p.implementationStarts) {
-                                p.implementationStarts = w.key;
+                            if (p.implementationStart == 0 || w.key < p.implementationStart) {
+                                p.implementationStart = w.key;
                             }
 
-                            if (w.key > p.implementationEnds) {
-                                p.implementationEnds = w.key;
+                            if (w.key > p.implementationEnd) {
+                                p.implementationEnd = w.key;
                             }
                         } else if (c.subtype === 'review') {
                             p.points.review += c.spent;
+
+                            if (p.reviewStart == 0 || w.key < p.reviewStart) {
+                                p.reviewStart = w.key;
+                            }
+
+                            if (w.key > p.reviewEnd) {
+                                p.reviewEnd = w.key;
+                            }
                         }
                         p.lastUpdate = new Date();
                     } else {
@@ -131,8 +140,10 @@ export default class DeliveryController extends Controller {
                                 implementation: (c.subtype === 'implementation' ? c.spent : 0),
                                 review: (c.subtype === 'review' ? c.spent : 0)
                             },
-                            implementationStarts: (c.subtype === 'implementation' ? w.key : 0),
-                            implementationEnds: (c.subtype === 'implementation' ? w.key : 0),
+                            implementationStart: (c.subtype === 'implementation' ? w.key : 0),
+                            implementationEnd: (c.subtype === 'implementation' ? w.key : 0),
+                            reviewStart: (c.subtype === 'review' ? w.key : 0),
+                            reviewEnd: (c.subtype === 'review' ? w.key : 0),
                             reviewsCount: 0,
                             lastUpdate: new Date()
                         });
