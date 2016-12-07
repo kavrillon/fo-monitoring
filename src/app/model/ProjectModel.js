@@ -13,8 +13,10 @@ export default class ProjectModel extends Model {
         };
         this.implementationStart = 0;
         this.implementationEnd = 0;
+        this.implementationHighlighted = false;
         this.reviewStart = 0;
         this.reviewEnd = 0;
+        this.reviewHighlighted = false;
         this.cards = [];
         this.lastUpdate = null;
 
@@ -29,6 +31,14 @@ export default class ProjectModel extends Model {
 
     static get storeName() {
         return 'ProjectModel';
+    }
+
+    isImplementationHighlighted() {
+        return this.points.implementation > 15;
+    }
+
+    isReviewHighlighted() {
+        return this.points.review > 10;
     }
 
 }

@@ -8,27 +8,27 @@
 
     &__sort {
         display: flex;
-        box-shadow: $globals-card-shadow;
         margin: -$globals-padding;
-        margin-bottom: 30px;
+        margin-bottom: 0;
+        box-shadow: $globals-card-shadow;
 
         @media (min-width: $screen-sm) {
             float: left;
+            margin: 0 0 30px;
             width: 48%;
-            margin: 0 0 30px 0;
         }
 
         &__alpha,
         &__points,
         &__date {
             flex: 1;
+            transition: $globals-transition;
+            outline: 0;
             border: 0;
             background: $white;
+            cursor: pointer;
             padding: 15px;
             text-align: center;
-            cursor: pointer;
-            outline: 0;
-            transition: $globals-transition;
 
             &:focus,
             &:active,
@@ -38,12 +38,12 @@
 
             &__order {
                 display: inline-block;
-                opacity: 0;
                 transition: $globals-transition;
+                opacity: 0;
             }
 
             &.active {
-                background: rgba($globals-color, .1);
+                background: $delivery-active-color;
 
                 .delivery__sort {
                     &__alpha,
@@ -56,7 +56,7 @@
                 }
             }
 
-            &[js-delivery-sort-order="asc"] {
+            &[js-delivery-sort-order='asc'] {
                 .delivery__sort {
                     &__alpha,
                     &__points,
@@ -74,13 +74,60 @@
         }
     }
 
+    &__filters {
+        display: flex;
+        margin:  15px 0 30px;
+        border-bottom: $globals-border;
+        padding-bottom: 10px;
+
+        @media (min-width: $screen-sm) {
+            float: right;
+            margin: 0 0 30px;
+            border-bottom: 0;
+            width: 48%;
+        }
+
+        &__name,
+        &__complete,
+        &__highlight {
+            flex: 3;
+        }
+
+        &__name {
+            flex: 4;
+
+            &__input {
+                display: block;
+                margin-top: 8px;
+                outline: 0;
+                border: $globals-border;
+                border-radius: 2px;
+                box-shadow: 0;
+                padding: 7px;
+                width: 100%;
+                font-size: $globals-font-size;
+
+                @media (min-width: $screen-sm) {
+                    margin-top: 0;
+                    padding: $globals-padding;
+                }
+            }
+        }
+
+        &__complete,
+        &__highlight {
+            padding: 15px 5px;
+            text-align: right;
+        }
+    }
+
     &__count {
         margin: $globals-padding 0;
         text-align: center;
 
         @media (min-width: $screen-sm) {
-            width: 48%;
             float: right;
+            width: 48%;
             text-align: right;
         }
     }

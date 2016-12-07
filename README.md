@@ -2,7 +2,6 @@ Monitoring of Frontend sprints with reporting per week and per project.
 
 # Next things
 - delivery:
-    filter: text/completed/highlight
     infos: imple duration / review duration
 - log
 - pagination

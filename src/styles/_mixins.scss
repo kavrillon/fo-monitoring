@@ -113,10 +113,10 @@
 @mixin weeks-globals-item($color) {
     flex: 1;
     margin-right: 5px;
-    background-color: $color;
-    padding: $globals-padding 5px;
     border-radius: 2px;
     box-shadow: $globals-card-shadow;
+    background-color: $color;
+    padding: $globals-padding 5px;
 
     @media (min-width: $screen-sm) {
         margin-right: 30px;

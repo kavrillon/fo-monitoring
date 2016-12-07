@@ -9,10 +9,30 @@
             <span class="delivery__sort__points__order">&uarr;</span>
             <span class="delivery__sort__points__label">Points</span>
         </button>
-        <button class="delivery__sort__date" js-delivery-sort="implementationStarts" js-delivery-sort-order="asc">
+        <button class="delivery__sort__date" js-delivery-sort="implementationStart" js-delivery-sort-order="asc">
             <span class="delivery__sort__date__order">&uarr;</span>
             <span class="delivery__sort__date__label">Date</span>
         </button>
+    </div>
+    <div class="delivery__filters">
+        <div class="delivery__filters__name">
+            <input class="delivery__filters__name__input"
+                   type="text"
+                   id="DeliveryFilterName"
+                   placeholder="Project name" />
+        </div>
+        <div class="delivery__filters__complete">
+            <input class="delivery__filters__complete__input"
+                   type="checkbox"
+                   id="DeliveryFilterComplete" />
+            <label class="delivery__filters__complete__label" for="DeliveryFilterComplete">Full projects</label>
+        </div>
+        <div class="delivery__filters__highlight">
+            <input class="delivery__filters__highlighted__input"
+                   type="checkbox"
+                   id="DeliveryFilterHighlight" />
+            <label class="delivery__filters__complete__label" for="DeliveryFilterHighlight">Highlighted</label>
+        </div>
     </div>
     <div class="delivery__count" js-delivery-count></div>
     <div class="delivery__list" js-delivery-list></div>

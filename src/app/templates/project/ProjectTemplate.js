@@ -52,7 +52,6 @@ export default class ProjectTemplate {
 
         if (data.implementationEnd > 0) {
             this.content.querySelector('[js-project-imple-end]').textContent = `W${data.implementationEnd}`;
-
         } else {
             this.content.querySelector('[js-project-imple-end]').textContent = `No date`;
         }
@@ -65,25 +64,24 @@ export default class ProjectTemplate {
 
         if (data.reviewEnd > 0) {
             this.content.querySelector('[js-project-review-end]').textContent = `W${data.reviewEnd}`;
-
         } else {
             this.content.querySelector('[js-project-review-end]').textContent = `No date`;
         }
 
         this.content.querySelector('[js-project-imple-value]').textContent = `${data.points.implementation} pts`;
 
-        if (data.points.implementation == 0) {
-            this.content.querySelector('[js-project-imple]').classList.add('project__header__infos__imple--inactive');
-        } else if (data.points.implementation > 15) {
-            this.content.querySelector('[js-project-imple]').classList.add('project__header__infos__imple--highlight');
+        if (data.points.implementation === 0) {
+            this.content.querySelector('[js-project-imple]').classList.add('inactive');
+        } else if (data.isImplementationHighlighted()) {
+            this.content.querySelector('[js-project-imple]').classList.add('highlight');
         }
 
         this.content.querySelector('[js-project-review-value]').textContent = `${data.points.review} pts`;
 
-        if (data.points.review == 0) {
-            this.content.querySelector('[js-project-review]').classList.add('project__header__infos__review--inactive');
-        } else if (data.points.review > 10) {
-            this.content.querySelector('[js-project-review]').classList.add('project__header__infos__review--highlight');
+        if (data.points.review === 0) {
+            this.content.querySelector('[js-project-review]').classList.add('inactive');
+        } else if (data.isReviewHighlighted()) {
+            this.content.querySelector('[js-project-review]').classList.add('highlight');
         }
 
         this.content.querySelector('[js-project-spent]').textContent = `${data.points.spent} pts`;

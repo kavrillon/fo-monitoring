@@ -14,8 +14,8 @@
     &__globals {
         display: flex;
         margin: $globals-padding 0;
-        color: $white;
         text-align: center;
+        color: $white;
         font-size: 18px;
 
         @media (min-width: $screen-sm) {

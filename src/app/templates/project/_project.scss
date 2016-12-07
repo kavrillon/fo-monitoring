@@ -26,9 +26,9 @@
         &__total {
             float: right;
             padding-top: 5px;
+            text-align: right;
             font-family: 'MuseoSansRounded-500', Arial, sans-serif;
             font-size: 16px;
-            text-align: right;
         }
 
         &__infos {
@@ -39,10 +39,18 @@
             &__imple,
             &__review {
                 flex: 1;
-                border-radius: 2px;
                 margin-right: 5px;
+                border-radius: 2px;
                 background: $project-info-bg;
                 padding: 10px;
+
+                &.inactive {
+                    opacity: .2;
+                }
+
+                &.highlight {
+                    background: $project-highlight-color;
+                }
 
                 &__label {
                     display: block;
@@ -54,17 +62,6 @@
                     font-size: 22px;
                 }
 
-                &--inactive {
-                    opacity: .2;
-                }
-
-                &--highlight {
-                    background: rgba($globals-red, .3);
-                }
-            }
-
-            &__imple,
-            &__review {
                 &__start {
                     @media (min-width: $screen-sm) {
                         float: left;
@@ -97,7 +94,7 @@
 
         &__cards-count {
             margin-bottom: $globals-padding;
-            border-top: $week-border;
+            border-top: $globals-border;
             padding-top: $globals-padding;
             text-align: center;
         }
