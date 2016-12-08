@@ -71,7 +71,6 @@ class Router {
         this.loader.classList.add('hidden');
 
         if (this.currentAction === this.routes[action]) {
-
             if (typeof this.currentAction.update === 'function') {
                 this.currentAction.update(data);
                 return true;
@@ -115,7 +114,7 @@ class Router {
             return;
         }
 
-        history.pushState(undefined, "", path);
+        history.pushState(undefined, '', path);
         requestAnimationFrame(() => {
             this.manageState();
         });

@@ -89,16 +89,16 @@ export default class TrelloUtils extends Trello {
 
     parseCardData(week, card) {
         let res;
-        let c = new CardModel(card.idShort);
+        const c = new CardModel(card.idShort);
 
         c.name = card.name.replace(/\((([0-9]*[.])?[0-9]+)\)/, '').replace(/\[(([0-9]*[.])?[0-9]+)\]/, '');
         c.estimated = (res = card.name.match(/\((([0-9]*[.])?[0-9]+)\)/)) === null ? 0 : parseFloat(res[1]);
         c.spent = (res = card.name.match(/\[(([0-9]*[.])?[0-9]+)\]/)) === null ? 0 : parseFloat(res[1]);
-        c.url  = card.shortUrl;
+        c.url = card.shortUrl;
         c.week = week;
 
         // Card type: from labels, delivery by default
-        let type = _find(card.labels, (o) => {
+        const type = _find(card.labels, (o) => {
             return o.name === 'Support' || o.name === 'Monitoring' || o.name === 'Product';
         });
 
@@ -109,7 +109,7 @@ export default class TrelloUtils extends Trello {
         }
 
         // Card subtype: from labels
-        let subtype = _find(card.labels, (o) => {
+        const subtype = _find(card.labels, (o) => {
             return o.name === 'Implementation' || o.name === 'Review';
         });
         if (typeof subtype !== 'undefined') {

@@ -145,7 +145,7 @@ export default class HomeController extends Controller {
     displayMonthlyActivities() {
         const values = [];
         const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        for (let i = 0; i <= 11; i++) {
+        for (let i = 0; i < labels.length; i++) {
             values.push({
                 key: i,
                 label: labels[i],

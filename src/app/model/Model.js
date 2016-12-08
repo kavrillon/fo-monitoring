@@ -25,8 +25,12 @@ export default class Model {
 
     static nuke() {
         return DatabaseInstance()
-            .then(db => db.close())
-            .then(db => db.nuke());
+            .then(db => {
+                return db.close();
+            })
+            .then(db => {
+                return db.nuke();
+            });
     }
 
     static get(key) {
@@ -36,7 +40,9 @@ export default class Model {
 
         return DatabaseInstance()
             // Do the query.
-            .then(db => db.get(this.storeName, key))
+            .then(db => {
+                return db.get(this.storeName, key);
+            })
 
             // Wrap the result in the correct class.
             .then(result => {
@@ -70,7 +76,9 @@ export default class Model {
 
         return DatabaseInstance()
             // Do the query.
-            .then(db => db.getAll(this.storeName, index, order))
+            .then(db => {
+                return db.getAll(this.storeName, index, order);
+            })
 
             // Wrap all the results in the correct class.
             .then(results => {
@@ -105,6 +113,8 @@ export default class Model {
      * then the object is updated. If the keyPath is not set and the value's key
      * is null, then the object is inserted. If the keypath is not set and the
      * value's key is set then the object is updated.
+     * @param {value} value to insert
+     * @returns {Promise} value inserted
      */
     static put(value) {
         if (this instanceof Model) {
@@ -113,7 +123,9 @@ export default class Model {
 
         return DatabaseInstance()
             // Do the query.
-            .then(db => db.put(this.storeName, value, value.key))
+            .then(db => {
+                return db.put(this.storeName, value, value.key);
+            })
             .then(key => {
                 return ConfigManagerInstance().then(configManager => {
                     // Inserting may provide a key. If there is no keyPath set
@@ -127,7 +139,7 @@ export default class Model {
                     }
 
                     return value;
-                })
+                });
             });
     }
 
@@ -137,7 +149,9 @@ export default class Model {
         }
 
         return DatabaseInstance()
-            .then(db => db.deleteAll(this.storeName))
+            .then(db => {
+                return db.deleteAll(this.storeName);
+            })
             .catch(e => {
                 // It may be that the store doesn't exist yet, so relax for that one.
                 if (e.name !== 'NotFoundError') {
@@ -170,7 +184,9 @@ export default class Model {
             }
 
             return DatabaseInstance()
-                .then(db => db.delete(this.storeName, value));
+                .then(db => {
+                    return db.delete(this.storeName, value);
+                });
         });
     }
 }

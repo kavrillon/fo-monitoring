@@ -53,15 +53,15 @@ const filesToCache = [
     'fonts/303098_B_0.ttf',
     'fonts/303098_B_0.woff',
     'fonts/303098_B_0.woff2',
-    'images/icon-144x144.png',
-    'images/icon-152x152.png',
-    'images/icon-192x192.png',
-    'images/icon-384x384.png',
     'images/favicon.ico',
     'images/ic_add_white_24px.svg',
     'images/ic_info_outline_24px.svg',
     'images/ic_menu_24px.svg',
     'images/ic_refresh_white_24px.svg',
+    'images/icon-144x144.png',
+    'images/icon-192x192.png',
+    'images/icon-384x384.png',
+    'images/icon-apple-touch-152x152.png',
     'images/side-nav-bg@2x.jpg'
 ];
 
