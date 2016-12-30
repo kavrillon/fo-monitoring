@@ -7,16 +7,16 @@ export default class WeekModel extends Model {
             available: 0,
             estimated: 0,
             product: 0,
-            monitoring: 0,
+            process: 0,
             support: 0,
-            delivery: 0,
+            project: 0,
             spent: 0
         };
         this.activity = {
             product: 0,
-            monitoring: 0,
+            process: 0,
             support: 0,
-            delivery: 0,
+            project: 0,
             total: 0
         };
         this.startDate = null;

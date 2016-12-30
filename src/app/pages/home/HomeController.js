@@ -77,19 +77,19 @@ export default class HomeController extends Controller {
     }
 
     displayGlobalActivities() {
-        const monitoringPercents = _map(this.data, 'activity.monitoring');
-        let monitoringAvg = 0;
-        monitoringPercents.forEach((elt) => {
-            monitoringAvg += elt;
+        const processPercents = _map(this.data, 'activity.process');
+        let processAvg = 0;
+        processPercents.forEach((elt) => {
+            processAvg += elt;
         });
-        monitoringAvg = Math.round(monitoringAvg / monitoringPercents.length);
+        processAvg = Math.round(processAvg / processPercents.length);
 
-        const deliveryPercents = _map(this.data, 'activity.delivery');
-        let deliveryAvg = 0;
-        deliveryPercents.forEach((elt) => {
-            deliveryAvg += elt;
+        const projectPercents = _map(this.data, 'activity.project');
+        let projectAvg = 0;
+        projectPercents.forEach((elt) => {
+            projectAvg += elt;
         });
-        deliveryAvg = Math.round(deliveryAvg / deliveryPercents.length);
+        projectAvg = Math.round(projectAvg / projectPercents.length);
 
         const supportPercents = _map(this.data, 'activity.support');
         let supportAvg = 0;
@@ -109,14 +109,14 @@ export default class HomeController extends Controller {
             type: 'doughnut',
             data: {
                 labels: [
-                    'Monitoring',
+                    'Process',
                     'Support',
-                    'Delivery',
+                    'Project',
                     'Product'
                 ],
                 datasets: [
                     {
-                        data: [monitoringAvg, supportAvg, deliveryAvg, productAvg],
+                        data: [processAvg, supportAvg, projectAvg, productAvg],
                         backgroundColor: [
                             '#ffce56',
                             '#44d279',
@@ -150,15 +150,15 @@ export default class HomeController extends Controller {
                 key: i,
                 label: labels[i],
                 activity: {
-                    monitoring: 0,
+                    process: 0,
                     support: 0,
-                    delivery: 0,
+                    project: 0,
                     product: 0
                 },
                 points: {
-                    monitoring: 0,
+                    process: 0,
                     support: 0,
-                    delivery: 0,
+                    project: 0,
                     product: 0,
                     spent: 0,
                     available: 0,
@@ -173,9 +173,9 @@ export default class HomeController extends Controller {
             if (values[monthKey]) {
                 values[monthKey].weeks.push(w);
                 values[monthKey].points.product += w.points.product;
-                values[monthKey].points.monitoring += w.points.monitoring;
+                values[monthKey].points.process += w.points.process;
                 values[monthKey].points.support += w.points.support;
-                values[monthKey].points.delivery += w.points.delivery;
+                values[monthKey].points.project += w.points.project;
                 values[monthKey].points.spent += w.points.spent;
                 values[monthKey].points.available += w.points.available;
                 values[monthKey].points.estimated += w.points.estimated;
@@ -184,9 +184,9 @@ export default class HomeController extends Controller {
 
         values.forEach((m) => {
             m.activity.product = Math.round(m.points.product * 100 / m.points.spent);
-            m.activity.monitoring = Math.round(m.points.monitoring * 100 / m.points.spent);
+            m.activity.process = Math.round(m.points.process * 100 / m.points.spent);
             m.activity.support = Math.round(m.points.support * 100 / m.points.spent);
-            m.activity.delivery = Math.round(m.points.delivery * 100 / m.points.spent);
+            m.activity.project = Math.round(m.points.project * 100 / m.points.spent);
         });
 
         new Chart(document.getElementById('ChartMonthlyActivity'), {
@@ -195,8 +195,8 @@ export default class HomeController extends Controller {
                 labels: labels,
                 datasets: [
                     {
-                        label: 'Monitoring',
-                        data: _map(values, 'activity.monitoring'),
+                        label: 'Process',
+                        data: _map(values, 'activity.process'),
                         backgroundColor: 'rgba(255,206,86,0.3)',
                         borderWidth: 1,
                         borderColor: '#ffce56',
@@ -211,8 +211,8 @@ export default class HomeController extends Controller {
                         pointRadius: 1
                     },
                     {
-                        label: 'Delivery',
-                        data: _map(values, 'activity.delivery'),
+                        label: 'Project',
+                        data: _map(values, 'activity.project'),
                         backgroundColor: 'rgba(255,99,132,0.3)',
                         borderWidth: 1,
                         borderColor: '#ff6384',

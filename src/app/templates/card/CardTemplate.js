@@ -1,5 +1,5 @@
 export default class CardTemplate {
-    constructor(data, showType = false, showSubtype = false, showWeek = false) {
+    constructor(data, showType = false, showLabels = false, showWeek = false, showVersion = true) {
         this.template = document.querySelector('[js-template-card]');
         this.data = data;
         this.content = this.template.cloneNode(true);
@@ -8,23 +8,33 @@ export default class CardTemplate {
         this.content.querySelector('[js-card-name]').setAttribute('href', `${this.data.url}`);
         this.content.querySelector('[js-card-name]').setAttribute('title', `${this.data.name}`);
 
-        if (showType) {
-            this.content.querySelector('[js-card-type]').removeAttribute('hidden');
-            this.content.querySelector('[js-card-type]').textContent = `${this.data.type}`;
-            this.content.querySelector('[js-card-type]').classList.add(`card__type__value--${this.data.type.toLowerCase()}`);
+        if (showVersion) {
+            this.content.querySelector('[js-card-version]').removeAttribute('hidden');
+
+            if (this.data.version) {
+                this.content.querySelector('[js-card-version-value]').textContent = `${this.data.version}`;
+                this.content.querySelector('[js-card-version-value]').classList.add(`card__version__value--${this.data.version}`);
+                this.content.querySelector('[js-card-version-value]').removeAttribute('hidden');
+            }
         }
 
-        if (showSubtype) {
-            this.content.querySelector('[js-card-subtype]').removeAttribute('hidden');
+        if (showType && this.data.type) {
+            this.content.querySelector('[js-card-type]').removeAttribute('hidden');
+            this.content.querySelector('[js-card-type]').setAttribute('title', `${this.data.type}`);
+            this.content.querySelector('[js-card-type]').classList.add(`card__name__type--${this.data.type.toLowerCase()}`);
+        }
 
-            if (this.data.subtype) {
-                this.content.querySelector('[js-card-subtype]').textContent = `${this.data.subtype}`;
-            }
+        if (showLabels) {
+            this.data.labels.forEach((l) => {
+                this.content.querySelector('[js-card-labels]').textContent = this.content.querySelector('[js-card-labels]').textContent + `${l} `;
+            });
+
+            this.content.querySelector('[js-card-labels]').removeAttribute('hidden');
         }
 
         if (showWeek) {
             this.content.querySelector('[js-card-week]').removeAttribute('hidden');
-            this.content.querySelector('[js-card-week]').textContent = `${this.data.week}`;
+            this.content.querySelector('[js-card-week]').textContent = `W${this.data.week}`;
         }
 
         this.content.querySelector('[js-card-spent]').textContent = `${this.data.spent} pts`;

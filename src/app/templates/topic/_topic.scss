@@ -37,10 +37,9 @@
     }
 
     &__cards {
-        transition: $globals-transition;
+        display: none;
         margin: 0 $globals-padding;
-        max-height: 0;
-        overflow: hidden;
+        padding-bottom: $globals-padding;
 
         &__cards-count {
             margin-bottom: $globals-padding;
@@ -52,8 +51,7 @@
 
     &.active {
         .topic__cards {
-            padding-bottom: $globals-padding;
-            max-height: 800px;
+            display: block;
         }
     }
 }

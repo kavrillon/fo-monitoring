@@ -5,48 +5,48 @@ import DateUtils from '../../libs/DateUtils';
 import _find from 'lodash/find';
 import _map from 'lodash/map';
 import _orderBy from 'lodash/orderBy';
-import moment from 'moment';
 import Chart from 'chart.js';
+import moment from 'moment';
 
-export default class ProductController extends Controller {
+export default class ProcessController extends Controller {
     constructor(data) {
         super();
 
         // Controller vars
-        this.products = this.parseData(data);
-        this.productsList = [];
+        this.processes = this.parseData(data);
+        this.processesList = [];
 
         // DOM vars
-        this.productsContainer = document.querySelector('[js-product-list]');
+        this.processesContainer = document.querySelector('[js-process-list]');
 
         this.displayData();
     }
 
     displayData() {
-        // Displaying products
-        _orderBy(this.products.list, 'name').forEach((p) => {
-            let product = null;
+        // Displaying processes
+        _orderBy(this.processes.list, 'name').forEach((p) => {
+            let process = null;
 
-            if (!this.productsList[p.key]) {
-                product = new TopicTemplate(p);
-                this.productsContainer.appendChild(product.getContent());
+            if (!this.processesList[p.key]) {
+                process = new TopicTemplate(p);
+                this.processesContainer.appendChild(process.getContent());
             } else {
-                product = this.productsList[p.key];
-                product.update(p);
+                process = this.processesList[p.key];
+                process.update(p);
             }
 
-            this.productsList[p.key] = product;
+            this.processesList[p.key] = process;
         });
 
         // Displaying chart
 
         let datasets = [];
-        const step = .5 / this.products.sets.length;
-        let borderStep = 1 / this.products.sets.length;
+        const step = .5 / this.processes.sets.length;
+        let borderStep = 1 / this.processes.sets.length;
         let opacity = 0;
         let opacityBorder = 0;
 
-        _orderBy(this.products.sets, 'label').forEach((s) => {
+        _orderBy(this.processes.sets, 'label').forEach((s) => {
             opacity += step;
             opacityBorder += borderStep;
 
@@ -56,17 +56,17 @@ export default class ProductController extends Controller {
             });
 
             datasets.push(Object.assign(s, {
-                backgroundColor: `rgba(54,162,235,${opacity})`,
+                backgroundColor: `rgba(255,206,86,${opacity})`,
                 borderWidth: 1,
-                borderColor: `rgba(54,162,235,${opacityBorder})`,
+                borderColor: `rgba(255,206,86,${opacityBorder})`,
                 pointRadius: 1
             }));
         });
 
-        new Chart(document.getElementById('ChartProductRepartition'), {
+        new Chart(document.getElementById('ChartProcessRepartition'), {
             type: 'line',
             data: {
-                labels: this.products.labels,
+                labels: this.processes.labels,
                 datasets: datasets
             },
             options: {
@@ -87,22 +87,22 @@ export default class ProductController extends Controller {
     }
 
     parseData(data) {
-        const products = {
+        const processes = {
             list: [],
             labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             sets: []
         };
 
-        _orderBy(data, 'key').forEach((w) => {
+        data.forEach((w) => {
             const monthKey = parseInt(moment(w.startDate).format('M')) - 1;
             const starts = DateUtils.getDateOfISOWeek(w.key, 2016);
             const ends = DateUtils.getDateOfISOWeek(w.key, 2016, 5);
 
             w.cards.forEach((c) => {
-                if (c.type === 'product' && c.spent > 0) {
+                if (c.type === 'process' && c.spent > 0) {
 
-                    // Add to product list
-                    let p = _find(products.list, (o) => {
+                    // Add to process list
+                    let p = _find(processes.list, (o) => {
                         return o.key === c.project;
                     });
 
@@ -131,11 +131,11 @@ export default class ProductController extends Controller {
                             lastUpdate: new Date()
                         });
 
-                        products.list.push(p);
+                        processes.list.push(p);
                     }
 
                     // Add to chart set
-                    let s = _find(products.sets, (o) => {
+                    let s = _find(processes.sets, (o) => {
                         return o.label === c.project;
                     });
 
@@ -146,7 +146,7 @@ export default class ProductController extends Controller {
                         };
 
                         s.data[monthKey] += c.spent;
-                        products.sets.push(s);
+                        processes.sets.push(s);
                     } else {
                         s.data[monthKey] += c.spent;
                     }
@@ -154,6 +154,6 @@ export default class ProductController extends Controller {
             });
         });
 
-        return products;
+        return processes;
     }
 }

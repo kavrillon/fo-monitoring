@@ -15,4 +15,18 @@ export default class DateUtils {
         }
         return simple;
     }
+
+    static pointsToDays(points, round = 1, withUnit = false) {
+        let value = Math.round(points * round / 2) / round;
+
+        if (withUnit) {
+            if (value > 1) {
+                value = value + ' days';
+            } else {
+                value = value + ' day';
+            }
+        }
+
+        return value;
+    }
 }

@@ -1,12 +1,14 @@
+import DateUtils from '../../libs/DateUtils';
 import CardTemplate from '../card/CardTemplate';
 import moment from 'moment';
 
 export default class TopicTemplate {
-    constructor(data, showCards = true) {
+    constructor(data, showCards = true, showVersions = false) {
         // Template cards
         this.template = document.querySelector('[js-template-topic]');
         this.data = data;
         this.showCards = showCards;
+        this.showVersions = showVersions;
         this.content = this.template.cloneNode(true);
 
         // DOM vars
@@ -46,7 +48,7 @@ export default class TopicTemplate {
         this.content.querySelector('[js-topic-last-updated]').textContent = data.lastUpdate;
         this.content.querySelector('[js-topic-start]').textContent = moment(data.startDate).format('ll');
         this.content.querySelector('[js-topic-end]').textContent = moment(data.endDate).format('ll');
-        this.content.querySelector('[js-topic-spent]').textContent = `${data.points.spent} pts`;
+        this.content.querySelector('[js-topic-spent]').textContent = `${DateUtils.pointsToDays(data.points.spent, 1, true)}`;
         this.content.querySelector('[js-topic-count]').textContent = `${data.cards.length} cards`;
 
         // Reset if cards exists
@@ -54,7 +56,7 @@ export default class TopicTemplate {
 
         if (this.showCards) {
             data.cards.forEach((c) => {
-                const card = new CardTemplate(c, false, false, true);
+                const card = new CardTemplate(c, false, false, true, this.showVersions);
                 this.cardsContainer.appendChild(card.getContent());
             });
         }

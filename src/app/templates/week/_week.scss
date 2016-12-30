@@ -70,9 +70,9 @@
             padding: $globals-padding 0 0;
             list-style-type: none;
 
-            &__monitoring,
+            &__process,
             &__support,
-            &__delivery,
+            &__project,
             &__product {
                 float: left;
                 padding: 0;
@@ -84,28 +84,24 @@
                     display: block;
                 }
 
-                &__value {
+                &__points {
                     display: inline-block;
                     margin-top: $globals-padding;
                     font-size: 26px;
                 }
 
-                &__points {
-                    display: block;
-                    transition: $globals-transition;
+                &__value {
+                    display: none;
                     margin-top: 5px;
-                    max-height: 0;
-                    overflow: hidden;
                 }
             }
         }
     }
 
     &__cards {
-        transition: $globals-transition;
+        display: none;
         margin: 0 $globals-padding;
-        max-height: 0;
-        overflow: hidden;
+        padding-bottom: $globals-padding;
 
         &__cards-count {
             margin-bottom: $globals-padding;
@@ -117,19 +113,18 @@
 
     &.active {
         .week__header__activity {
-            &__monitoring,
+            &__process,
             &__support,
-            &__delivery,
+            &__project,
             &__product {
-                &__points {
-                    max-height: 100px;
+                &__value {
+                    display: block;
                 }
             }
         }
 
         .week__cards {
-            padding-bottom: $globals-padding;
-            max-height: 800px;
+            display: block;
         }
     }
 }

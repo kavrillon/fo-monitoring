@@ -1,9 +1,9 @@
 
 //------------------------------------------------------------------
-// PROJECT TEMPLATE
+// CLIENT TEMPLATE
 //-------------------------------------------------------------------
 
-.project {
+.client {
     @include card;
 
     &__header {
@@ -41,7 +41,7 @@
                 flex: 1;
                 margin-right: 5px;
                 border-radius: 2px;
-                background: $project-info-bg;
+                background: $client-info-bg;
                 padding: 10px;
 
                 &.inactive {
@@ -49,7 +49,7 @@
                 }
 
                 &.highlight {
-                    background: $project-highlight-color;
+                    background: $client-highlight-color;
                 }
 
                 &__label {
@@ -58,11 +58,13 @@
                 }
 
                 &__value {
-                    margin-bottom: $globals-padding;
                     font-size: 22px;
                 }
 
                 &__start {
+                    display: none;
+                    padding-top: $globals-padding;
+
                     @media (min-width: $screen-sm) {
                         float: left;
                         width: 50%;
@@ -71,6 +73,9 @@
                 }
 
                 &__end {
+                    display: none;
+                    padding-top: $globals-padding;
+
                     @media (min-width: $screen-sm) {
                         float: right;
                         width: 50%;
@@ -87,10 +92,9 @@
     }
 
     &__cards {
-        transition: $globals-transition;
+        display: none;
         margin: 0 $globals-padding;
-        max-height: 0;
-        overflow: hidden;
+        padding-bottom: $globals-padding;
 
         &__cards-count {
             margin-bottom: $globals-padding;
@@ -101,20 +105,29 @@
     }
 
     &.active {
-        .project__header__activity {
+        .client__header__infos {
+            &__imple,
+            &__review {
+                &__start,
+                &__end {
+                    display: block;
+                }
+            }
+        }
+
+        .client__header__activity {
             &__monitoring,
             &__support,
             &__delivery,
             &__product {
                 &__points {
-                    max-height: 100px;
+                    display: block;
                 }
             }
         }
 
-        .project__cards {
-            padding-bottom: $globals-padding;
-            max-height: 800px;
+        .client__cards {
+            display: block;
         }
     }
 }

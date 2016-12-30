@@ -1,34 +1,34 @@
 import Controller from '../../libs/Controller';
-import ProjectTemplate from '../../templates/project/ProjectTemplate';
-import ProjectModel from '../../model/ProjectModel';
+import ClientTemplate from '../../templates/client/ClientTemplate';
+import ClientModel from '../../model/ClientModel';
 import _filter from 'lodash/filter';
 import _find from 'lodash/find';
 import _orderBy from 'lodash/orderBy';
 
-export default class DeliveryController extends Controller {
+export default class ClientsController extends Controller {
     constructor(data) {
         super();
 
         // Controller vars
-        this.projects = this.parseDataForDelivery(data);
-        this.projectsList = [];
+        this.clients = this.parseData(data);
+        this.clientsList = [];
         this.activeSort = 'alpha';
         this.activeOrder = 'asc';
         this.filterComplete = false;
         this.filterHighlight = false;
         this.filterName = null;
 
-        const activeSorter = document.querySelector('[js-delivery-sort].active');
+        const activeSorter = document.querySelector('[js-clients-sort].active');
         if (activeSorter) {
-            this.activeSort = activeSorter.getAttribute('js-delivery-sort');
-            this.activeOrder = activeSorter.getAttribute('js-delivery-sort-order');
+            this.activeSort = activeSorter.getAttribute('js-clients-sort');
+            this.activeOrder = activeSorter.getAttribute('js-clients-sort-order');
         }
 
         // DOM vars
-        this.projectsContainer = document.querySelector('[js-delivery-list]');
-        this.sorters = document.querySelectorAll('[js-delivery-sort]');
+        this.clientsContainer = document.querySelector('[js-clients-list]');
+        this.sorters = document.querySelectorAll('[js-clients-sort]');
 
-        this.displayProjects();
+        this.displayClients();
         this.bind();
     }
 
@@ -37,18 +37,18 @@ export default class DeliveryController extends Controller {
         Array.from(this.sorters).forEach((elt) => {
             elt.addEventListener('click', (e) => {
                 let requestedSort = e.target;
-                if (!requestedSort.hasAttribute('js-delivery-sort')) {
+                if (!requestedSort.hasAttribute('js-clients-sort')) {
                     requestedSort = requestedSort.parentElement;
                 }
 
-                const requestedSortValue = requestedSort.getAttribute('js-delivery-sort');
+                const requestedSortValue = requestedSort.getAttribute('js-clients-sort');
                 let activeSort = null;
                 let activeOrder = null;
-                const activeSorter = document.querySelector('[js-delivery-sort].active');
+                const activeSorter = document.querySelector('[js-clients-sort].active');
 
                 if (activeSorter) {
-                    activeSort = activeSorter.getAttribute('js-delivery-sort');
-                    activeOrder = activeSorter.getAttribute('js-delivery-sort-order');
+                    activeSort = activeSorter.getAttribute('js-clients-sort');
+                    activeOrder = activeSorter.getAttribute('js-clients-sort-order');
                 }
 
                 if (requestedSortValue === activeSort) {
@@ -65,37 +65,37 @@ export default class DeliveryController extends Controller {
                 }
 
                 requestedSort.classList.add('active');
-                document.querySelector('[js-delivery-sort].active').setAttribute('js-delivery-sort-order', activeOrder);
+                document.querySelector('[js-clients-sort].active').setAttribute('js-clients-sort-order', activeOrder);
 
                 this.activeSort = requestedSortValue;
                 this.activeOrder = activeOrder;
 
-                this.displayProjects();
+                this.displayClients();
             });
         });
 
         // Filter
-        document.querySelector('#DeliveryFilterComplete').addEventListener('change', (e) => {
+        document.querySelector('#ClientsFilterComplete').addEventListener('change', (e) => {
             this.filterComplete = e.target.checked;
-            this.displayProjects();
+            this.displayClients();
         });
 
-        document.querySelector('#DeliveryFilterHighlight').addEventListener('change', (e) => {
+        document.querySelector('#ClientsFilterHighlight').addEventListener('change', (e) => {
             this.filterHighlight = e.target.checked;
-            this.displayProjects();
+            this.displayClients();
         });
 
-        document.querySelector('#DeliveryFilterName').addEventListener('keyup', (e) => {
+        document.querySelector('#ClientsFilterName').addEventListener('keyup', (e) => {
             this.filterName = e.target.value;
-            this.displayProjects();
+            this.displayClients();
         });
     }
 
-    displayProjects() {
-        // Displaying projects
-        this.projectsContainer.innerHTML = '';
-        this.projectsList = [];
-        let results = this.projects;
+    displayClients() {
+        // Displaying clients
+        this.clientsContainer.innerHTML = '';
+        this.clientsList = [];
+        let results = this.clients;
 
         if (this.filterComplete) {
             results = _filter(results, (o) => {
@@ -115,39 +115,42 @@ export default class DeliveryController extends Controller {
             });
         }
 
-        document.querySelector('[js-delivery-count]').innerHTML = `${results.length} projects`;
+        document.querySelector('[js-clients-count]').innerHTML = `${results.length} clients`;
 
         _orderBy(results, this.activeSort, this.activeOrder).forEach((p) => {
-            let project = null;
+            let client = null;
 
-            if (!this.projectsList[p.key]) {
-                project = new ProjectTemplate(p);
-                this.projectsContainer.appendChild(project.getContent());
+            if (!this.clientsList[p.key]) {
+                client = new ClientTemplate(p);
+                this.clientsContainer.appendChild(client.getContent());
             } else {
-                project = this.projectsList[p.key];
-                project.update(p);
+                client = this.clientsList[p.key];
+                client.update(p);
             }
 
-            this.projectsList[p.key] = project;
+            this.clientsList[p.key] = client;
         });
     }
 
-    parseDataForDelivery(data) {
-        const projects = [];
+    parseData(data) {
+        const clients = [];
 
         data.forEach((w) => {
             w.cards.forEach((c) => {
-                if (c.type === 'delivery' && c.spent > 0) {
-                    const p = _find(projects, (o) => {
+                if (c.type === 'project' && c.spent > 0) {
+                    const p = _find(clients, (o) => {
                         return o.key === c.project;
                     });
+
+                    const isImplementation = c.labels.includes('Implementation');
+                    const isReview = c.labels.includes('Review');
 
                     if (p) {
                         p.cards.push(c);
                         p.points.estimated += c.estimated;
                         p.points.spent += c.spent;
 
-                        if(c.subtype === 'implementation') {
+                        if(isImplementation) {
                             p.points.implementation += c.spent;
 
                             if (p.implementationStart === 0 || w.key < p.implementationStart) {
@@ -157,7 +160,7 @@ export default class DeliveryController extends Controller {
                             if (w.key > p.implementationEnd) {
                                 p.implementationEnd = w.key;
                             }
-                        } else if (c.subtype === 'review') {
+                        } else if (isReview) {
                             p.points.review += c.spent;
 
                             if (p.reviewStart === 0 || w.key < p.reviewStart) {
@@ -170,29 +173,29 @@ export default class DeliveryController extends Controller {
                         }
                         p.lastUpdate = new Date();
                     } else {
-                        const newProject = new ProjectModel(c.project, {
+                        const newClient = new ClientModel(c.project, {
                             cards: [c],
                             name: c.project,
                             points: {
                                 spent: c.spent,
                                 estimated: c.estimated,
-                                implementation: c.subtype === 'implementation' ? c.spent : 0,
-                                review: c.subtype === 'review' ? c.spent : 0
+                                implementation: isImplementation ? c.spent : 0,
+                                review: isReview ? c.spent : 0
                             },
-                            implementationStart: c.subtype === 'implementation' ? w.key : 0,
-                            implementationEnd: c.subtype === 'implementation' ? w.key : 0,
-                            reviewStart: c.subtype === 'review' ? w.key : 0,
-                            reviewEnd: c.subtype === 'review' ? w.key : 0,
+                            implementationStart: isImplementation ? w.key : 0,
+                            implementationEnd: isImplementation ? w.key : 0,
+                            reviewStart: isReview ? w.key : 0,
+                            reviewEnd: isReview ? w.key : 0,
                             reviewsCount: 0,
                             lastUpdate: new Date()
                         });
 
-                        projects.push(newProject);
+                        clients.push(newClient);
                     }
                 }
             });
         });
 
-        return projects;
+        return clients;
     }
 }

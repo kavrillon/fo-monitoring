@@ -1,5 +1,6 @@
 import CardTemplate from '../card/CardTemplate';
 import moment from 'moment';
+import _orderBy from 'lodash/orderBy';
 
 export default class WeekTemplate {
     constructor(data, showCards = true) {
@@ -49,22 +50,22 @@ export default class WeekTemplate {
         this.content.querySelector('[js-week-available]').textContent = `${data.points.available} pts`;
         this.content.querySelector('[js-week-spent]').textContent = `${data.points.spent} pts`;
 
-        this.content.querySelector('[js-week-product]').textContent = `${data.points.product} pts`;
-        this.content.querySelector('[js-week-support]').textContent = `${data.points.support} pts`;
-        this.content.querySelector('[js-week-monitoring]').textContent = `${data.points.monitoring} pts`;
-        this.content.querySelector('[js-week-delivery]').textContent = `${data.points.delivery} pts`;
+        this.content.querySelector('[js-week-product]').textContent = `${data.points.product}`;
+        this.content.querySelector('[js-week-support]').textContent = `${data.points.support}`;
+        this.content.querySelector('[js-week-process]').textContent = `${data.points.process}`;
+        this.content.querySelector('[js-week-project]').textContent = `${data.points.project}`;
 
-        this.content.querySelector('[js-week-delivery-percent]').textContent = `${Math.round(data.activity.delivery)}%`;
+        this.content.querySelector('[js-week-project-percent]').textContent = `${Math.round(data.activity.project)}%`;
         this.content.querySelector('[js-week-product-percent]').textContent = `${Math.round(data.activity.product)}%`;
-        this.content.querySelector('[js-week-monitoring-percent]').textContent = `${Math.round(data.activity.monitoring)}%`;
+        this.content.querySelector('[js-week-process-percent]').textContent = `${Math.round(data.activity.process)}%`;
         this.content.querySelector('[js-week-support-percent]').textContent = `${Math.round(data.activity.support)}%`;
 
         // Reset if cards exists
         this.content.querySelector('[js-week-cards]').innerHTML = '';
 
         if (this.showCards) {
-            data.cards.forEach((c) => {
-                const card = new CardTemplate(c, true, false, false);
+            _orderBy(data.cards, 'type').forEach((c) => {
+                const card = new CardTemplate(c, true, true, false);
                 this.cardsContainer.appendChild(card.getContent());
             });
         }

@@ -18,9 +18,9 @@ $globals-font-size: 13px;
 $globals-padding: 15px;
 $globals-padding-small: 8px;
 $globals-transition: all .233s cubic-bezier(0, 0, .21, 1) .1s;
-$globals-monitoring-color: $globals-yellow;
+$globals-process-color: $globals-yellow;
 $globals-support-color: $globals-green;
-$globals-delivery-color: $globals-red;
+$globals-project-color: $globals-red;
 $globals-product-color: $globals-blue;
 $globals-card-shadow: 0 2px 2px 0 rgba($black, .14), 0 3px 1px -2px rgba($black, .2), 0 1px 5px 0 rgba($black, .12);
 $globals-card-bg: $white;
@@ -67,9 +67,9 @@ $sidebar-footer-color: #999;
 // CONNECT
 $connect-svg-hover: #64b5f6;
 
-// TEMPLATE PROJECT
-$project-info-bg: rgba($globals-color, .1);
-$project-highlight-color: rgba($globals-red, .2);
+// TEMPLATE CLIENT
+$client-info-bg: rgba($globals-color, .1);
+$client-highlight-color: rgba($globals-red, .2);
 
-// PAGE DELIVERY
-$delivery-active-color: rgba($globals-color, .1);
+// PAGE CLIENTS
+$clients-active-color: rgba($globals-color, .1);

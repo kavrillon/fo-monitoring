@@ -2,9 +2,10 @@ import Controller from './libs/Controller';
 import ConfigManagerInstance from './libs/ConfigManager';
 import TrelloUtils from './libs/TrelloUtils';
 import HomeController from './pages/home/HomeController';
-import DeliveryController from './pages/delivery/DeliveryController';
-import MonitoringController from './pages/monitoring/MonitoringController';
+import ClientsController from './pages/clients/ClientsController';
+import ProcessController from './pages/process/ProcessController';
 import ProductController from './pages/product/ProductController';
+import ProjectController from './pages/project/ProjectController';
 import SupportController from './pages/support/SupportController';
 import WeeksController from './pages/weeks/WeeksController';
 import AppModel from './model/AppModel';
@@ -25,9 +26,9 @@ export default class AppController extends Controller {
 
         this.pages = [
             {name: 'weeks', title: 'Weeks'},
-            {name: 'delivery', title: 'Delivery'},
+            {name: 'clients', title: 'Clients'},
             {name: 'support', title: 'Support'},
-            {name: 'monitoring', title: 'Monitoring'},
+            {name: 'process', title: 'Process'},
             {name: 'product', title: 'Product'}
         ];
 
@@ -41,7 +42,7 @@ export default class AppController extends Controller {
         // Init calls
         this.bindEvents();
         this.init();
-        this.registerSW();
+        // this.registerSW();
     }
 
     registerSW() {
@@ -85,9 +86,10 @@ export default class AppController extends Controller {
 
                         new HomeController(this.data);
                         new WeeksController(this.data);
-                        new DeliveryController(this.data);
+                        new ClientsController(this.data);
                         new ProductController(this.data);
-                        new MonitoringController(this.data);
+                        new ProjectController(this.data);
+                        new ProcessController(this.data);
                         new SupportController(this.data);
 
                         // Add each week in the database

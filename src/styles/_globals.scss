@@ -54,6 +54,10 @@ html {
     -moz-font-smoothing: antialiased;
 }
 
+[hidden] {
+    display: none !important;
+}
+
 .app {
     display: flex;
     flex-direction: column;

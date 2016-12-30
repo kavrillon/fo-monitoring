@@ -1,10 +1,14 @@
 
 //------------------------------------------------------------------
-// DELIVERY
+// PAGE CLIENTS
 //-------------------------------------------------------------------
 
-.delivery {
+.page-clients {
     @include page;
+
+    @media (min-width: $screen-sm) {
+        padding-top: 30px;
+    }
 
     &__sort {
         display: flex;
@@ -43,9 +47,9 @@
             }
 
             &.active {
-                background: $delivery-active-color;
+                background: $clients-active-color;
 
-                .delivery__sort {
+                .page-clients__sort {
                     &__alpha,
                     &__points,
                     &__date {
@@ -56,8 +60,8 @@
                 }
             }
 
-            &[js-delivery-sort-order='asc'] {
-                .delivery__sort {
+            &[js-clients-sort-order='asc'] {
+                .page-clients__sort {
                     &__alpha,
                     &__points,
                     &__date {
@@ -135,17 +139,20 @@
     }
 
     &__count {
-        float: left;
         margin: $globals-padding 0;
-        width: 100%;
         text-align: center;
+
+        @media (min-width: $screen-sm) {
+            float: left;
+            width: 100%;
+        }
     }
 
     &__list {
         @include clear;
     }
 
-    .project {
+    .client {
         margin: $globals-padding 0;
 
         @media (min-width: $screen-sm) {

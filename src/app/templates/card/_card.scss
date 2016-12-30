@@ -10,12 +10,40 @@
 
     &__name {
         @include ellipsis;
-        flex: 5;
+
+        position: relative;
+        flex: 3;
         margin: 0 15px 0 0;
+
+        &__type {
+            position: absolute;
+            top: 4px;
+            left: 0;
+            border-radius: 50%;
+            width: 8px;
+            height: 8px;
+
+            &--process {
+                background: $globals-process-color;
+            }
+
+            &--product {
+                background: $globals-product-color;
+            }
+
+            &--support {
+                background: $globals-support-color;
+            }
+
+            &--project {
+                background: $globals-project-color;
+            }
+        }
 
         &__link {
             @include ellipsis;
             display: block;
+            margin-left: 15px;
             transition: $globals-transition;
             text-decoration: none;
             color: $globals-color;
@@ -29,14 +57,10 @@
         }
     }
 
-    &__type {
+    &__labels {
         flex: 2;
         text-align: center;
-    }
-
-    &__subtype {
-        flex: 2;
-        text-align: center;
+        font-size: 12px;
     }
 
     &__week {
@@ -44,8 +68,35 @@
         text-align: center;
     }
 
+    &__version {
+        flex: 2;
+        text-align: center;
+
+        @media (min-width: $screen-sm) {
+            flex: 1;
+        }
+
+        &__value {
+            display: inline-block;
+            border-radius: 6px;
+            background: $globals-color;
+            opacity: .2;
+            padding: 2px 5px;
+            font-size: 12px;
+            color: $white;
+
+            &--V3 {
+                opacity: 1;
+            }
+        }
+    }
+
     &__spent {
         flex: 2;
         text-align: right;
+
+        @media (min-width: $screen-sm) {
+            flex: 1;
+        }
     }
 }

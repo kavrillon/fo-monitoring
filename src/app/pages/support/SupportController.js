@@ -13,7 +13,7 @@ export default class SupportController extends Controller {
         super();
 
         // Controller vars
-        this.supports = this.parseDataForSupport(data);
+        this.supports = this.parseData(data);
         this.supportsList = [];
 
         // DOM vars
@@ -24,7 +24,7 @@ export default class SupportController extends Controller {
 
     displayData() {
         // Displaying supports
-        _orderBy(this.supports, 'name').forEach((p) => {
+        _orderBy(this.supports.list, 'name').forEach((p) => {
             let support = null;
 
             if (!this.supportsList[p.key]) {
@@ -38,55 +38,71 @@ export default class SupportController extends Controller {
             this.supportsList[p.key] = support;
         });
 
-        const labels = _map(this.supports, 'name');
-        const values = [];
-        this.supports.forEach((elt) => {
-            values.push(Math.round(elt.points.spent * 10 / (elt.endWeek - elt.startWeek)) / 10);
+        // Displaying chart
+
+        let datasets = [];
+        const step = .5 / this.supports.sets.length;
+        let borderStep = 1 / this.supports.sets.length;
+        let opacity = 0;
+        let opacityBorder = 0;
+
+        _orderBy(this.supports.sets, 'label').forEach((s) => {
+            opacity += step;
+            opacityBorder += borderStep;
+
+            // Days conversion
+            s.data = _map(s.data, (d) => {
+                return DateUtils.pointsToDays(d);
+            });
+
+            datasets.push(Object.assign(s, {
+                backgroundColor: `rgba(68,210,121,${opacity})`,
+                borderWidth: 1,
+                borderColor: `rgba(68,210,121,${opacityBorder})`,
+                pointRadius: 1
+            }));
         });
 
-        // Display chart
         new Chart(document.getElementById('ChartSupportRepartition'), {
-            type: 'doughnut',
+            type: 'line',
             data: {
-                labels: labels,
-                datasets: [
-                    {
-                        data: values,
-                        backgroundColor: [
-                            '#ffce56',
-                            '#44d279',
-                            '#ff6384',
-                            '#36a2eb'
-                        ],
-                        hoverBackgroundColor: [
-                            '#ffce56',
-                            '#44d279',
-                            '#ff6384',
-                            '#36a2eb'
-                        ]
-                    }
-                ]
+                labels: this.supports.labels,
+                datasets: datasets
             },
             options: {
                 legend: {
                     position: 'bottom'
                 },
                 responsive: true,
-                maintainAspectRatio: false
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
             }
         });
     }
 
-    parseDataForSupport(data) {
-        const supports = [];
+    parseData(data) {
+        const supports = {
+            list: [],
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            sets: []
+        };
 
         data.forEach((w) => {
+            const monthKey = parseInt(moment(w.startDate).format('M')) - 1;
             const starts = DateUtils.getDateOfISOWeek(w.key, 2016);
             const ends = DateUtils.getDateOfISOWeek(w.key, 2016, 5);
 
             w.cards.forEach((c) => {
                 if (c.type === 'support' && c.spent > 0) {
-                    const p = _find(supports, (o) => {
+
+                    // Add to support list
+                    let p = _find(supports.list, (o) => {
                         return o.key === c.project;
                     });
 
@@ -103,7 +119,7 @@ export default class SupportController extends Controller {
                         }
                         p.lastUpdate = new Date();
                     } else {
-                        const newSupport = new TopicModel(c.project, {
+                        p = new TopicModel(c.project, {
                             cards: [c],
                             name: c.project,
                             points: {
@@ -115,12 +131,29 @@ export default class SupportController extends Controller {
                             lastUpdate: new Date()
                         });
 
-                        supports.push(newSupport);
+                        supports.list.push(p);
+                    }
+
+                    // Add to chart set
+                    let s = _find(supports.sets, (o) => {
+                        return o.label === c.project;
+                    });
+
+                    if (!s) {
+                        s = {
+                            label: c.project,
+                            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                        };
+
+                        s.data[monthKey] += c.spent;
+                        supports.sets.push(s);
+                    } else {
+                        s.data[monthKey] += c.spent;
                     }
                 }
             });
 
-            supports.forEach((elt) => {
+            supports.list.forEach((elt) => {
                 elt.startWeek = moment(elt.startDate).isoWeek();
                 elt.endWeek = moment(elt.endDate).isoWeek();
             });

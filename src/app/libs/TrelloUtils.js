@@ -70,14 +70,17 @@ export default class TrelloUtils extends Trello {
                         w.cards.push(card);
                         w.points.estimated += card.estimated;
                         w.points.spent += card.spent;
-                        w.points[card.type] += card.spent;
+
+                        if (card.type) {
+                            w.points[card.type] += card.spent;
+                        }
                     });
 
-                    w.activity.delivery = w.points.delivery / w.points.spent * 100;
+                    w.activity.project = w.points.project / w.points.spent * 100;
                     w.activity.product = w.points.product / w.points.spent * 100;
                     w.activity.support = w.points.support / w.points.spent * 100;
-                    w.activity.monitoring = w.points.monitoring / w.points.spent * 100;
-                    w.activity.total = w.activity.delivery + w.activity.product + w.activity.support + w.activity.monitoring;
+                    w.activity.process = w.points.process / w.points.spent * 100;
+                    w.activity.total = w.activity.project + w.activity.product + w.activity.support + w.activity.process;
 
                     this.data.push(w);
                 }
@@ -88,6 +91,8 @@ export default class TrelloUtils extends Trello {
     }
 
     parseCardData(week, card) {
+        const types = ['Support', 'Process', 'Product', 'Project'];
+        const versions = ['V2', 'V3'];
         let res;
         const c = new CardModel(card.idShort);
 
@@ -97,24 +102,20 @@ export default class TrelloUtils extends Trello {
         c.url = card.shortUrl;
         c.week = week;
 
-        // Card type: from labels, delivery by default
-        const type = _find(card.labels, (o) => {
-            return o.name === 'Support' || o.name === 'Monitoring' || o.name === 'Product';
+        c.type = null;
+        c.version = null;
+        c.labels = [];
+        card.labels.forEach((l) => {
+            if (types.includes(l.name)) {
+                c.type = l.name.toLowerCase();
+            }
+            else if (versions.includes(l.name)) {
+                c.version = l.name;
+            }
+            else {
+                c.labels.push(l.name);
+            }
         });
-
-        if (typeof type === 'undefined') {
-            c.type = 'delivery'; // default type
-        } else {
-            c.type = type.name.toLowerCase();
-        }
-
-        // Card subtype: from labels
-        const subtype = _find(card.labels, (o) => {
-            return o.name === 'Implementation' || o.name === 'Review';
-        });
-        if (typeof subtype !== 'undefined') {
-            c.subtype = subtype.name.toLowerCase();
-        }
 
         // Card project: from regex on name
         res = c.name.match(/\[([^\]]*)\]/);

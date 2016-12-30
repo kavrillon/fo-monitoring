@@ -1,14 +1,24 @@
 
 //------------------------------------------------------------------
-// WEEKS
+// PAGE WEEKS
 //-------------------------------------------------------------------
 
-.weeks {
+.page-weeks {
     @include page;
 
-    &__count {
+    &__header {
+        display: flex;
         margin: $globals-padding 0;
-        text-align: center;
+
+        &__velocity {
+            flex: 1;
+            text-align: left;
+        }
+
+        &__count {
+            flex: 1;
+            text-align: right;
+        }
     }
 
     &__globals {
@@ -26,16 +36,16 @@
             font-size: 32px;
         }
 
-        &__monitoring {
-            @include weeks-globals-item($globals-monitoring-color);
+        &__process {
+            @include weeks-globals-item($globals-process-color);
         }
 
         &__support {
             @include weeks-globals-item($globals-support-color);
         }
 
-        &__delivery {
-            @include weeks-globals-item($globals-delivery-color);
+        &__project {
+            @include weeks-globals-item($globals-project-color);
         }
 
         &__product {

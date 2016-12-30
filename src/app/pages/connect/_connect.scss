@@ -1,9 +1,9 @@
 
 //------------------------------------------------------------------
-// CONNECT
+// PAGE CONNECT
 //-------------------------------------------------------------------
 
-.connect {
+.page-connect {
     @include page;
 
     &__button {
@@ -32,7 +32,7 @@
         &:focus {
             outline: 0;
 
-            .connect__button__svg__round {
+            .page-connect__button__svg__round {
                 fill: darken($connect-svg-hover, 15%);
             }
         }

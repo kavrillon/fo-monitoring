@@ -1,6 +1,6 @@
 import Model from './Model';
 
-export default class ProjectModel extends Model {
+export default class ClientModel extends Model {
     constructor(key, data) {
         super(key);
 
@@ -26,11 +26,11 @@ export default class ProjectModel extends Model {
     }
 
     static get UPDATED() {
-        return 'ProjectModel-updated';
+        return 'ClientModel-updated';
     }
 
     static get storeName() {
-        return 'ProjectModel';
+        return 'ClientModel';
     }
 
     isImplementationHighlighted() {

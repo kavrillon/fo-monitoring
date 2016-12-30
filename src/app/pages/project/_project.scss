@@ -1,9 +1,9 @@
 
 //------------------------------------------------------------------
-// PAGE PRODUCT
+// PAGE PROJECT
 //-------------------------------------------------------------------
 
-.page-product {
+.page-project {
     @include page;
 
     &__repartition {
@@ -12,6 +12,8 @@
 
         &__chart {
             @include chart;
+
+            margin-bottom: 30px;
         }
     }
 
