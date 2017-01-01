@@ -138,14 +138,16 @@
         }
     }
 
-    &__count {
+    &__stats {
+        clear: both;
+        border-top: $globals-border;
+        border-bottom: $globals-border;
         margin: $globals-padding 0;
-        text-align: center;
+        padding: $globals-padding 0;
+    }
 
-        @media (min-width: $screen-sm) {
-            float: left;
-            width: 100%;
-        }
+    &__count {
+        text-align: center;
     }
 
     &__list {

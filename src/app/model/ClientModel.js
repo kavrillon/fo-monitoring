@@ -11,6 +11,7 @@ export default class ClientModel extends Model {
             implementation: 0,
             review: 0
         };
+        this.isLive = false;
         this.implementationStart = 0;
         this.implementationEnd = 0;
         this.implementationHighlighted = false;

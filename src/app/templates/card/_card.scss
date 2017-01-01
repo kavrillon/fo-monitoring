@@ -77,13 +77,8 @@
         }
 
         &__value {
-            display: inline-block;
-            border-radius: 6px;
-            background: $globals-color;
+            @include badge;
             opacity: .2;
-            padding: 2px 5px;
-            font-size: 12px;
-            color: $white;
 
             &--V3 {
                 opacity: 1;

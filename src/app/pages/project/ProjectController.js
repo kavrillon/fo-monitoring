@@ -204,8 +204,6 @@ export default class ProjectController extends Controller {
                         }
                     }
 
-                    console.log(c.version);
-
                     // Add to version chart set
                     let vs = _find(projects.versionSets, (o) => {
                         return o.label === c.version;

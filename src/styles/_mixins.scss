@@ -139,3 +139,14 @@
         }
     }
 }
+
+@mixin badge {
+    display: inline-block;
+    border-radius: 6px;
+    background: $globals-color;
+    opacity: .2;
+    padding: 2px 5px;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: $white;
+}

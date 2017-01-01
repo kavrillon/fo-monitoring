@@ -25,13 +25,31 @@
             <input class="page-clients__filters__complete__input"
                    type="checkbox"
                    id="ClientsFilterComplete" />
-            <label class="page-clients__filters__complete__label" for="ClientsFilterComplete">Implementations</label>
+            <label class="page-clients__filters__complete__label" for="ClientsFilterComplete">Live</label>
         </div>
         <div class="page-clients__filters__highlight">
             <input class="page-clients__filters__highlighted__input"
                    type="checkbox"
                    id="ClientsFilterHighlight" />
             <label class="page-clients__filters__complete__label" for="ClientsFilterHighlight">Highlighted</label>
+        </div>
+    </div>
+    <div class="page-clients__stats">
+        <div class="page-clients__stats__imple-duration">
+            <span class="page-clients__stats__imple-duration__text">Imples average duration:</span>
+            <span class="page-clients__stats__imple-duration__value" js-clients-imple-duration-avg></span>
+        </div>
+        <div class="page-clients__stats__imple-spent">
+            <span class="page-clients__stats__imple-spent__text">Imples average spent time:</span>
+            <span class="page-clients__stats__imple-spent__value" js-clients-imple-spent-avg></span>
+        </div>
+        <div class="page-clients__stats__review-duration">
+            <span class="page-clients__stats__review-duration__text">Reviews average duration:</span>
+            <span class="page-clients__stats__review-duration__value" js-clients-review-duration-avg></span>
+        </div>
+        <div class="page-clients__stats__review-spent">
+            <span class="page-clients__stats__review-spent__text">Reviews average spent time:</span>
+            <span class="page-clients__stats__review-spent__value" js-clients-review-spent-avg></span>
         </div>
     </div>
     <div class="page-clients__count" js-clients-count></div>

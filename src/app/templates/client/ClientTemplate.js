@@ -45,6 +45,10 @@ export default class ClientTemplate {
         this.content.querySelector('[js-client-name]').textContent = data.name;
         this.content.querySelector('[js-client-last-updated]').textContent = data.lastUpdate;
 
+        if (data.isLive) {
+            this.content.querySelector('[js-client-live]').removeAttribute('hidden');
+        }
+
         if (data.implementationStart > 0 && data.implementationEnd > 0) {
             const diffImple = data.implementationEnd - data.implementationStart + 1;
             this.content.querySelector('[js-client-imple-weeks]').textContent = `${diffImple} week` + (diffImple > 1 ? 's' : '');
