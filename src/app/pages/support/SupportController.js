@@ -40,11 +40,12 @@ export default class SupportController extends Controller {
 
         // Displaying chart
 
-        let datasets = [];
+        const datasets = [];
         const step = .5 / this.supports.sets.length;
-        let borderStep = 1 / this.supports.sets.length;
-        let opacity = 0;
-        let opacityBorder = 0;
+        const borderStep = 1 / this.supports.sets.length;
+        let opacity = 0, opacityBorder = 0;
+
+        const total = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
         _orderBy(this.supports.sets, 'label').forEach((s) => {
             opacity += step;
@@ -55,12 +56,26 @@ export default class SupportController extends Controller {
                 return DateUtils.pointsToDays(d);
             });
 
+            s.data.forEach((value, key) => {
+                total[key] += value;
+            });
+
             datasets.push(Object.assign(s, {
                 backgroundColor: `rgba(68,210,121,${opacity})`,
                 borderWidth: 1,
                 borderColor: `rgba(68,210,121,${opacityBorder})`,
                 pointRadius: 1
             }));
+        });
+
+        datasets.push({
+            label: 'Total',
+            data: total,
+            tooltip: false,
+            fill: false,
+            borderWidth: 1,
+            borderColor: '#cc0000',
+            pointRadius: 1
         });
 
         new Chart(document.getElementById('ChartSupportRepartition'), {
@@ -94,13 +109,12 @@ export default class SupportController extends Controller {
         };
 
         data.forEach((w) => {
-            const monthKey = parseInt(moment(w.startDate).format('M')) - 1;
+            const monthKey = DateUtils.getMonthKeyFromStartDate(w.startDate);
             const starts = DateUtils.getDateOfISOWeek(w.key, 2016);
             const ends = DateUtils.getDateOfISOWeek(w.key, 2016, 5);
 
             w.cards.forEach((c) => {
                 if (c.type === 'support' && c.spent > 0) {
-
                     // Add to support list
                     let p = _find(supports.list, (o) => {
                         return o.key === c.project;

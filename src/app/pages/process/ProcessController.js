@@ -6,7 +6,6 @@ import _find from 'lodash/find';
 import _map from 'lodash/map';
 import _orderBy from 'lodash/orderBy';
 import Chart from 'chart.js';
-import moment from 'moment';
 
 export default class ProcessController extends Controller {
     constructor(data) {
@@ -40,11 +39,12 @@ export default class ProcessController extends Controller {
 
         // Displaying chart
 
-        let datasets = [];
+        const datasets = [];
         const step = .5 / this.processes.sets.length;
-        let borderStep = 1 / this.processes.sets.length;
-        let opacity = 0;
-        let opacityBorder = 0;
+        const borderStep = 1 / this.processes.sets.length;
+        let opacity = 0, opacityBorder = 0;
+
+        const total = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
         _orderBy(this.processes.sets, 'label').forEach((s) => {
             opacity += step;
@@ -55,12 +55,27 @@ export default class ProcessController extends Controller {
                 return DateUtils.pointsToDays(d);
             });
 
+            s.data.forEach((value, key) => {
+                total[key] += value;
+            });
+
+
             datasets.push(Object.assign(s, {
                 backgroundColor: `rgba(255,206,86,${opacity})`,
                 borderWidth: 1,
                 borderColor: `rgba(255,206,86,${opacityBorder})`,
                 pointRadius: 1
             }));
+        });
+
+        datasets.push({
+            label: 'Total',
+            data: total,
+            tooltip: false,
+            fill: false,
+            borderWidth: 1,
+            borderColor: '#cc0000',
+            pointRadius: 1
         });
 
         new Chart(document.getElementById('ChartProcessRepartition'), {
@@ -94,7 +109,7 @@ export default class ProcessController extends Controller {
         };
 
         data.forEach((w) => {
-            const monthKey = parseInt(moment(w.startDate).format('M')) - 1;
+            const monthKey = DateUtils.getMonthKeyFromStartDate(w.startDate);
             const starts = DateUtils.getDateOfISOWeek(w.key, 2016);
             const ends = DateUtils.getDateOfISOWeek(w.key, 2016, 5);
 

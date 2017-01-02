@@ -43,8 +43,8 @@
         &__link {
             @include ellipsis;
             display: block;
-            margin-left: 15px;
             transition: $globals-transition;
+            margin-left: 15px;
             text-decoration: none;
             color: $globals-color;
 

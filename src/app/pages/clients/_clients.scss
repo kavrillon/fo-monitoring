@@ -12,7 +12,6 @@
 
     &__sort {
         display: flex;
-        margin: -$globals-padding;
         margin-bottom: 0;
         box-shadow: $globals-card-shadow;
 
@@ -140,13 +139,46 @@
 
     &__stats {
         clear: both;
-        border-top: $globals-border;
-        border-bottom: $globals-border;
-        margin: $globals-padding 0;
-        padding: $globals-padding 0;
+        margin: 0 0 $globals-padding;
+        padding: 0 0 $globals-padding;
+        text-align: center;
+
+        @media (min-width: $screen-sm) {
+            display: flex;
+        }
+
+        &__imple,
+        &__review {
+            @include card;
+            flex: 1;
+            padding: 10px;
+
+            &__title {
+                margin-top: 0;
+            }
+
+            &__duration,
+            &__spent {
+                display: flex;
+                padding: 5px 0;
+
+                &__text {
+                    flex: 1;
+                }
+
+                &__value {
+                    flex: 1;
+                    padding-left: 15px;
+                    color: $globals-color;
+                    font-size: 16px;
+                    font-weight: bold;
+                }
+            }
+        }
     }
 
     &__count {
+        clear: both;
         text-align: center;
     }
 

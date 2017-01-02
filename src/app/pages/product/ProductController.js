@@ -40,11 +40,12 @@ export default class ProductController extends Controller {
 
         // Displaying chart
 
-        let datasets = [];
+        const datasets = [];
         const step = .5 / this.products.sets.length;
-        let borderStep = 1 / this.products.sets.length;
-        let opacity = 0;
-        let opacityBorder = 0;
+        const borderStep = 1 / this.products.sets.length;
+        let opacity = 0, opacityBorder = 0;
+
+        const total = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
         _orderBy(this.products.sets, 'label').forEach((s) => {
             opacity += step;
@@ -55,12 +56,26 @@ export default class ProductController extends Controller {
                 return DateUtils.pointsToDays(d);
             });
 
+            s.data.forEach((value, key) => {
+                total[key] += value;
+            });
+
             datasets.push(Object.assign(s, {
                 backgroundColor: `rgba(54,162,235,${opacity})`,
                 borderWidth: 1,
                 borderColor: `rgba(54,162,235,${opacityBorder})`,
                 pointRadius: 1
             }));
+        });
+
+        datasets.push({
+            label: 'Total',
+            data: total,
+            tooltip: false,
+            fill: false,
+            borderWidth: 1,
+            borderColor: '#cc0000',
+            pointRadius: 1
         });
 
         new Chart(document.getElementById('ChartProductRepartition'), {
@@ -94,7 +109,7 @@ export default class ProductController extends Controller {
         };
 
         _orderBy(data, 'key').forEach((w) => {
-            const monthKey = parseInt(moment(w.startDate).format('M')) - 1;
+            const monthKey = DateUtils.getMonthKeyFromStartDate(w.startDate);
             const starts = DateUtils.getDateOfISOWeek(w.key, 2016);
             const ends = DateUtils.getDateOfISOWeek(w.key, 2016, 5);
 

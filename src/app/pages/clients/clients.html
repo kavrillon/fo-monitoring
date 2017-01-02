@@ -1,5 +1,29 @@
 <!-- Page Clients -->
 <section class="page-clients" js-page="clients">
+    <div class="page-clients__stats">
+        <div class="page-clients__stats__imple">
+            <h2 class="page-clients__stats__imple__title">Implementations</h2>
+            <div class="page-clients__stats__imple__spent">
+                <span class="page-clients__stats__imple__spent__text">Avg spent time:</span>
+                <span class="page-clients__stats__imple__spent__value" js-clients-imple-spent-avg></span>
+            </div>
+            <div class="page-clients__stats__imple__duration">
+                <span class="page-clients__stats__imple__duration__text">Avg duration:</span>
+                <span class="page-clients__stats__imple__duration__value" js-clients-imple-duration-avg></span>
+            </div>
+        </div>
+        <div class="page-clients__stats__review">
+            <h2 class="page-clients__stats__review__title">Reviews</h2>
+            <div class="page-clients__stats__review__spent">
+                <span class="page-clients__stats__review__spent__text">Avg spent time:</span>
+                <span class="page-clients__stats__review__spent__value" js-clients-review-spent-avg></span>
+            </div>
+            <div class="page-clients__stats__review__duration">
+                <span class="page-clients__stats__review__duration__text">Avg duration:</span>
+                <span class="page-clients__stats__review__duration__value" js-clients-review-duration-avg></span>
+            </div>
+        </div>
+    </div>
     <div class="page-clients__sort">
         <button class="page-clients__sort__alpha active" js-clients-sort="name" js-clients-sort-order="asc">
             <span class="page-clients__sort__alpha__order">&uarr;</span>
@@ -32,24 +56,6 @@
                    type="checkbox"
                    id="ClientsFilterHighlight" />
             <label class="page-clients__filters__complete__label" for="ClientsFilterHighlight">Highlighted</label>
-        </div>
-    </div>
-    <div class="page-clients__stats">
-        <div class="page-clients__stats__imple-duration">
-            <span class="page-clients__stats__imple-duration__text">Imples average duration:</span>
-            <span class="page-clients__stats__imple-duration__value" js-clients-imple-duration-avg></span>
-        </div>
-        <div class="page-clients__stats__imple-spent">
-            <span class="page-clients__stats__imple-spent__text">Imples average spent time:</span>
-            <span class="page-clients__stats__imple-spent__value" js-clients-imple-spent-avg></span>
-        </div>
-        <div class="page-clients__stats__review-duration">
-            <span class="page-clients__stats__review-duration__text">Reviews average duration:</span>
-            <span class="page-clients__stats__review-duration__value" js-clients-review-duration-avg></span>
-        </div>
-        <div class="page-clients__stats__review-spent">
-            <span class="page-clients__stats__review-spent__text">Reviews average spent time:</span>
-            <span class="page-clients__stats__review-spent__value" js-clients-review-spent-avg></span>
         </div>
     </div>
     <div class="page-clients__count" js-clients-count></div>

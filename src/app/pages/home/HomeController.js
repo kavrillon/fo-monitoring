@@ -1,8 +1,8 @@
 import Controller from '../../libs/Controller';
+import DateUtils from '../../libs/DateUtils';
 import _orderBy from 'lodash/orderBy';
 import _map from 'lodash/map';
 import Chart from 'chart.js';
-import moment from 'moment';
 
 export default class HomeController extends Controller {
     constructor(data) {
@@ -64,14 +64,7 @@ export default class HomeController extends Controller {
                     display: false
                 },
                 responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
+                maintainAspectRatio: false
             }
         });
     }
@@ -149,44 +142,31 @@ export default class HomeController extends Controller {
             values.push({
                 key: i,
                 label: labels[i],
-                activity: {
-                    process: 0,
-                    support: 0,
-                    project: 0,
-                    product: 0
-                },
-                points: {
-                    process: 0,
-                    support: 0,
-                    project: 0,
-                    product: 0,
-                    spent: 0,
-                    available: 0,
-                    estimated: 0
-                },
-                weeks: []
+                process: 0,
+                support: 0,
+                project: 0,
+                product: 0,
+                spent: 0
             });
         }
 
         _orderBy(this.data, 'key').forEach((w) => {
-            const monthKey = parseInt(moment(w.startDate).format('M')) - 1;
+            const monthKey = DateUtils.getMonthKeyFromStartDate(w.startDate);
             if (values[monthKey]) {
-                values[monthKey].weeks.push(w);
-                values[monthKey].points.product += w.points.product;
-                values[monthKey].points.process += w.points.process;
-                values[monthKey].points.support += w.points.support;
-                values[monthKey].points.project += w.points.project;
-                values[monthKey].points.spent += w.points.spent;
-                values[monthKey].points.available += w.points.available;
-                values[monthKey].points.estimated += w.points.estimated;
+                values[monthKey].product += w.points.product;
+                values[monthKey].process += w.points.process;
+                values[monthKey].support += w.points.support;
+                values[monthKey].project += w.points.project;
+                values[monthKey].spent += w.points.spent;
             }
         });
 
         values.forEach((m) => {
-            m.activity.product = Math.round(m.points.product * 100 / m.points.spent);
-            m.activity.process = Math.round(m.points.process * 100 / m.points.spent);
-            m.activity.support = Math.round(m.points.support * 100 / m.points.spent);
-            m.activity.project = Math.round(m.points.project * 100 / m.points.spent);
+            m.product = DateUtils.pointsToDays(m.product);
+            m.process = DateUtils.pointsToDays(m.process);
+            m.support = DateUtils.pointsToDays(m.support);
+            m.project = DateUtils.pointsToDays(m.project);
+            m.spent = DateUtils.pointsToDays(m.spent);
         });
 
         new Chart(document.getElementById('ChartMonthlyActivity'), {
@@ -196,7 +176,7 @@ export default class HomeController extends Controller {
                 datasets: [
                     {
                         label: 'Process',
-                        data: _map(values, 'activity.process'),
+                        data: _map(values, 'process'),
                         backgroundColor: 'rgba(255,206,86,0.3)',
                         borderWidth: 1,
                         borderColor: '#ffce56',
@@ -204,7 +184,7 @@ export default class HomeController extends Controller {
                     },
                     {
                         label: 'Support',
-                        data: _map(values, 'activity.support'),
+                        data: _map(values, 'support'),
                         backgroundColor: 'rgba(68,210,121,0.3)',
                         borderWidth: 1,
                         borderColor: '#44d279',
@@ -212,7 +192,7 @@ export default class HomeController extends Controller {
                     },
                     {
                         label: 'Project',
-                        data: _map(values, 'activity.project'),
+                        data: _map(values, 'project'),
                         backgroundColor: 'rgba(255,99,132,0.3)',
                         borderWidth: 1,
                         borderColor: '#ff6384',
@@ -220,10 +200,19 @@ export default class HomeController extends Controller {
                     },
                     {
                         label: 'Product',
-                        data: _map(values, 'activity.product'),
+                        data: _map(values, 'product'),
                         backgroundColor: 'rgba(54,162,235,0.3)',
                         borderWidth: 1,
                         borderColor: '#36a2eb',
+                        pointRadius: 1
+                    },
+                    {
+                        label: 'Total',
+                        data: _map(values, 'spent'),
+                        tooltip: false,
+                        fill: false,
+                        borderWidth: 1,
+                        borderColor: '#cc0000',
                         pointRadius: 1
                     }
                 ]

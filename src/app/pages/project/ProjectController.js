@@ -43,8 +43,9 @@ export default class ProjectController extends Controller {
         let datasets = [];
         let step = .5 / this.projects.sets.length;
         let borderStep = 1 / this.projects.sets.length;
-        let opacity = 0;
-        let opacityBorder = 0;
+        let opacity = 0, opacityBorder = 0;
+
+        const total = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
         _orderBy(this.projects.sets, 'label').forEach((s) => {
             opacity += step;
@@ -55,12 +56,26 @@ export default class ProjectController extends Controller {
                 return DateUtils.pointsToDays(d);
             });
 
+            s.data.forEach((value, key) => {
+                total[key] += value;
+            });
+
             datasets.push(Object.assign(s, {
                 backgroundColor: `rgba(255,99,132,${opacity})`,
                 borderWidth: 1,
                 borderColor: `rgba(255,99,132,${opacityBorder})`,
                 pointRadius: 1
             }));
+        });
+
+        datasets.push({
+            label: 'Total',
+            data: total,
+            tooltip: false,
+            fill: false,
+            borderWidth: 1,
+            borderColor: '#cc0000',
+            pointRadius: 1
         });
 
         new Chart(document.getElementById('ChartProjectRepartition'), {
@@ -88,8 +103,7 @@ export default class ProjectController extends Controller {
         datasets = [];
         step = .5 / this.projects.versionSets.length;
         borderStep = 1 / this.projects.versionSets.length;
-        opacity = 0;
-        opacityBorder = 0;
+        opacity = 0, opacityBorder = 0;
 
         _orderBy(this.projects.versionSets, 'label').forEach((s) => {
             opacity += step;
@@ -141,7 +155,7 @@ export default class ProjectController extends Controller {
         };
 
         _orderBy(data, 'key').forEach((w) => {
-            const monthKey = parseInt(moment(w.startDate).format('M')) - 1;
+            const monthKey = DateUtils.getMonthKeyFromStartDate(w.startDate);
             const starts = DateUtils.getDateOfISOWeek(w.key, 2016);
             const ends = DateUtils.getDateOfISOWeek(w.key, 2016, 5);
 

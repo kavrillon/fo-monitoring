@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class DateUtils {
 
     static getDateOfISOWeek(w, y, d = 0) {
@@ -28,5 +30,18 @@ export default class DateUtils {
         }
 
         return value;
+    }
+
+    /**
+     * Get the month key (0 .. 11) value from a start date.
+     * As the parameter given is the monday of the week, we'll admit an small error if the week in between two month
+     * eg. if the startDate is the Monday 31/10/16:
+     * as only the Monday is in October, the month returned will be November
+     * For our calculation, we return the month of the Wednesday
+     * @param week
+     */
+    static getMonthKeyFromStartDate(week) {
+        const startDate = moment(week).add(2, 'days'); // We take the wednesday (middle of the week)
+        return parseInt(moment(startDate).format('M')) - 1; // We take the month of this date
     }
 }
