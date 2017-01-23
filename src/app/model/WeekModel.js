@@ -3,6 +3,8 @@ import Model from './Model';
 export default class WeekModel extends Model {
     constructor(key, data) {
         super(key);
+        this.year = 0;
+        this.number = 0;
         this.points = {
             available: 0,
             estimated: 0,

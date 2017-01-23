@@ -28,6 +28,23 @@
                 opacity: .5;
                 margin-left: 5px;
                 font-size: 12px;
+
+                &__url {
+                    text-decoration: none;
+                    color: $white;
+                }
+            }
+
+            &__version {
+                @include badge;
+
+                opacity: .5;
+                margin-left: 5px;
+                font-size: 12px;
+
+                &.v3 {
+                    opacity: 1;
+                }
             }
         }
 

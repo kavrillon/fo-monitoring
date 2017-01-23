@@ -1,5 +1,46 @@
 <!-- Page Clients -->
 <section class="page-clients" js-page="clients">
+    <div class="page-clients__sort">
+        <button class="page-clients__sort__alpha active" js-clients-sort="name" js-clients-sort-order="asc">
+            <span class="page-clients__sort__alpha__order">&uarr;</span>
+            <span class="page-clients__sort__alpha__label">A-Z</span>
+        </button>
+        <button class="page-clients__sort__points" js-clients-sort="points.spent" js-clients-sort-order="asc">
+            <span class="page-clients__sort__points__order">&uarr;</span>
+            <span class="page-clients__sort__points__label">Spent</span>
+        </button>
+        <button class="page-clients__sort__date" js-clients-sort="implementationStart" js-clients-sort-order="asc">
+            <span class="page-clients__sort__date__order">&uarr;</span>
+            <span class="page-clients__sort__date__label">Date</span>
+        </button>
+    </div>
+    <div class="page-clients__filters">
+        <div class="page-clients__filters__name">
+            <input class="page-clients__filters__name__input"
+                   type="text"
+                   id="ClientsFilterName"
+                   placeholder="Project name" />
+        </div>
+        <div class="page-clients__filters__v3">
+            <input class="page-clients__filters__v3__input"
+                   type="checkbox"
+                   id="ClientsFilterV3" />
+            <label class="page-clients__filters__v3__label" for="ClientsFilterV3">V3</label>
+        </div>
+        <div class="page-clients__filters__complete">
+            <input class="page-clients__filters__complete__input"
+                   type="checkbox"
+                   id="ClientsFilterComplete" />
+            <label class="page-clients__filters__complete__label" for="ClientsFilterComplete">Live</label>
+        </div>
+        <div class="page-clients__filters__highlight">
+            <input class="page-clients__filters__highlighted__input"
+                   type="checkbox"
+                   id="ClientsFilterHighlight" />
+            <label class="page-clients__filters__complete__label" for="ClientsFilterHighlight">Highlighted</label>
+        </div>
+    </div>
+    <div class="page-clients__count" js-clients-count></div>
     <div class="page-clients__stats">
         <div class="page-clients__stats__imple">
             <h2 class="page-clients__stats__imple__title">Implementations</h2>
@@ -24,40 +65,5 @@
             </div>
         </div>
     </div>
-    <div class="page-clients__sort">
-        <button class="page-clients__sort__alpha active" js-clients-sort="name" js-clients-sort-order="asc">
-            <span class="page-clients__sort__alpha__order">&uarr;</span>
-            <span class="page-clients__sort__alpha__label">A-Z</span>
-        </button>
-        <button class="page-clients__sort__points" js-clients-sort="points.spent" js-clients-sort-order="asc">
-            <span class="page-clients__sort__points__order">&uarr;</span>
-            <span class="page-clients__sort__points__label">Spent</span>
-        </button>
-        <button class="page-clients__sort__date" js-clients-sort="implementationStart" js-clients-sort-order="asc">
-            <span class="page-clients__sort__date__order">&uarr;</span>
-            <span class="page-clients__sort__date__label">Date</span>
-        </button>
-    </div>
-    <div class="page-clients__filters">
-        <div class="page-clients__filters__name">
-            <input class="page-clients__filters__name__input"
-                   type="text"
-                   id="ClientsFilterName"
-                   placeholder="Project name" />
-        </div>
-        <div class="page-clients__filters__complete">
-            <input class="page-clients__filters__complete__input"
-                   type="checkbox"
-                   id="ClientsFilterComplete" />
-            <label class="page-clients__filters__complete__label" for="ClientsFilterComplete">Live</label>
-        </div>
-        <div class="page-clients__filters__highlight">
-            <input class="page-clients__filters__highlighted__input"
-                   type="checkbox"
-                   id="ClientsFilterHighlight" />
-            <label class="page-clients__filters__complete__label" for="ClientsFilterHighlight">Highlighted</label>
-        </div>
-    </div>
-    <div class="page-clients__count" js-clients-count></div>
     <div class="page-clients__list" js-clients-list></div>
 </section>

@@ -45,7 +45,7 @@ export default class ProjectController extends Controller {
         let borderStep = 1 / this.projects.sets.length;
         let opacity = 0, opacityBorder = 0;
 
-        const total = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        const total = Array(this.projects.labels.length).fill(0);
 
         _orderBy(this.projects.sets, 'label').forEach((s) => {
             opacity += step;
@@ -145,97 +145,128 @@ export default class ProjectController extends Controller {
         });
     }
 
+    getChartLabels(data) {
+        const labels = [];
+
+        _orderBy(data, 'key').forEach((w) => {
+            const matches = w.key.match(/^(\d+)-(\d+)/);
+
+            if (matches && matches.length > 0) {
+                const year = parseInt(matches[1]);
+                const monthKey = DateUtils.getMonthKeyFromStartDate(w.startDate);
+
+                const label = moment().year(year).month(monthKey).format('MMM') + ' ' + year.toString().substr(2,2);
+                if (!labels.includes(label)) {
+                    labels.push(label);
+                }
+            }
+        });
+
+        return labels;
+    }
+
     parseData(data) {
-        const labels = ['Mockup', 'Bridge Product', 'Feature', 'Bug', 'Review', 'Update', 'Implementation'];
+        const tags = ['Mockup', 'Bridge Product', 'Feature', 'Bug', 'Review', 'Update', 'Implementation'];
         const projects = {
             list: [],
             versionSets: [],
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            labels: [],
             sets: []
         };
 
-        _orderBy(data, 'key').forEach((w) => {
-            const monthKey = DateUtils.getMonthKeyFromStartDate(w.startDate);
-            const starts = DateUtils.getDateOfISOWeek(w.key, 2016);
-            const ends = DateUtils.getDateOfISOWeek(w.key, 2016, 5);
+        // Define labels
+        projects.labels = this.getChartLabels(data);
 
-            w.cards.forEach((c) => {
-                if (c.type === 'project' && c.spent > 0) {
+        // Parse weeks
+        data.forEach((w) => {
+            const matches = w.key.match(/^(\d+)-(\d+)/);
 
-                    const l = _find(c.labels, (o) => {
-                        return labels.includes(o);
-                    });
+            if (matches && matches.length > 0) {
+                const year = parseInt(matches[1]);
+                const weekNumber = parseInt(matches[2]);
+                const monthKey = DateUtils.getMonthKeyFromStartDate(w.startDate);
+                const starts = DateUtils.getDateOfISOWeek(weekNumber, year);
+                const ends = DateUtils.getDateOfISOWeek(weekNumber, year, 5);
+                const label = moment().year(year).month(monthKey).format('MMM') + ' ' + year.toString().substr(2, 2);
 
-                    if (l) {
-                        // Add to project list
-                        let p = _find(projects.list, (o) => {
-                            return o.key === l;
+                w.cards.forEach((c) => {
+                    if (c.type === 'project' && c.spent > 0) {
+
+                        const l = _find(c.labels, (o) => {
+                            return tags.includes(o);
                         });
 
-                        if (p) {
-                            p.cards.push(c);
-                            p.points.estimated += c.estimated;
-                            p.points.spent += c.spent;
-
-                            if (p.startDate > starts) {
-                                p.startDate = starts;
-                            }
-                            if (p.endDate < ends) {
-                                p.endDate = ends;
-                            }
-                            p.lastUpdate = new Date();
-                        } else {
-                            p = new TopicModel(l, {
-                                cards: [c],
-                                name: l,
-                                points: {
-                                    spent: c.spent,
-                                    estimated: c.estimated
-                                },
-                                startDate: starts,
-                                endDate: ends,
-                                lastUpdate: new Date()
+                        if (l) {
+                            // Add to project list
+                            let p = _find(projects.list, (o) => {
+                                return o.key === l;
                             });
 
-                            projects.list.push(p);
+                            if (p) {
+                                p.cards.push(c);
+                                p.points.estimated += c.estimated;
+                                p.points.spent += c.spent;
+
+                                if (p.startDate > starts) {
+                                    p.startDate = starts;
+                                }
+                                if (p.endDate < ends) {
+                                    p.endDate = ends;
+                                }
+                                p.lastUpdate = new Date();
+                            } else {
+                                p = new TopicModel(l, {
+                                    cards: [c],
+                                    name: l,
+                                    points: {
+                                        spent: c.spent,
+                                        estimated: c.estimated
+                                    },
+                                    startDate: starts,
+                                    endDate: ends,
+                                    lastUpdate: new Date()
+                                });
+
+                                projects.list.push(p);
+                            }
+
+                            // Add to chart set
+                            let s = _find(projects.sets, (o) => {
+                                return o.label === l;
+                            });
+
+                            if (!s) {
+                                s = {
+                                    label: l,
+                                    data: Array(projects.labels.length).fill(0)
+                                };
+
+                                s.data[projects.labels.indexOf(label)] = c.spent;
+                                projects.sets.push(s);
+                            } else {
+                                s.data[projects.labels.indexOf(label)] += c.spent;
+                            }
                         }
 
-                        // Add to chart set
-                        let s = _find(projects.sets, (o) => {
-                            return o.label === l;
+                        // Add to version chart set
+                        let vs = _find(projects.versionSets, (o) => {
+                            return o.label === c.version;
                         });
 
-                        if (!s) {
-                            s = {
-                                label: l,
-                                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                        if (!vs) {
+                            vs = {
+                                label: c.version,
+                                data: Array(projects.labels.length).fill(0)
                             };
 
-                            s.data[monthKey] += c.spent;
-                            projects.sets.push(s);
+                            vs.data[projects.labels.indexOf(label)] = c.spent;
+                            projects.versionSets.push(vs);
                         } else {
-                            s.data[monthKey] += c.spent;
+                            vs.data[projects.labels.indexOf(label)] += c.spent;
                         }
                     }
-
-                    // Add to version chart set
-                    let vs = _find(projects.versionSets, (o) => {
-                        return o.label === c.version;
-                    });
-
-                    if (!vs) {
-                        vs = {
-                            label: c.version,
-                            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-                        };
-
-                        vs.data[monthKey] += c.spent;
-                        projects.versionSets.push(vs);
-                    } else {
-                        vs.data[monthKey] += c.spent;
-                    }
-                }
-            });
+                });
+            }
         });
 
         return projects;

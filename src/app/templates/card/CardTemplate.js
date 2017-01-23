@@ -1,3 +1,5 @@
+import DateUtils from '../../libs/DateUtils';
+
 export default class CardTemplate {
     constructor(data, showType = false, showLabels = false, showWeek = false, showVersion = true) {
         this.template = document.querySelector('[js-template-card]');
@@ -34,7 +36,7 @@ export default class CardTemplate {
 
         if (showWeek) {
             this.content.querySelector('[js-card-week]').removeAttribute('hidden');
-            this.content.querySelector('[js-card-week]').textContent = `W${this.data.week}`;
+            this.content.querySelector('[js-card-week]').textContent = DateUtils.getWeekFormat(this.data.week);
         }
 
         this.content.querySelector('[js-card-spent]').textContent = `${this.data.spent} pts`;

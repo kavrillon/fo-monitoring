@@ -7,7 +7,16 @@ const Config = {
     trello: {
         key: 'd54e7add79eb871a615dcdb47033a99b',
         connectUrl: 'https://trello.com/1/authorize?name=fo-sprints&scope=read&expiration=30days&response_type=token',
-        url: 'https://api.trello.com/1/boards/577130dfed8fabf757eddc60/lists',
+        boards: [
+            {
+                year: 2017,
+                url: '1/boards/5873497b3b5a6abf4aefc12a/lists'
+            },
+            {
+                year: 2016,
+                url: '1/boards/577130dfed8fabf757eddc60/lists'
+            }
+        ],
         filters: '?cards=open&card_fields=name,labels&fields=name,desc'
     },
     stores: {

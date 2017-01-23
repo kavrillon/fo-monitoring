@@ -45,7 +45,7 @@ export default class ProductController extends Controller {
         const borderStep = 1 / this.products.sets.length;
         let opacity = 0, opacityBorder = 0;
 
-        const total = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        const total = Array(this.products.labels.length).fill(0);
 
         _orderBy(this.products.sets, 'label').forEach((s) => {
             opacity += step;
@@ -101,72 +101,103 @@ export default class ProductController extends Controller {
         });
     }
 
+    getChartLabels(data) {
+        const labels = [];
+
+        _orderBy(data, 'key').forEach((w) => {
+            const matches = w.key.match(/^(\d+)-(\d+)/);
+
+            if (matches && matches.length > 0) {
+                const year = parseInt(matches[1]);
+                const monthKey = DateUtils.getMonthKeyFromStartDate(w.startDate);
+
+                const label = moment().year(year).month(monthKey).format('MMM') + ' ' + year.toString().substr(2,2);
+                if (!labels.includes(label)) {
+                    labels.push(label);
+                }
+            }
+        });
+
+        return labels;
+    }
+
     parseData(data) {
         const products = {
             list: [],
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            labels: [],
             sets: []
         };
 
-        _orderBy(data, 'key').forEach((w) => {
-            const monthKey = DateUtils.getMonthKeyFromStartDate(w.startDate);
-            const starts = DateUtils.getDateOfISOWeek(w.key, 2016);
-            const ends = DateUtils.getDateOfISOWeek(w.key, 2016, 5);
+        // Define labels
+        products.labels = this.getChartLabels(data);
 
-            w.cards.forEach((c) => {
-                if (c.type === 'product' && c.spent > 0) {
+        // Parse weeks
+        data.forEach((w) => {
+            const matches = w.key.match(/^(\d+)-(\d+)/);
 
-                    // Add to product list
-                    let p = _find(products.list, (o) => {
-                        return o.key === c.project;
-                    });
+            if (matches && matches.length > 0) {
+                const year = parseInt(matches[1]);
+                const weekNumber = parseInt(matches[2]);
+                const monthKey = DateUtils.getMonthKeyFromStartDate(w.startDate);
+                const starts = DateUtils.getDateOfISOWeek(weekNumber, year);
+                const ends = DateUtils.getDateOfISOWeek(weekNumber, year, 5);
+                const label = moment().year(year).month(monthKey).format('MMM') + ' ' + year.toString().substr(2,2);
 
-                    if (p) {
-                        p.cards.push(c);
-                        p.points.estimated += c.estimated;
-                        p.points.spent += c.spent;
+                w.cards.forEach((c) => {
+                    if (c.type === 'product' && c.spent > 0) {
 
-                        if (p.startDate > starts) {
-                            p.startDate = starts;
-                        }
-                        if (p.endDate < ends) {
-                            p.endDate = ends;
-                        }
-                        p.lastUpdate = new Date();
-                    } else {
-                        p = new TopicModel(c.project, {
-                            cards: [c],
-                            name: c.project,
-                            points: {
-                                spent: c.spent,
-                                estimated: c.estimated
-                            },
-                            startDate: starts,
-                            endDate: ends,
-                            lastUpdate: new Date()
+                        // Add to product list
+                        let p = _find(products.list, (o) => {
+                            return o.key === c.project;
                         });
 
-                        products.list.push(p);
+                        if (p) {
+                            p.cards.push(c);
+                            p.points.estimated += c.estimated;
+                            p.points.spent += c.spent;
+
+                            if (p.startDate > starts) {
+                                p.startDate = starts;
+                            }
+                            if (p.endDate < ends) {
+                                p.endDate = ends;
+                            }
+                            p.lastUpdate = new Date();
+                        } else {
+                            p = new TopicModel(c.project, {
+                                cards: [c],
+                                name: c.project,
+                                points: {
+                                    spent: c.spent,
+                                    estimated: c.estimated
+                                },
+                                startDate: starts,
+                                endDate: ends,
+                                lastUpdate: new Date()
+                            });
+
+                            products.list.push(p);
+                        }
+
+                        // Add to chart set
+                        let s = _find(products.sets, (o) => {
+                            return o.label === c.project;
+                        });
+
+                        if (!s) {
+                            s = {
+                                label: c.project,
+                                data: Array(products.labels.length).fill(0)
+                            };
+
+                            s.data[products.labels.indexOf(label)] = c.spent;
+                            products.sets.push(s);
+                        } else {
+                            s.data[products.labels.indexOf(label)] += c.spent;
+                        }
                     }
-
-                    // Add to chart set
-                    let s = _find(products.sets, (o) => {
-                        return o.label === c.project;
-                    });
-
-                    if (!s) {
-                        s = {
-                            label: c.project,
-                            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-                        };
-
-                        s.data[monthKey] += c.spent;
-                        products.sets.push(s);
-                    } else {
-                        s.data[monthKey] += c.spent;
-                    }
-                }
-            });
+                });
+            }
         });
 
         return products;

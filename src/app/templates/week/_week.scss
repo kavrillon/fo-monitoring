@@ -20,19 +20,20 @@
             z-index: 1;
             margin-top: 6px;
             margin-left: 5px;
-            padding: 6px;
-            width: 30px;
-            height: 30px;
+            padding: 8px 6px;
+            width: 36px;
+            height: 36px;
+            text-align: center;
             color: $white;
             font-family: 'MuseoSansRounded-500', Arial, sans-serif;
             font-size: 16px;
 
             &:before {
                 position: absolute;
-                top: -4px;
-                right: -4px;
-                bottom: -4px;
-                left: -4px;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
                 z-index: -1;
                 margin: auto;
                 border-radius: 50%;

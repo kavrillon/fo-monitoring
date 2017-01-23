@@ -15,6 +15,7 @@ export default class ClientsController extends Controller {
         this.clientsList = [];
         this.activeSort = 'alpha';
         this.activeOrder = 'asc';
+        this.filterV3 = false;
         this.filterComplete = false;
         this.filterHighlight = false;
         this.filterName = null;
@@ -75,6 +76,11 @@ export default class ClientsController extends Controller {
         });
 
         // Filter
+        document.querySelector('#ClientsFilterV3').addEventListener('change', (e) => {
+            this.filterV3 = e.target.checked;
+            this.displayClients();
+        });
+
         document.querySelector('#ClientsFilterComplete').addEventListener('change', (e) => {
             this.filterComplete = e.target.checked;
             this.displayClients();
@@ -96,6 +102,12 @@ export default class ClientsController extends Controller {
         this.clientsContainer.innerHTML = '';
         this.clientsList = [];
         let results = this.clients;
+
+        if (this.filterV3) {
+            results = _filter(results, (o) => {
+                return o.versionLive == 'V3';
+            });
+        }
 
         if (this.filterComplete) {
             results = _filter(results, (o) => {
@@ -122,15 +134,15 @@ export default class ClientsController extends Controller {
 
         results.forEach((r) => {
             if (r.isLive) {
-                if (r.implementationStart > 0 && r.implementationEnd > 0) {
+                if (r.implementationStart !== 0 && r.implementationEnd !== 0) {
                     countImple++;
-                    avgImpleDuration += r.implementationEnd - r.implementationStart + 1;
+                    avgImpleDuration += DateUtils.getDiffWeeks(r.implementationStart, r.implementationEnd);
                     avgImpleSpent += r.points.implementation;
                 }
 
-                if (r.reviewStart > 0 && r.reviewEnd > 0) {
+                if (r.reviewStart !== 0 && r.reviewEnd !== 0) {
                     countReview++;
-                    avgReviewDuration += r.reviewEnd - r.reviewStart + 1;
+                    avgReviewDuration += DateUtils.getDiffWeeks(r.reviewStart, r.reviewEnd);
                     avgReviewSpent += r.points.review;
                 }
             }
@@ -166,7 +178,7 @@ export default class ClientsController extends Controller {
 
         data.forEach((w) => {
             w.cards.forEach((c) => {
-                if (c.type === 'project' && (c.spent > 0 || c.labels.includes('Live'))) {
+                if ((c.type === 'project' || c.type === 'support') && (c.spent > 0 || c.labels.includes('Live'))) {
                     const p = _find(clients, (o) => {
                         return o.key === c.project;
                     });
@@ -182,6 +194,8 @@ export default class ClientsController extends Controller {
 
                         if (isLive) {
                             p.isLive = isLive;
+                            p.urlLive = c.desc;
+                            p.versionLive = c.version;
                         }
 
                         if(isImplementation) {
@@ -191,7 +205,7 @@ export default class ClientsController extends Controller {
                                 p.implementationStart = w.key;
                             }
 
-                            if (w.key > p.implementationEnd) {
+                            if (w.key > p.implementationEnd.toString()) {
                                 p.implementationEnd = w.key;
                             }
                         } else if (isReview) {
@@ -201,7 +215,7 @@ export default class ClientsController extends Controller {
                                 p.reviewStart = w.key;
                             }
 
-                            if (w.key > p.reviewEnd) {
+                            if (w.key > p.reviewEnd.toString()) {
                                 p.reviewEnd = w.key;
                             }
                         }
@@ -219,6 +233,7 @@ export default class ClientsController extends Controller {
                             implementationStart: isImplementation ? w.key : 0,
                             implementationEnd: isImplementation ? w.key : 0,
                             isLive: isLive,
+                            urlLive: isLive ? c.desc : null,
                             reviewStart: isReview ? w.key : 0,
                             reviewEnd: isReview ? w.key : 0,
                             reviewsCount: 0,

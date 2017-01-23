@@ -5,6 +5,7 @@ import DateUtils from '../../libs/DateUtils';
 import _find from 'lodash/find';
 import _map from 'lodash/map';
 import _orderBy from 'lodash/orderBy';
+import moment from 'moment';
 import Chart from 'chart.js';
 
 export default class ProcessController extends Controller {
@@ -44,7 +45,7 @@ export default class ProcessController extends Controller {
         const borderStep = 1 / this.processes.sets.length;
         let opacity = 0, opacityBorder = 0;
 
-        const total = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        const total = Array(this.processes.labels.length).fill(0);
 
         _orderBy(this.processes.sets, 'label').forEach((s) => {
             opacity += step;
@@ -101,72 +102,103 @@ export default class ProcessController extends Controller {
         });
     }
 
+    getChartLabels(data) {
+        const labels = [];
+
+        _orderBy(data, 'key').forEach((w) => {
+            const matches = w.key.match(/^(\d+)-(\d+)/);
+
+            if (matches && matches.length > 0) {
+                const year = parseInt(matches[1]);
+                const monthKey = DateUtils.getMonthKeyFromStartDate(w.startDate);
+
+                const label = moment().year(year).month(monthKey).format('MMM') + ' ' + year.toString().substr(2,2);
+                if (!labels.includes(label)) {
+                    labels.push(label);
+                }
+            }
+        });
+
+        return labels;
+    }
+
     parseData(data) {
         const processes = {
             list: [],
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            labels: [],
             sets: []
         };
 
+        // Define labels
+        processes.labels = this.getChartLabels(data);
+
+        // Parse weeks
         data.forEach((w) => {
-            const monthKey = DateUtils.getMonthKeyFromStartDate(w.startDate);
-            const starts = DateUtils.getDateOfISOWeek(w.key, 2016);
-            const ends = DateUtils.getDateOfISOWeek(w.key, 2016, 5);
+            const matches = w.key.match(/^(\d+)-(\d+)/);
 
-            w.cards.forEach((c) => {
-                if (c.type === 'process' && c.spent > 0) {
+            if (matches && matches.length > 0) {
+                const year = parseInt(matches[1]);
+                const weekNumber = parseInt(matches[2]);
+                const monthKey = DateUtils.getMonthKeyFromStartDate(w.startDate);
+                const starts = DateUtils.getDateOfISOWeek(weekNumber, year);
+                const ends = DateUtils.getDateOfISOWeek(weekNumber, year, 5);
+                const label = moment().year(year).month(monthKey).format('MMM') + ' ' + year.toString().substr(2, 2);
+                
+                w.cards.forEach((c) => {
+                    if (c.type === 'process' && c.spent > 0) {
 
-                    // Add to process list
-                    let p = _find(processes.list, (o) => {
-                        return o.key === c.project;
-                    });
-
-                    if (p) {
-                        p.cards.push(c);
-                        p.points.estimated += c.estimated;
-                        p.points.spent += c.spent;
-
-                        if (p.startDate > starts) {
-                            p.startDate = starts;
-                        }
-                        if (p.endDate < ends) {
-                            p.endDate = ends;
-                        }
-                        p.lastUpdate = new Date();
-                    } else {
-                        p = new TopicModel(c.project, {
-                            cards: [c],
-                            name: c.project,
-                            points: {
-                                spent: c.spent,
-                                estimated: c.estimated
-                            },
-                            startDate: starts,
-                            endDate: ends,
-                            lastUpdate: new Date()
+                        // Add to process list
+                        let p = _find(processes.list, (o) => {
+                            return o.key === c.project;
                         });
 
-                        processes.list.push(p);
+                        if (p) {
+                            p.cards.push(c);
+                            p.points.estimated += c.estimated;
+                            p.points.spent += c.spent;
+
+                            if (p.startDate > starts) {
+                                p.startDate = starts;
+                            }
+                            if (p.endDate < ends) {
+                                p.endDate = ends;
+                            }
+                            p.lastUpdate = new Date();
+                        } else {
+                            p = new TopicModel(c.project, {
+                                cards: [c],
+                                name: c.project,
+                                points: {
+                                    spent: c.spent,
+                                    estimated: c.estimated
+                                },
+                                startDate: starts,
+                                endDate: ends,
+                                lastUpdate: new Date()
+                            });
+
+                            processes.list.push(p);
+                        }
+
+                        // Add to chart set
+                        let s = _find(processes.sets, (o) => {
+                            return o.label === c.project;
+                        });
+
+                        if (!s) {
+                            s = {
+                                label: c.project,
+                                data: Array(processes.labels.length).fill(0)
+                            };
+
+                            s.data[processes.labels.indexOf(label)] = c.spent;
+                            processes.sets.push(s);
+                        } else {
+                            s.data[processes.labels.indexOf(label)] += c.spent;
+                        }
                     }
-
-                    // Add to chart set
-                    let s = _find(processes.sets, (o) => {
-                        return o.label === c.project;
-                    });
-
-                    if (!s) {
-                        s = {
-                            label: c.project,
-                            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-                        };
-
-                        s.data[monthKey] += c.spent;
-                        processes.sets.push(s);
-                    } else {
-                        s.data[monthKey] += c.spent;
-                    }
-                }
-            });
+                });
+            }
         });
 
         return processes;

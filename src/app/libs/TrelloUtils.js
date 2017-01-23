@@ -34,22 +34,34 @@ export default class TrelloUtils extends Trello {
     }
 
     getParsedData() {
+        const promises = [];
+
         return new Promise((resolve, reject) => {
-            this.get('1/boards/577130dfed8fabf757eddc60/lists', {
-                cards: 'open',
-                card_fields:'id,idShort,name,labels,url,shortUrl',
-                fields:'name,desc'
-            }, (err, data) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(this.parseData(data));
-                }
+            ConfigManagerInstance().then(configManager => {
+                configManager.config.trello.boards.forEach((b) => {
+                    promises.push(new Promise((resolve, reject) => {
+                        this.get(b.url, {
+                            cards: 'open',
+                            card_fields:'id,idShort,name,labels,url,shortUrl,desc,descData',
+                            fields:'name,desc'
+                        }, (err, data) => {
+                            if (err) {
+                                reject(err);
+                            } else {
+                                resolve(this.parseData(b.year, data));
+                            }
+                        });
+                    }));
+                });
+
+                Promise.all(promises).then(() => {
+                    resolve(this.data);
+                });
             });
         });
     }
 
-    parseData(data) {
+    parseData(year, data) {
         if (data.length > 0) {
             data.forEach(item => {
                 const matches = item.name.match(/^W(\d+).*:\s*(\d+)/);
@@ -57,14 +69,16 @@ export default class TrelloUtils extends Trello {
                     const weekNumber = parseInt(matches[1]);
                     const weekPoints = parseInt(matches[2]);
 
-                    const w = new WeekModel(weekNumber);
-                    w.startDate = DateUtils.getDateOfISOWeek(weekNumber, this.currentYear);
-                    w.endDate = DateUtils.getDateOfISOWeek(weekNumber, this.currentYear, 5);
+                    const w = new WeekModel(year + '-' + weekNumber);
+                    w.year = year;
+                    w.number = weekNumber;
+                    w.startDate = DateUtils.getDateOfISOWeek(weekNumber, year);
+                    w.endDate = DateUtils.getDateOfISOWeek(weekNumber, year, 5);
                     w.points.available = weekPoints;
                     w.lastUpdate = new Date();
 
                     item.cards.forEach(c => {
-                        const card = this.parseCardData(weekNumber, c);
+                        const card = this.parseCardData(w, c);
 
                         // weeks data
                         w.cards.push(card);
@@ -96,11 +110,12 @@ export default class TrelloUtils extends Trello {
         let res;
         const c = new CardModel(card.idShort);
 
+        c.week = week.key;
         c.name = card.name.replace(/\((([0-9]*[.])?[0-9]+)\)/, '').replace(/\[(([0-9]*[.])?[0-9]+)\]/, '');
         c.estimated = (res = card.name.match(/\((([0-9]*[.])?[0-9]+)\)/)) === null ? 0 : parseFloat(res[1]);
         c.spent = (res = card.name.match(/\[(([0-9]*[.])?[0-9]+)\]/)) === null ? 0 : parseFloat(res[1]);
+        c.desc = card.desc;
         c.url = card.shortUrl;
-        c.week = week;
 
         c.type = null;
         c.version = null;

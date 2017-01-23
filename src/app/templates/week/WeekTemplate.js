@@ -42,7 +42,7 @@ export default class WeekTemplate {
     }
 
     update(data) {
-        this.content.querySelector('[js-week-key]').textContent = data.key;
+        this.content.querySelector('[js-week-key]').textContent = data.number;
         this.content.querySelector('[js-week-last-updated]').textContent = data.lastUpdate;
         this.content.querySelector('[js-week-start]').textContent = moment(data.startDate).format('MMM DD');
         this.content.querySelector('[js-week-end]').textContent = moment(data.endDate).format('ll');

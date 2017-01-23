@@ -114,11 +114,12 @@
             }
         }
 
+        &__v3,
         &__complete,
         &__highlight {
             float: left;
             padding: $globals-padding 5px;
-            width: 50%;
+            width: calc(100% / 3);
             text-align: center;
 
             @media (min-width: $screen-sm) {
@@ -132,14 +133,20 @@
             float: right;
 
             @media (min-width: $screen-sm) {
+                flex: 6;
                 float: none;
             }
         }
     }
 
+    &__count {
+        clear: both;
+        text-align: center;
+    }
+
     &__stats {
         clear: both;
-        margin: 0 0 $globals-padding;
+        margin: $globals-padding 0;
         padding: 0 0 $globals-padding;
         text-align: center;
 
@@ -175,11 +182,6 @@
                 }
             }
         }
-    }
-
-    &__count {
-        clear: both;
-        text-align: center;
     }
 
     &__list {

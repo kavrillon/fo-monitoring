@@ -3,6 +3,7 @@ import DateUtils from '../../libs/DateUtils';
 import _orderBy from 'lodash/orderBy';
 import _map from 'lodash/map';
 import Chart from 'chart.js';
+import moment from 'moment';
 
 export default class HomeController extends Controller {
     constructor(data) {
@@ -18,7 +19,12 @@ export default class HomeController extends Controller {
     }
 
     displayVelocity() {
-        const labels = _orderBy(_map(this.data, 'key'));
+        const labels = [];
+
+        _orderBy(this.data, 'key').forEach((w) => {
+            labels.push(DateUtils.getWeekFormat(w.key));
+        });
+
         const values = _map(_orderBy(this.data, 'key'), 'points.spent');
 
         let avg = 0;
@@ -137,7 +143,7 @@ export default class HomeController extends Controller {
 
     displayMonthlyActivities() {
         const values = [];
-        const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const labels = this.getChartLabels();
         for (let i = 0; i < labels.length; i++) {
             values.push({
                 key: i,
@@ -151,13 +157,20 @@ export default class HomeController extends Controller {
         }
 
         _orderBy(this.data, 'key').forEach((w) => {
-            const monthKey = DateUtils.getMonthKeyFromStartDate(w.startDate);
-            if (values[monthKey]) {
-                values[monthKey].product += w.points.product;
-                values[monthKey].process += w.points.process;
-                values[monthKey].support += w.points.support;
-                values[monthKey].project += w.points.project;
-                values[monthKey].spent += w.points.spent;
+            const matches = w.key.match(/^(\d+)-(\d+)/);
+
+            if (matches && matches.length > 0) {
+                const year = parseInt(matches[1]);
+                const monthKey = DateUtils.getMonthKeyFromStartDate(w.startDate);
+                const label = moment().year(year).month(monthKey).format('MMM') + ' ' + year.toString().substr(2,2);
+
+                if (values[labels.indexOf(label)]) {
+                    values[labels.indexOf(label)].product += w.points.product;
+                    values[labels.indexOf(label)].process += w.points.process;
+                    values[labels.indexOf(label)].support += w.points.support;
+                    values[labels.indexOf(label)].project += w.points.project;
+                    values[labels.indexOf(label)].spent += w.points.spent;
+                }
             }
         });
 
@@ -232,5 +245,25 @@ export default class HomeController extends Controller {
                 }
             }
         });
+    }
+
+    getChartLabels() {
+        const labels = [];
+
+        _orderBy(this.data, 'key').forEach((w) => {
+            const matches = w.key.match(/^(\d+)-(\d+)/);
+
+            if (matches && matches.length > 0) {
+                const year = parseInt(matches[1]);
+                const monthKey = DateUtils.getMonthKeyFromStartDate(w.startDate);
+
+                const label = moment().year(year).month(monthKey).format('MMM') + ' ' + year.toString().substr(2,2);
+                if (!labels.includes(label)) {
+                    labels.push(label);
+                }
+            }
+        });
+
+        return labels;
     }
 }

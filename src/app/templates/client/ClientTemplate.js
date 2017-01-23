@@ -41,47 +41,59 @@ export default class ClientTemplate {
     }
 
     update(data) {
+        let matches, yearStart, weekStart, yearEnd, weekEnd,
+            impleStart = 'No date', impleEnd = 'No date',
+            reviewStart = 'No date', reviewEnd = 'No date';
+
         this.content.querySelector('[js-client-key]').textContent = data.key;
         this.content.querySelector('[js-client-name]').textContent = data.name;
         this.content.querySelector('[js-client-last-updated]').textContent = data.lastUpdate;
 
         if (data.isLive) {
+            this.content.querySelector('[js-client-live-link]').setAttribute('href', data.urlLive);
             this.content.querySelector('[js-client-live]').removeAttribute('hidden');
+
+
+            if (data.versionLive) {
+                this.content.querySelector('[js-client-version]').classList.add(data.versionLive.toLowerCase());
+                this.content.querySelector('[js-client-version]').innerHTML = data.versionLive.toString();
+                this.content.querySelector('[js-client-version]').removeAttribute('hidden');
+            }
         }
 
-        if (data.implementationStart > 0 && data.implementationEnd > 0) {
-            const diffImple = data.implementationEnd - data.implementationStart + 1;
+        if (data.implementationStart !== 0) {
+            impleStart = DateUtils.getWeekFormat(data.implementationStart);
+        }
+
+        if (data.implementationEnd !== 0) {
+            impleEnd = DateUtils.getWeekFormat(data.implementationEnd);
+        }
+
+        if (data.implementationStart !== 0 && data.implementationEnd !== 0) {
+            const diffImple = DateUtils.getDiffWeeks(data.implementationStart, data.implementationEnd);
             this.content.querySelector('[js-client-imple-weeks]').textContent = `${diffImple} week` + (diffImple > 1 ? 's' : '');
         }
 
-        if (data.reviewStart > 0 && data.reviewEnd > 0) {
-            const diffReview = data.reviewEnd - data.reviewStart + 1;
+        this.content.querySelector('[js-client-imple-start]').textContent = impleStart;
+        this.content.querySelector('[js-client-imple-end]').textContent = impleEnd;
+
+        if (data.reviewStart !== 0) {
+            reviewStart = DateUtils.getWeekFormat(data.reviewStart);
+        }
+
+        if (data.reviewEnd !== 0) {
+            reviewEnd = DateUtils.getWeekFormat(data.reviewEnd);
+        }
+
+        if (data.reviewStart !== 0 && data.reviewEnd !== 0) {
+            const diffReview = DateUtils.getDiffWeeks(data.reviewStart, data.reviewEnd);
             this.content.querySelector('[js-client-review-weeks]').textContent = `${diffReview} week` + (diffReview > 1 ? 's' : '');
         }
 
-        if (data.implementationStart > 0) {
-            this.content.querySelector('[js-client-imple-start]').textContent = `W${data.implementationStart}`;
-        } else {
-            this.content.querySelector('[js-client-imple-start]').textContent = `No date`;
-        }
 
-        if (data.implementationEnd > 0) {
-            this.content.querySelector('[js-client-imple-end]').textContent = `W${data.implementationEnd}`;
-        } else {
-            this.content.querySelector('[js-client-imple-end]').textContent = `No date`;
-        }
+        this.content.querySelector('[js-client-review-start]').textContent = reviewStart;
+        this.content.querySelector('[js-client-review-end]').textContent = reviewEnd;
 
-        if (data.reviewStart > 0) {
-            this.content.querySelector('[js-client-review-start]').textContent = `W${data.reviewStart}`;
-        } else {
-            this.content.querySelector('[js-client-review-start]').textContent = `No date`;
-        }
-
-        if (data.reviewEnd > 0) {
-            this.content.querySelector('[js-client-review-end]').textContent = `W${data.reviewEnd}`;
-        } else {
-            this.content.querySelector('[js-client-review-end]').textContent = `No date`;
-        }
 
         this.content.querySelector('[js-client-imple-value]').textContent = `${DateUtils.pointsToDays(data.points.implementation, 1, true)}`;
 
@@ -107,7 +119,7 @@ export default class ClientTemplate {
 
         if (this.showCards) {
             data.cards.forEach((c) => {
-                const card = new CardTemplate(c, false, true, true);
+                const card = new CardTemplate(c, true, true, true, false);
                 this.cardsContainer.appendChild(card.getContent());
             });
         }

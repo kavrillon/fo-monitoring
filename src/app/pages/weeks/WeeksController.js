@@ -101,13 +101,31 @@ export default class WeeksController extends Controller {
     }
 
     displayWeeks() {
+        let prevYear = 0;
+
         // Displaying weeks
         this.weeks.forEach((w) => {
             let week = null;
 
             if (!this.weeksList[w.key]) {
-                week = new WeekTemplate(w);
-                this.weeksContainer.appendChild(week.getContent());
+
+                const matches = w.key.match(/^(\d+)-(\d+)/);
+                if (matches && matches.length > 0) {
+                    const year = parseInt(matches[1]);
+                    const number = parseInt(matches[2]);
+
+                    if (year !== prevYear) {
+                        let sep = document.createElement('div');
+                        sep.className = 'page-weeks__list__separator';
+                        sep.innerHTML = `${year}`;
+                        this.weeksContainer.appendChild(sep);
+                    }
+
+                    week = new WeekTemplate(w);
+                    this.weeksContainer.appendChild(week.getContent());
+
+                    prevYear = year;
+                }
             } else {
                 week = this.weeksList[w.key];
                 week.update(w);

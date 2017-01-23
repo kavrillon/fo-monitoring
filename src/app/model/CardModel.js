@@ -7,6 +7,8 @@ export default class CardModel extends Model {
         this.week = null;
         this.name = null;
         this.type = null;
+        this.desc = null;
+        this.version = null;
         this.project = null;
         this.url = null;
         this.labels = [];

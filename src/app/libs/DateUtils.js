@@ -40,8 +40,36 @@ export default class DateUtils {
      * For our calculation, we return the month of the Wednesday
      * @param week
      */
-    static getMonthKeyFromStartDate(week) {
-        const startDate = moment(week).add(2, 'days'); // We take the wednesday (middle of the week)
+    static getMonthKeyFromStartDate(date) {
+        const startDate = moment(date).add(2, 'days'); // We take the wednesday (middle of the week)
         return parseInt(moment(startDate).format('M')) - 1; // We take the month of this date
+    }
+
+    static getWeekFormat(date) {
+        let matches = date.match(/^(\d+)-(\d+)/);
+
+        if (matches && matches.length > 0) {
+            return `W${parseInt(matches[2])}.${parseInt(matches[1]).toString().substr(2,2)}`;
+        }
+        return '';
+    }
+
+    static getDiffWeeks(start, end) {
+        let matches, yearStart, weekStart, yearEnd, weekEnd;
+        const regEx = /^(\d+)-(\d+)/;
+
+        matches = start.match(regEx);
+        if (matches && matches.length > 0) {
+            yearStart = parseInt(matches[1]);
+            weekStart = parseInt(matches[2]);
+        }
+
+        matches = end.match(regEx);
+        if (matches && matches.length > 0) {
+            yearEnd = parseInt(matches[1]);
+            weekEnd = parseInt(matches[2]);
+        }
+
+        return (52 - weekStart + weekEnd) + 52 * (yearEnd - yearStart - 1) + 1;
     }
 }
