@@ -15,6 +15,7 @@ export default class ClientsController extends Controller {
         this.clientsList = [];
         this.activeSort = 'alpha';
         this.activeOrder = 'asc';
+        this.filterV2 = false;
         this.filterV3 = false;
         this.filterComplete = false;
         this.filterHighlight = false;
@@ -76,6 +77,11 @@ export default class ClientsController extends Controller {
         });
 
         // Filter
+        document.querySelector('#ClientsFilterV2').addEventListener('change', (e) => {
+            this.filterV2 = e.target.checked;
+            this.displayClients();
+        });
+
         document.querySelector('#ClientsFilterV3').addEventListener('change', (e) => {
             this.filterV3 = e.target.checked;
             this.displayClients();
@@ -102,6 +108,12 @@ export default class ClientsController extends Controller {
         this.clientsContainer.innerHTML = '';
         this.clientsList = [];
         let results = this.clients;
+
+        if (this.filterV2) {
+            results = _filter(results, (o) => {
+                return o.versionLive == 'V2';
+            });
+        }
 
         if (this.filterV3) {
             results = _filter(results, (o) => {
@@ -234,6 +246,7 @@ export default class ClientsController extends Controller {
                             implementationEnd: isImplementation ? w.key : 0,
                             isLive: isLive,
                             urlLive: isLive ? c.desc : null,
+                            versionLive: isLive ? c.version : null,
                             reviewStart: isReview ? w.key : 0,
                             reviewEnd: isReview ? w.key : 0,
                             reviewsCount: 0,

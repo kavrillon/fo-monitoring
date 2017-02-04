@@ -18,7 +18,7 @@
         @media (min-width: $screen-sm) {
             float: left;
             margin: 0 0 30px;
-            width: 48%;
+            width: 32%;
         }
 
         &__alpha,
@@ -88,12 +88,12 @@
             float: right;
             margin: 0 0 30px;
             border-bottom: 0;
-            width: 48%;
+            width: 64%;
         }
 
         &__name {
             @media (min-width: $screen-sm) {
-                flex: 4;
+                flex: 14;
             }
 
             &__input {
@@ -114,12 +114,13 @@
             }
         }
 
+        &__v2,
         &__v3,
         &__complete,
         &__highlight {
             float: left;
             padding: $globals-padding 5px;
-            width: calc(100% / 3);
+            width: 23%;
             text-align: center;
 
             @media (min-width: $screen-sm) {
@@ -131,6 +132,7 @@
 
         &__highlight {
             float: right;
+            width: 31%;
 
             @media (min-width: $screen-sm) {
                 flex: 6;
@@ -156,17 +158,21 @@
 
         &__imple,
         &__review {
-            @include card;
+            @include clear;
+            border-top: $globals-border;
+            border-bottom: $globals-border;
             flex: 1;
             padding: 10px;
 
             &__title {
                 margin-top: 0;
+                margin-bottom: 10px;
             }
 
             &__duration,
             &__spent {
-                display: flex;
+                float: left;
+                width: 50%;
                 padding: 5px 0;
 
                 &__text {
@@ -174,8 +180,8 @@
                 }
 
                 &__value {
-                    flex: 1;
-                    padding-left: 15px;
+                    display: block;
+                    padding-top: 5px;
                     color: $globals-color;
                     font-size: 16px;
                     font-weight: bold;
