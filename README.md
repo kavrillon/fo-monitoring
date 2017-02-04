@@ -1,10 +1,10 @@
 Monitoring of Frontend sprints with reporting per week and per project.
 
 # Next things
-- year management: one board per year, store in conf. By default the current year is shown, possibility to select year in the left menu
-- delivery:
-    infos: imple duration / review duration
-- log & perf testing
+- client: show support, better design
+- client: add V2 filter
+- client: remove stats when no data
+- client: manage multiple imples
 
 # To implement
 ### New functionalities
@@ -13,9 +13,11 @@ Monitoring of Frontend sprints with reporting per week and per project.
 - PWA: test on Android & Chrome & Windows
 - swipe management
 - home page: add data for projects
-- weeks: problem on  total not about 100%
+- weeks: problem on total not about 100%
 
 ### Technical
+- data parser refacto for perfs
+- log & perf testing
 - pagination
 - PWA: debug on iOS
 - JS generated optimization
