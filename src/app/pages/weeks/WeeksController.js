@@ -1,6 +1,7 @@
 import Controller from '../../libs/Controller';
 import WeekTemplate from '../../templates/week/WeekTemplate';
 import _map from 'lodash/map';
+import _orderBy from 'lodash/orderBy';
 
 export default class WeeksController extends Controller {
     constructor(data) {
@@ -104,7 +105,7 @@ export default class WeeksController extends Controller {
         let prevYear = 0;
 
         // Displaying weeks
-        this.weeks.forEach((w) => {
+        _orderBy(this.weeks, 'key', 'desc').forEach((w) => {
             let week = null;
 
             if (!this.weeksList[w.key]) {
