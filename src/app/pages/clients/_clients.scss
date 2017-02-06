@@ -79,9 +79,7 @@
 
     &__filters {
         @include clear;
-
         margin: $globals-padding 0;
-        border-bottom: $globals-border;
 
         @media (min-width: $screen-sm) {
             display: flex;
@@ -120,11 +118,11 @@
         &__highlight {
             float: left;
             padding: $globals-padding 5px;
-            width: 23%;
+            width: 50%;
             text-align: center;
 
             @media (min-width: $screen-sm) {
-                flex: 3;
+                flex: 4;
                 float: none;
                 text-align: right;
             }
@@ -132,24 +130,27 @@
 
         &__highlight {
             float: right;
-            width: 31%;
+            width: 50%;
 
             @media (min-width: $screen-sm) {
-                flex: 6;
+                flex: 7;
                 float: none;
             }
         }
     }
 
     &__count {
+        margin: $globals-padding 0;
         clear: both;
         text-align: center;
     }
 
     &__stats {
+        border-top: $globals-border;
+        border-bottom: $globals-border;
         clear: both;
-        margin: $globals-padding 0;
-        padding: 0 0 $globals-padding;
+        margin: $globals-padding 0 30px;
+        padding: 0;
         text-align: center;
 
         @media (min-width: $screen-sm) {
@@ -159,8 +160,6 @@
         &__imple,
         &__review {
             @include clear;
-            border-top: $globals-border;
-            border-bottom: $globals-border;
             flex: 1;
             padding: 10px;
 

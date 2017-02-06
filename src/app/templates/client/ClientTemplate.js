@@ -41,8 +41,7 @@ export default class ClientTemplate {
     }
 
     update(data) {
-        let matches, yearStart, weekStart, yearEnd, weekEnd,
-            impleStart = 'No date', impleEnd = 'No date',
+        let impleStart = 'No date', impleEnd = 'No date',
             reviewStart = 'No date', reviewEnd = 'No date';
 
         this.content.querySelector('[js-client-key]').textContent = data.key;

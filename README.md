@@ -2,7 +2,7 @@ Monitoring of Frontend sprints with reporting per week and per project.
 
 # Next things
 - client: show support, better design
-- client: add V2 filter
+- conf highlight
 - client: remove stats when no data
 - client: manage multiple imples
 
