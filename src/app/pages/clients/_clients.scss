@@ -146,8 +146,7 @@
     }
 
     &__stats {
-        border-top: $globals-border;
-        border-bottom: $globals-border;
+        background: rgba($globals-color, .1);
         clear: both;
         margin: $globals-padding 0 30px;
         padding: 0;

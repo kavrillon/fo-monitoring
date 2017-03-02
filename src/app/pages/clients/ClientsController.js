@@ -196,6 +196,10 @@ export default class ClientsController extends Controller {
                     });
 
                     const isImplementation = c.labels.includes('Implementation');
+                    const isBug = c.labels.includes('Bug');
+                    const isFeature = c.labels.includes('Feature');
+                    const isUpdate = c.labels.includes('Update');
+                    const isConsulting = c.labels.includes('Consulting');
                     const isReview = c.labels.includes('Review');
                     const isLive = c.labels.includes('Live');
 
@@ -230,6 +234,14 @@ export default class ClientsController extends Controller {
                             if (w.key > p.reviewEnd.toString()) {
                                 p.reviewEnd = w.key;
                             }
+                        } else if (isBug) {
+                            p.points.bug += c.spent;
+                        } else if (isUpdate) {
+                            p.points.update += c.spent;
+                        } else if (isFeature) {
+                            p.points.feature += c.spent;
+                        } else if (isConsulting) {
+                            p.points.consulting += c.spent;
                         }
                         p.lastUpdate = new Date();
                     } else {
@@ -239,6 +251,10 @@ export default class ClientsController extends Controller {
                             points: {
                                 spent: c.spent,
                                 estimated: c.estimated,
+                                bug: isBug ? c.spent : 0,
+                                feature: isFeature ? c.spent : 0,
+                                update: isUpdate ? c.spent : 0,
+                                consulting: isConsulting ? c.spent : 0,
                                 implementation: isImplementation ? c.spent : 0,
                                 review: isReview ? c.spent : 0
                             },

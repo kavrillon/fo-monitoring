@@ -13,37 +13,67 @@
         <div class="client__header__total">
             <div class="client__header__total__spent"><span js-client-spent></span></div>
         </div>
-        <div class="client__header__infos">
-            <div class="client__header__infos__imple" js-client-imple>
-                <div class="client__header__infos__imple__label">Implementation</div>
-                <div class="client__header__infos__imple__value" js-client-imple-value></div>
-                <div class="client__header__infos__imple__weeks" js-client-imple-weeks></div>
-                <div class="client__header__infos__imple__start">
-                    <span class="client__header__infos__imple__start__label">Start: </span>
-                    <span class="client__header__infos__imple__start__value" js-client-imple-start></span>
+        <div class="client__header__stats">
+            <div class="client__header__stats">
+                <div class="client__header__stats__imple">
+                    <div class="client__header__stats__imple__label">Implementation: </div>
+                    <div class="client__header__stats__imple__value" js-client-stats-imple></div>
                 </div>
-                <div class="client__header__infos__imple__end">
-                    <span class="client__header__infos__imple__end__label">End: </span>
-                    <span class="client__header__infos__imple__end__value" js-client-imple-end></span>
+                <div class="client__header__stats__review">
+                    <div class="client__header__stats__review__label">Review: </div>
+                    <div class="client__header__stats__review__value" js-client-stats-review></div>
                 </div>
-            </div>
-            <div class="client__header__infos__review" js-client-review>
-                <div class="client__header__infos__review__label">Reviews</div>
-                <div class="client__header__infos__review__value" js-client-review-value></div>
-                <div class="client__header__infos__review__weeks" js-client-review-weeks></div>
-                <div class="client__header__infos__review__start">
-                    <span class="client__header__infos__review__start__label">Start: </span>
-                    <span class="client__header__infos__review__start__value" js-client-review-start></span>
+                <div class="client__header__stats__bug">
+                    <div class="client__header__stats__bug__label">Bug: </div>
+                    <div class="client__header__stats__bug__value" js-client-stats-bug></div>
                 </div>
-                <div class="client__header__infos__review__end">
-                    <span class="client__header__infos__review__end__label">End: </span>
-                    <span class="client__header__infos__review__end__value" js-client-review-end></span>
+                <div class="client__header__stats__feature">
+                    <div class="client__header__stats__feature__label">Feature: </div>
+                    <div class="client__header__stats__feature__value" js-client-stats-feature></div>
+                </div>
+                <div class="client__header__stats__update">
+                    <div class="client__header__stats__update__label">Update: </div>
+                    <div class="client__header__stats__update__value" js-client-stats-update></div>
+                </div>
+                <div class="client__header__stats__consult">
+                    <div class="client__header__stats__update__label">Consulting: </div>
+                    <div class="client__header__stats__update__value" js-client-stats-consult></div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="client__cards">
-        <div class="client__cards__cards-count" js-client-count></div>
-        <div class="client__cards__list" js-client-cards></div>
+    <div class="client__container">
+        <div class="client__container__imples">
+            <div class="client__container__imples__imple" js-client-imple>
+                <div class="client__container__imples__imple__label">Implementation</div>
+                <div class="client__container__imples__imple__value" js-client-imple-value></div>
+                <div class="client__container__imples__imple__weeks" js-client-imple-weeks></div>
+                <div class="client__container__imples__imple__start">
+                    <span class="client__container__imples__imple__start__label">Start: </span>
+                    <span class="client__container__imples__imple__start__value" js-client-imple-start></span>
+                </div>
+                <div class="client__container__imples__imple__end">
+                    <span class="client__container__imples__imple__end__label">End: </span>
+                    <span class="client__container__imples__imple__end__value" js-client-imple-end></span>
+                </div>
+            </div>
+            <div class="client__container__imples__review" js-client-review>
+                <div class="client__container__imples__review__label">Reviews</div>
+                <div class="client__container__imples__review__value" js-client-review-value></div>
+                <div class="client__container__imples__review__weeks" js-client-review-weeks></div>
+                <div class="client__container__imples__review__start">
+                    <span class="client__container__imples__review__start__label">Start: </span>
+                    <span class="client__container__imples__review__start__value" js-client-review-start></span>
+                </div>
+                <div class="client__container__imples__review__end">
+                    <span class="client__container__imples__review__end__label">End: </span>
+                    <span class="client__container__imples__review__end__value" js-client-review-end></span>
+                </div>
+            </div>
+        </div>
+        <div class="client__container__cards">
+            <div class="client__container__cards__cards-count" js-client-count></div>
+            <div class="client__container__cards__list" js-client-cards></div>
+        </div>
     </div>
 </div>

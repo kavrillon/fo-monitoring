@@ -56,9 +56,39 @@
             font-size: 16px;
         }
 
-        &__infos {
+        &__stats {
+            @include clear;
+
+            &__imple,
+            &__review,
+            &__bug,
+            &__consult,
+            &__feature,
+            &__update {
+                float: left;
+                width: 50%;
+                padding: 5px;
+                text-align: center;
+
+                &__label {
+                    display: inline-block;
+                }
+
+                &__value {
+                    display: inline-block;
+                }
+            }
+        }
+    }
+
+    &__container {
+        display: none;
+        margin: 0 $globals-padding;
+
+        &__imples {
             display: flex;
-            margin-top: $globals-padding;
+            border-top: $globals-border;
+            padding: $globals-padding;
             text-align: center;
 
             &__imple,
@@ -114,18 +144,16 @@
                 margin-left: 5px;
             }
         }
-    }
 
-    &__cards {
-        display: none;
-        margin: 0 $globals-padding;
-        padding-bottom: $globals-padding;
+        &__cards {
+            padding-bottom: $globals-padding;
 
-        &__cards-count {
-            margin-bottom: $globals-padding;
-            border-top: $globals-border;
-            padding-top: $globals-padding;
-            text-align: center;
+            &__cards-count {
+                margin-bottom: $globals-padding;
+                border-top: $globals-border;
+                padding-top: $globals-padding;
+                text-align: center;
+            }
         }
     }
 
@@ -151,7 +179,7 @@
             }
         }
 
-        .client__cards {
+        .client__container {
             display: block;
         }
     }

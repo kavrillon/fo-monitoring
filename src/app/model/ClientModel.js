@@ -8,6 +8,10 @@ export default class ClientModel extends Model {
         this.points = {
             spent: 0,
             estimated: 0,
+            feature: 0,
+            update: 0,
+            bug: 0,
+            consulting: 0,
             implementation: 0,
             review: 0
         };

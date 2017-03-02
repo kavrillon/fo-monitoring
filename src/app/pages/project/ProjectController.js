@@ -166,7 +166,7 @@ export default class ProjectController extends Controller {
     }
 
     parseData(data) {
-        const tags = ['Mockup', 'Bridge Product', 'Feature', 'Bug', 'Review', 'Update', 'Implementation'];
+        const tags = ['Mockup', 'Feature', 'Bug', 'Review', 'Update', 'Implementation'];
         const projects = {
             list: [],
             versionSets: [],

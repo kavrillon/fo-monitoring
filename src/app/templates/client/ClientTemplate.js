@@ -113,6 +113,16 @@ export default class ClientTemplate {
         this.content.querySelector('[js-client-spent]').textContent = `${DateUtils.pointsToDays(data.points.spent, 1, true)}`;
         this.content.querySelector('[js-client-count]').textContent = `${data.cards.length} cards`;
 
+        // Stats
+        this.content.querySelector('[js-client-stats-imple]').textContent = `${DateUtils.pointsToDays(data.points.implementation, 1, true)}`;
+        this.content.querySelector('[js-client-stats-review]').textContent = `${DateUtils.pointsToDays(data.points.review, 1, true)}`;
+        this.content.querySelector('[js-client-stats-bug]').textContent = `${DateUtils.pointsToDays(data.points.bug, 1, true)}`;
+        this.content.querySelector('[js-client-stats-update]').textContent = `${DateUtils.pointsToDays(data.points.update, 1, true)}`;
+        this.content.querySelector('[js-client-stats-feature]').textContent = `${DateUtils.pointsToDays(data.points.feature, 1, true)}`;
+        this.content.querySelector('[js-client-stats-consult]').textContent = `${DateUtils.pointsToDays(data.points.consulting, 1, true)}`;
+
+
+
         // Reset if cards exists
         this.content.querySelector('[js-client-cards]').innerHTML = '';
 

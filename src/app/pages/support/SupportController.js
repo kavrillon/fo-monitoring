@@ -122,6 +122,7 @@ export default class SupportController extends Controller {
     }
 
     parseData(data) {
+        const tags = ['Bug', 'Feature', 'Update', 'Consulting'];
         const supports = {
             list: [],
             labels: [],
@@ -145,54 +146,60 @@ export default class SupportController extends Controller {
 
                 w.cards.forEach((c) => {
                     if (c.type === 'support' && c.spent > 0) {
-                        // Add to support list
-                        let p = _find(supports.list, (o) => {
-                            return o.key === c.project;
+                        const l = _find(c.labels, (o) => {
+                            return tags.includes(o);
                         });
 
-                        if (p) {
-                            p.cards.push(c);
-                            p.points.estimated += c.estimated;
-                            p.points.spent += c.spent;
-
-                            if (p.startDate > starts) {
-                                p.startDate = starts;
-                            }
-                            if (p.endDate < ends) {
-                                p.endDate = ends;
-                            }
-                            p.lastUpdate = new Date();
-                        } else {
-                            p = new TopicModel(c.project, {
-                                cards: [c],
-                                name: c.project,
-                                points: {
-                                    spent: c.spent,
-                                    estimated: c.estimated
-                                },
-                                startDate: starts,
-                                endDate: ends,
-                                lastUpdate: new Date()
+                        if (l) {
+                            // Add to support list
+                            let p = _find(supports.list, (o) => {
+                                return o.key === l;
                             });
 
-                            supports.list.push(p);
-                        }
+                            if (p) {
+                                p.cards.push(c);
+                                p.points.estimated += c.estimated;
+                                p.points.spent += c.spent;
 
-                        // Add to chart set
-                        let s = _find(supports.sets, (o) => {
-                            return o.label === c.project;
-                        });
+                                if (p.startDate > starts) {
+                                    p.startDate = starts;
+                                }
+                                if (p.endDate < ends) {
+                                    p.endDate = ends;
+                                }
+                                p.lastUpdate = new Date();
+                            } else {
+                                p = new TopicModel(c.project, {
+                                    cards: [c],
+                                    name: l,
+                                    points: {
+                                        spent: c.spent,
+                                        estimated: c.estimated
+                                    },
+                                    startDate: starts,
+                                    endDate: ends,
+                                    lastUpdate: new Date()
+                                });
 
-                        if (!s) {
-                            s = {
-                                label: c.project,
-                                data: Array(supports.labels.length).fill(0)
-                            };
+                                supports.list.push(p);
+                            }
 
-                            s.data[supports.labels.indexOf(label)] = c.spent;
-                            supports.sets.push(s);
-                        } else {
-                            s.data[supports.labels.indexOf(label)] += c.spent;
+                            // Add to chart set
+                            let s = _find(supports.sets, (o) => {
+                                return o.label === l;
+                            });
+
+                            if (!s) {
+                                s = {
+                                    label: l,
+                                    data: Array(supports.labels.length).fill(0)
+                                };
+
+                                s.data[supports.labels.indexOf(label)] = c.spent;
+                                supports.sets.push(s);
+                            } else {
+                                s.data[supports.labels.indexOf(label)] += c.spent;
+                            }
                         }
                     }
                 });
