@@ -153,7 +153,7 @@ export default class SupportController extends Controller {
                         if (l) {
                             // Add to support list
                             let p = _find(supports.list, (o) => {
-                                return o.key === l;
+                                return o.key.toLowerCase() === l.toLowerCase();
                             });
 
                             if (p) {
@@ -186,7 +186,7 @@ export default class SupportController extends Controller {
 
                             // Add to chart set
                             let s = _find(supports.sets, (o) => {
-                                return o.label === l;
+                                return o.label.toLowerCase() === l.toLowerCase();
                             });
 
                             if (!s) {

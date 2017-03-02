@@ -192,7 +192,7 @@ export default class ClientsController extends Controller {
             w.cards.forEach((c) => {
                 if ((c.type === 'project' || c.type === 'support') && (c.spent > 0 || c.labels.includes('Live'))) {
                     const p = _find(clients, (o) => {
-                        return o.key === c.project;
+                        return o.key.toLowerCase() === c.project.toLowerCase();
                     });
 
                     const isImplementation = c.labels.includes('Implementation');

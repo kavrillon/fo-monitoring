@@ -148,7 +148,7 @@ export default class ProductController extends Controller {
 
                         // Add to product list
                         let p = _find(products.list, (o) => {
-                            return o.key === c.project;
+                            return o.key.toLowerCase() === c.project.toLowerCase();
                         });
 
                         if (p) {
@@ -181,7 +181,7 @@ export default class ProductController extends Controller {
 
                         // Add to chart set
                         let s = _find(products.sets, (o) => {
-                            return o.label === c.project;
+                            return o.label.toLowerCase() === c.project.toLowerCase();
                         });
 
                         if (!s) {

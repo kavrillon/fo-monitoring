@@ -143,13 +143,13 @@ export default class ProcessController extends Controller {
                 const starts = DateUtils.getDateOfISOWeek(weekNumber, year);
                 const ends = DateUtils.getDateOfISOWeek(weekNumber, year, 5);
                 const label = moment().year(year).month(monthKey).format('MMM') + ' ' + year.toString().substr(2, 2);
-                
+
                 w.cards.forEach((c) => {
                     if (c.type === 'process' && c.spent > 0) {
 
                         // Add to process list
                         let p = _find(processes.list, (o) => {
-                            return o.key === c.project;
+                            return o.key.toLowerCase() === c.project.toLowerCase();
                         });
 
                         if (p) {
@@ -182,7 +182,7 @@ export default class ProcessController extends Controller {
 
                         // Add to chart set
                         let s = _find(processes.sets, (o) => {
-                            return o.label === c.project;
+                            return o.label.toLowerCase() === c.project.toLowerCase();
                         });
 
                         if (!s) {

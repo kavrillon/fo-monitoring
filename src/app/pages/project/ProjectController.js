@@ -199,7 +199,7 @@ export default class ProjectController extends Controller {
                         if (l) {
                             // Add to project list
                             let p = _find(projects.list, (o) => {
-                                return o.key === l;
+                                return o.key.toLowerCase() === l.toLowerCase();
                             });
 
                             if (p) {
@@ -232,7 +232,7 @@ export default class ProjectController extends Controller {
 
                             // Add to chart set
                             let s = _find(projects.sets, (o) => {
-                                return o.label === l;
+                                return o.label.toLowerCase() === l.toLowerCase();
                             });
 
                             if (!s) {
@@ -250,7 +250,7 @@ export default class ProjectController extends Controller {
 
                         // Add to version chart set
                         let vs = _find(projects.versionSets, (o) => {
-                            return o.label === c.version;
+                            return o.label.toLowerCase() === c.version.toLowerCase();
                         });
 
                         if (!vs) {

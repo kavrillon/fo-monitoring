@@ -140,15 +140,15 @@
     }
 
     &__count {
-        margin: $globals-padding 0;
         clear: both;
+        margin: $globals-padding 0;
         text-align: center;
     }
 
     &__stats {
-        background: rgba($globals-color, .1);
         clear: both;
         margin: $globals-padding 0 30px;
+        background: rgba($globals-color, .1);
         padding: 0;
         text-align: center;
 
