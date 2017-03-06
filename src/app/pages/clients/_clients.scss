@@ -147,68 +147,57 @@
 
     &__stats {
         @include clear;
+        @include card;
 
+        display: block;
         position: relative;
-        margin: $globals-padding 0 30px;
-        padding: 0 0 30px;
+        margin: 0 auto $globals-padding;
+        background: $globals-color;
+        padding: $globals-padding 30px;
         text-align: center;
         color: $white;
         font-weight: bold;
 
-        @media (min-width: $screen-sm) {
-            padding: 0 0 45px;
+        &__title {
+            margin-top: 0;
+            color: $white;
+
+            @media (min-width: $screen-md) {
+                float: left;
+                margin: 0;
+                width: 50%;
+                text-align: left;
+            }
+
+            span {
+                display: block;
+                font-size: $globals-font-size;
+            }
         }
 
-        &:before {
-            position: absolute;
-            right: 30%;
-            bottom: 0;
-            left: 30%;
-            border-bottom: $globals-border;
-            content: ' ';
-        }
-
-        &__imple,
-        &__review {
-            @include card;
-            @include clear;
-
-            background: $globals-color;
-            padding: 10px;
-
+        &__implementation,
+        &__duration {
             @media (min-width: $screen-sm) {
                 float: left;
-                margin: 0 2% 0 0;
-                width: 48%;
-            }
-
-            &__title {
-                margin-top: 0;
-                margin-bottom: 10px;
-                color: $white;
-            }
-
-            &__duration,
-            &__spent {
-                float: left;
-                padding: 5px 0;
                 width: 50%;
+            }
 
-                &__text {
-                    display: inline-block;
-                }
+            @media (min-width: $screen-md) {
+                width: 25%;
+            }
 
-                &__value {
-                    display: inline-block;
-                    font-size: 16px;
-                }
+            &__text,
+            &__value {
+                font-size: 19px;
             }
         }
 
-        &__review {
+        &__duration {
+            margin-top: $globals-padding;
+
             @media (min-width: $screen-sm) {
                 float: right;
-                margin: 0 0 0 2%;
+                margin-top: 0;
             }
         }
     }

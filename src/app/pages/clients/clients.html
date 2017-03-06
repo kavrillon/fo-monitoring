@@ -48,26 +48,19 @@
     </div>
     <div class="page-clients__count" js-clients-count></div>
     <div class="page-clients__stats">
-        <div class="page-clients__stats__imple">
-            <h2 class="page-clients__stats__imple__title">Implementations</h2>
-            <div class="page-clients__stats__imple__spent">
-                <span class="page-clients__stats__imple__spent__text">Avg spent time:</span>
-                <span class="page-clients__stats__imple__spent__value" js-clients-imple-spent-avg></span>
-            </div>
-            <div class="page-clients__stats__imple__duration">
-                <span class="page-clients__stats__imple__duration__text">Avg duration:</span>
-                <span class="page-clients__stats__imple__duration__value" js-clients-imple-duration-avg></span>
+        <h2 class="page-clients__stats__title">Implementations stats <span>Live clients only</span></h2>
+        <div class="page-clients__stats__implementation">
+            <span class="page-clients__stats__implementation__text">Working time:</span>
+            <span class="page-clients__stats__implementation__value" js-clients-stats-worked></span>
+            <div class="page-clients__stats__implementation__details">
+                <span js-clients-stats-worked-imple></span> implem. / <span js-clients-stats-worked-review></span> review
             </div>
         </div>
-        <div class="page-clients__stats__review">
-            <h2 class="page-clients__stats__review__title">Reviews</h2>
-            <div class="page-clients__stats__review__spent">
-                <span class="page-clients__stats__review__spent__text">Avg spent time:</span>
-                <span class="page-clients__stats__review__spent__value" js-clients-review-spent-avg></span>
-            </div>
-            <div class="page-clients__stats__review__duration">
-                <span class="page-clients__stats__review__duration__text">Avg duration:</span>
-                <span class="page-clients__stats__review__duration__value" js-clients-review-duration-avg></span>
+        <div class="page-clients__stats__duration">
+            <span class="page-clients__stats__duration__text">Duration:</span>
+            <span class="page-clients__stats__duration__value" js-clients-stats-duration></span>
+            <div class="page-clients__stats__duration__details">
+                <span js-clients-stats-duration-imple></span> implem. / <span js-clients-stats-duration-review></span> review
             </div>
         </div>
     </div>

@@ -166,10 +166,13 @@ export default class ClientsController extends Controller {
         avgReviewDuration = Math.round(avgReviewDuration * 10 / countReview) / 10;
         avgReviewSpent = Math.round(avgReviewSpent / countReview);
 
-        document.querySelector('[js-clients-imple-duration-avg]').innerHTML = `${avgImpleDuration} weeks`;
-        document.querySelector('[js-clients-imple-spent-avg]').innerHTML = `${DateUtils.pointsToDays(avgImpleSpent, 10, true)}`;
-        document.querySelector('[js-clients-review-duration-avg]').innerHTML = `${avgReviewDuration} weeks`;
-        document.querySelector('[js-clients-review-spent-avg]').innerHTML = `${DateUtils.pointsToDays(avgReviewSpent, 10, true)}`;
+        document.querySelector('[js-clients-stats-worked]').innerHTML = `${DateUtils.pointsToDays(avgImpleSpent + avgReviewSpent, 10, true)}`;
+        document.querySelector('[js-clients-stats-worked-imple]').innerHTML = `${DateUtils.pointsToDays(avgImpleSpent, 10, false)}`;
+        document.querySelector('[js-clients-stats-worked-review]').innerHTML = `${DateUtils.pointsToDays(avgReviewSpent, 10, false)}`;
+
+        document.querySelector('[js-clients-stats-duration]').innerHTML = `${(avgImpleDuration + avgReviewDuration)} weeks`;
+        document.querySelector('[js-clients-stats-duration-imple]').innerHTML = `${avgImpleDuration}`;
+        document.querySelector('[js-clients-stats-duration-review]').innerHTML = `${avgReviewDuration}`;
 
         _orderBy(results, this.activeSort, this.activeOrder).forEach((p) => {
             let client = null;
