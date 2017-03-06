@@ -109,14 +109,12 @@ export default class WeeksController extends Controller {
             let week = null;
 
             if (!this.weeksList[w.key]) {
-
                 const matches = w.key.match(/^(\d+)-(\d+)/);
                 if (matches && matches.length > 0) {
                     const year = parseInt(matches[1]);
-                    const number = parseInt(matches[2]);
 
                     if (year !== prevYear) {
-                        let sep = document.createElement('div');
+                        const sep = document.createElement('div');
                         sep.className = 'page-weeks__list__separator';
                         sep.innerHTML = `${year}`;
                         this.weeksContainer.appendChild(sep);

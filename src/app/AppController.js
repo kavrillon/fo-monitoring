@@ -1,7 +1,6 @@
 import Controller from './libs/Controller';
 import ConfigManagerInstance from './libs/ConfigManager';
 import TrelloUtils from './libs/TrelloUtils';
-import HomeController from './pages/home/HomeController';
 import ClientsController from './pages/clients/ClientsController';
 import ProcessController from './pages/process/ProcessController';
 import ProductController from './pages/product/ProductController';
@@ -84,7 +83,6 @@ export default class AppController extends Controller {
                     if (data) {
                         this.data = data;
 
-                        new HomeController(this.data);
                         new WeeksController(this.data);
                         new ClientsController(this.data);
                         new ProductController(this.data);
@@ -99,7 +97,7 @@ export default class AppController extends Controller {
 
                         // show home once it's available
                         this.setLoader(false);
-                        this.setPage('home');
+                        this.setPage('clients');
                     } else {
                         this.setLoader(false);
                         this.setPage('empty');

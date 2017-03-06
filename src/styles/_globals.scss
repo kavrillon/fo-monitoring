@@ -55,7 +55,9 @@ html {
 }
 
 [hidden] {
-    display: none !important;
+    // sass-lint:disable no-important
+    display: none !important; // Overwrite default browser comportment
+    // scss-lint:enable no-important
 }
 
 .app {

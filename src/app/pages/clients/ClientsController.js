@@ -45,7 +45,8 @@ export default class ClientsController extends Controller {
                 }
 
                 const requestedSortValue = requestedSort.getAttribute('js-clients-sort');
-                let activeSort = null, activeOrder = null;
+                let activeSort = null;
+                let activeOrder = null;
                 const activeSorter = document.querySelector('[js-clients-sort].active');
 
                 if (activeSorter) {
@@ -111,13 +112,13 @@ export default class ClientsController extends Controller {
 
         if (this.filterV2) {
             results = _filter(results, (o) => {
-                return o.versionLive == 'V2';
+                return o.versionLive === 'V2';
             });
         }
 
         if (this.filterV3) {
             results = _filter(results, (o) => {
-                return o.versionLive == 'V3';
+                return o.versionLive === 'V3';
             });
         }
 

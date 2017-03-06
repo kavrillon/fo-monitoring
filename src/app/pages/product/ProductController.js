@@ -43,7 +43,8 @@ export default class ProductController extends Controller {
         const datasets = [];
         const step = .5 / this.products.sets.length;
         const borderStep = 1 / this.products.sets.length;
-        let opacity = 0, opacityBorder = 0;
+        let opacity = 0;
+        let opacityBorder = 0;
 
         const total = Array(this.products.labels.length).fill(0);
 
@@ -145,7 +146,6 @@ export default class ProductController extends Controller {
 
                 w.cards.forEach((c) => {
                     if (c.type === 'product' && c.spent > 0) {
-
                         // Add to product list
                         let p = _find(products.list, (o) => {
                             return o.key.toLowerCase() === c.project.toLowerCase();

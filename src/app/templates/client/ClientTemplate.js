@@ -41,8 +41,10 @@ export default class ClientTemplate {
     }
 
     update(data) {
-        let impleStart = 'No date', impleEnd = 'No date',
-            reviewStart = 'No date', reviewEnd = 'No date';
+        let impleStart = 'No date';
+        let impleEnd = 'No date';
+        let reviewStart = 'No date';
+        let reviewEnd = 'No date';
 
         this.content.querySelector('[js-client-key]').textContent = data.key;
         this.content.querySelector('[js-client-name]').textContent = data.name;
@@ -51,7 +53,6 @@ export default class ClientTemplate {
         if (data.isLive) {
             this.content.querySelector('[js-client-live-link]').setAttribute('href', data.urlLive);
             this.content.querySelector('[js-client-live]').removeAttribute('hidden');
-
 
             if (data.versionLive) {
                 this.content.querySelector('[js-client-version]').classList.add(data.versionLive.toLowerCase());
@@ -89,10 +90,8 @@ export default class ClientTemplate {
             this.content.querySelector('[js-client-review-weeks]').textContent = `${diffReview} week` + (diffReview > 1 ? 's' : '');
         }
 
-
         this.content.querySelector('[js-client-review-start]').textContent = reviewStart;
         this.content.querySelector('[js-client-review-end]').textContent = reviewEnd;
-
 
         this.content.querySelector('[js-client-imple-value]').textContent = `${DateUtils.pointsToDays(data.points.implementation, 1, true)}`;
 
@@ -120,8 +119,6 @@ export default class ClientTemplate {
         this.content.querySelector('[js-client-stats-update]').textContent = `${DateUtils.pointsToDays(data.points.update, 1, true)}`;
         this.content.querySelector('[js-client-stats-feature]').textContent = `${DateUtils.pointsToDays(data.points.feature, 1, true)}`;
         this.content.querySelector('[js-client-stats-consult]').textContent = `${DateUtils.pointsToDays(data.points.consulting, 1, true)}`;
-
-
 
         // Reset if cards exists
         this.content.querySelector('[js-client-cards]').innerHTML = '';

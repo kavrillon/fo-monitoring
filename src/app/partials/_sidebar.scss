@@ -92,6 +92,12 @@
         &__body {
             padding-top: 8px;
 
+            &__separator {
+                margin: $globals-padding $globals-padding $globals-padding 30px;
+                border-top: $globals-border;
+                width: 30%;
+            }
+
             &__button {
                 display: block;
                 transition: $globals-transition;

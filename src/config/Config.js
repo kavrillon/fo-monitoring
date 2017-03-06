@@ -36,6 +36,10 @@ const Config = {
                 autoIncrement: true
             }
         }
+    },
+    highlights: {
+        implementation: 15,
+        review: 10
     }
 };
 

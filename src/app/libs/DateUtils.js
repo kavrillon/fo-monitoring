@@ -38,7 +38,8 @@ export default class DateUtils {
      * eg. if the startDate is the Monday 31/10/16:
      * as only the Monday is in October, the month returned will be November
      * For our calculation, we return the month of the Wednesday
-     * @param week
+     * @param date: given date
+     * @returns month key (0 .. 11)
      */
     static getMonthKeyFromStartDate(date) {
         const startDate = moment(date).add(2, 'days'); // We take the wednesday (middle of the week)
@@ -46,7 +47,7 @@ export default class DateUtils {
     }
 
     static getWeekFormat(date) {
-        let matches = date.match(/^(\d+)-(\d+)/);
+        const matches = date.match(/^(\d+)-(\d+)/);
 
         if (matches && matches.length > 0) {
             return `W${parseInt(matches[2])}.${parseInt(matches[1]).toString().substr(2,2)}`;
@@ -55,7 +56,11 @@ export default class DateUtils {
     }
 
     static getDiffWeeks(start, end) {
-        let matches, yearStart, weekStart, yearEnd, weekEnd;
+        let matches;
+        let yearStart;
+        let weekStart;
+        let yearEnd;
+        let weekEnd;
         const regEx = /^(\d+)-(\d+)/;
 
         matches = start.match(regEx);
@@ -70,6 +75,6 @@ export default class DateUtils {
             weekEnd = parseInt(matches[2]);
         }
 
-        return (52 - weekStart + weekEnd) + 52 * (yearEnd - yearStart - 1) + 1;
+        return 52 - weekStart + weekEnd + 52 * (yearEnd - yearStart - 1) + 1;
     }
 }

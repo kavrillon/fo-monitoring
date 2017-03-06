@@ -3,12 +3,10 @@ import DateUtils from './DateUtils';
 import ConfigManagerInstance from './ConfigManager';
 import WeekModel from '../model/WeekModel';
 import CardModel from '../model/CardModel';
-import _find from 'lodash/find';
 
 export default class TrelloUtils extends Trello {
     constructor(key, token) {
         super(key, token);
-        this.currentYear = 2016;
         this.data = [];
     }
 
@@ -123,11 +121,9 @@ export default class TrelloUtils extends Trello {
         card.labels.forEach((l) => {
             if (types.includes(l.name)) {
                 c.type = l.name.toLowerCase();
-            }
-            else if (versions.includes(l.name)) {
+            } else if (versions.includes(l.name)) {
                 c.version = l.name;
-            }
-            else {
+            } else {
                 c.labels.push(l.name);
             }
         });

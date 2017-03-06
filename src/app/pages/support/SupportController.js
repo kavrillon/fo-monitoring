@@ -43,7 +43,8 @@ export default class SupportController extends Controller {
         let datasets = [];
         let step = .5 / this.supports.sets.length;
         let borderStep = 1 / this.supports.sets.length;
-        let opacity = 0, opacityBorder = 0;
+        let opacity = 0;
+        let opacityBorder = 0;
 
         const total = Array(this.supports.labels.length).fill(0);
 
@@ -103,7 +104,8 @@ export default class SupportController extends Controller {
         datasets = [];
         step = .5 / this.supports.versionSets.length;
         borderStep = 1 / this.supports.versionSets.length;
-        opacity = 0, opacityBorder = 0;
+        opacity = 0;
+        opacityBorder = 0;
 
         _orderBy(this.supports.versionSets, 'label').forEach((s) => {
             opacity += step;
@@ -155,7 +157,7 @@ export default class SupportController extends Controller {
                 const year = parseInt(matches[1]);
                 const monthKey = DateUtils.getMonthKeyFromStartDate(w.startDate);
 
-                const label = moment().year(year).month(monthKey).format('MMM') + ' ' + year.toString().substr(2,2);
+                const label = moment().year(year).month(monthKey).format('MMM') + ' ' + year.toString().substr(2, 2);
                 if (!labels.includes(label)) {
                     labels.push(label);
                 }
@@ -187,7 +189,7 @@ export default class SupportController extends Controller {
                 const monthKey = DateUtils.getMonthKeyFromStartDate(w.startDate);
                 const starts = DateUtils.getDateOfISOWeek(weekNumber, year);
                 const ends = DateUtils.getDateOfISOWeek(weekNumber, year, 5);
-                const label = moment().year(year).month(monthKey).format('MMM') + ' ' + year.toString().substr(2,2);
+                const label = moment().year(year).month(monthKey).format('MMM') + ' ' + year.toString().substr(2, 2);
 
                 w.cards.forEach((c) => {
                     if (c.type === 'support' && c.spent > 0) {
@@ -274,7 +276,6 @@ export default class SupportController extends Controller {
                     elt.startWeek = moment(elt.startDate).isoWeek();
                     elt.endWeek = moment(elt.endDate).isoWeek();
                 });
-
             }
         });
 

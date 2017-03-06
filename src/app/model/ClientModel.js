@@ -4,6 +4,11 @@ export default class ClientModel extends Model {
     constructor(key, data) {
         super(key);
 
+        this.highlights = {
+            implementation: 15,
+            review: 10
+        };
+
         this.name = null;
         this.points = {
             spent: 0,
@@ -20,10 +25,8 @@ export default class ClientModel extends Model {
         this.urlLive = null;
         this.implementationStart = 0;
         this.implementationEnd = 0;
-        this.implementationHighlighted = false;
         this.reviewStart = 0;
         this.reviewEnd = 0;
-        this.reviewHighlighted = false;
         this.cards = [];
         this.lastUpdate = null;
 
@@ -41,11 +44,11 @@ export default class ClientModel extends Model {
     }
 
     isImplementationHighlighted() {
-        return this.points.implementation > 15;
+        return this.points.implementation > this.highlights.implementation;
     }
 
     isReviewHighlighted() {
-        return this.points.review > 10;
+        return this.points.review > this.highlights.review;
     }
 
 }
