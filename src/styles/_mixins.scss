@@ -104,6 +104,46 @@
     background: $globals-card-bg;
 }
 
+@mixin page-card($type: 'small') {
+    margin: $globals-padding 0;
+
+    @if($type == 'large') {
+        @media (min-width: $screen-sm) {
+            float: left;
+            margin: $globals-padding 0 $globals-padding 2%;
+            width: 48%;
+
+            &:nth-child(2n + 1) {
+                clear: both;
+                margin: $globals-padding 2% $globals-padding 0;
+            }
+        }
+    }
+    @else {
+        @media (min-width: $screen-sm) and (max-width: $screen-lg - 1) {
+            float: left;
+            margin: $globals-padding 0 $globals-padding 2%;
+            width: 48%;
+
+            &:nth-child(2n + 1) {
+                clear: both;
+                margin: $globals-padding 2% $globals-padding 0;
+            }
+        }
+
+        @media (min-width: $screen-lg) {
+            float: left;
+            margin: $globals-padding 0 $globals-padding 2%;
+            width: 32%;
+
+            &:nth-child(3n + 1) {
+                clear: both;
+                margin: $globals-padding 0;
+            }
+        }
+    }
+}
+
 @mixin chart {
     height: $globals-chart-xs-height;
 

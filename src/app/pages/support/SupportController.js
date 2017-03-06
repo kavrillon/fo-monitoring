@@ -191,9 +191,13 @@ export default class SupportController extends Controller {
 
                 w.cards.forEach((c) => {
                     if (c.type === 'support' && c.spent > 0) {
-                        const l = _find(c.labels, (o) => {
+                        let l = _find(c.labels, (o) => {
                             return tags.includes(o);
                         });
+
+                        if (!l) {
+                            l = 'Unknown';
+                        }
 
                         if (l) {
                             // Add to support list
