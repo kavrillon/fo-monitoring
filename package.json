@@ -1,6 +1,6 @@
 {
     "name": "fo-sprints",
-    "version": "1.0.43",
+    "version": "1.0.44",
     "description": "Progressive Web App for Frontend Team Sprints Monitoring",
     "main": "src/index.html",
     "scripts": {
