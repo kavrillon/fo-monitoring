@@ -50,10 +50,10 @@ export default class WeekTemplate {
         this.content.querySelector('[js-week-available]').textContent = `${data.points.available} pts`;
         this.content.querySelector('[js-week-spent]').textContent = `${data.points.spent} pts`;
 
-        this.content.querySelector('[js-week-product]').textContent = `${Math.round(data.points.product)}`;
-        this.content.querySelector('[js-week-support]').textContent = `${Math.round(data.points.support)}`;
-        this.content.querySelector('[js-week-process]').textContent = `${Math.round(data.points.process)}`;
-        this.content.querySelector('[js-week-project]').textContent = `${Math.round(data.points.project)}`;
+        this.content.querySelector('[js-week-product]').textContent = `${data.points.product}`;
+        this.content.querySelector('[js-week-support]').textContent = `${data.points.support}`;
+        this.content.querySelector('[js-week-process]').textContent = `${data.points.process}`;
+        this.content.querySelector('[js-week-project]').textContent = `${data.points.project}`;
 
         this.content.querySelector('[js-week-project-percent]').textContent = `${Math.round(data.activity.project)}%`;
         this.content.querySelector('[js-week-product-percent]').textContent = `${Math.round(data.activity.product)}%`;

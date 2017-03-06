@@ -90,7 +90,7 @@ export default class AppController extends Controller {
                         new ProductController(this.data);
                         new ProjectController(this.data);
                         new ProcessController(this.data);
-                        new SupportController(this.data);
+                        // new SupportController(this.data);
 
                         // Add each week in the database
                         this.data.forEach((w) => {

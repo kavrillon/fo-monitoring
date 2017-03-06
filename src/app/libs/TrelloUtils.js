@@ -82,18 +82,18 @@ export default class TrelloUtils extends Trello {
 
                         // weeks data
                         w.cards.push(card);
-                        w.points.estimated += card.estimated;
-                        w.points.spent += card.spent;
+                        w.points.estimated = Math.round((w.points.estimated + card.estimated) * 100) / 100;
+                        w.points.spent = Math.round((w.points.spent + card.spent) * 100) / 100;
 
                         if (card.type) {
-                            w.points[card.type] += card.spent;
+                            w.points[card.type] = Math.round((w.points[card.type] + card.spent) * 100) / 100;
                         }
                     });
 
-                    w.activity.project = w.points.project / w.points.spent * 100;
-                    w.activity.product = w.points.product / w.points.spent * 100;
-                    w.activity.support = w.points.support / w.points.spent * 100;
-                    w.activity.process = w.points.process / w.points.spent * 100;
+                    w.activity.project = Math.round(w.points.project / w.points.spent * 10000) / 100;
+                    w.activity.product = Math.round(w.points.product / w.points.spent * 10000) / 100;
+                    w.activity.support = Math.round(w.points.support / w.points.spent * 10000) / 100;
+                    w.activity.process = Math.round(w.points.process / w.points.spent * 10000) / 100;
                     w.activity.total = w.activity.project + w.activity.product + w.activity.support + w.activity.process;
 
                     this.data.push(w);
