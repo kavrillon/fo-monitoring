@@ -122,7 +122,7 @@ export default class ProjectController extends Controller {
             }));
         });
 
-        new Chart(document.getElementById('ChartVersionRepartition'), {
+        new Chart(document.getElementById('ChartProjectVersionRepartition'), {
             type: 'line',
             data: {
                 labels: this.projects.labels,

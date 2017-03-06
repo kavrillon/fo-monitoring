@@ -40,9 +40,9 @@ export default class SupportController extends Controller {
 
         // Displaying chart
 
-        const datasets = [];
-        const step = .5 / this.supports.sets.length;
-        const borderStep = 1 / this.supports.sets.length;
+        let datasets = [];
+        let step = .5 / this.supports.sets.length;
+        let borderStep = 1 / this.supports.sets.length;
         let opacity = 0, opacityBorder = 0;
 
         const total = Array(this.supports.labels.length).fill(0);
@@ -99,6 +99,50 @@ export default class SupportController extends Controller {
                 }
             }
         });
+
+        datasets = [];
+        step = .5 / this.supports.versionSets.length;
+        borderStep = 1 / this.supports.versionSets.length;
+        opacity = 0, opacityBorder = 0;
+
+        _orderBy(this.supports.versionSets, 'label').forEach((s) => {
+            opacity += step;
+            opacityBorder += borderStep;
+
+            // Days conversion
+            s.data = _map(s.data, (d) => {
+                return DateUtils.pointsToDays(d);
+            });
+
+            datasets.push(Object.assign(s, {
+                backgroundColor: `rgba(68,210,121,${opacity})`,
+                borderWidth: 1,
+                borderColor: `rgba(68,210,121,${opacityBorder})`,
+                pointRadius: 1
+            }));
+        });
+
+        new Chart(document.getElementById('ChartSupportVersionRepartition'), {
+            type: 'line',
+            data: {
+                labels: this.supports.labels,
+                datasets: datasets
+            },
+            options: {
+                legend: {
+                    position: 'bottom'
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
     }
 
     getChartLabels(data) {
@@ -125,6 +169,7 @@ export default class SupportController extends Controller {
         const tags = ['Bug', 'Feature', 'Update', 'Consulting'];
         const supports = {
             list: [],
+            versionSets: [],
             labels: [],
             sets: []
         };
@@ -169,7 +214,7 @@ export default class SupportController extends Controller {
                                 }
                                 p.lastUpdate = new Date();
                             } else {
-                                p = new TopicModel(c.project, {
+                                p = new TopicModel(l, {
                                     cards: [c],
                                     name: l,
                                     points: {
@@ -186,7 +231,7 @@ export default class SupportController extends Controller {
 
                             // Add to chart set
                             let s = _find(supports.sets, (o) => {
-                                return o.label.toLowerCase() === l.toLowerCase();
+                                return o.label === l;
                             });
 
                             if (!s) {
@@ -200,6 +245,23 @@ export default class SupportController extends Controller {
                             } else {
                                 s.data[supports.labels.indexOf(label)] += c.spent;
                             }
+                        }
+
+                        // Add to version chart set
+                        let vs = _find(supports.versionSets, (o) => {
+                            return o.label.toLowerCase() === c.version.toLowerCase();
+                        });
+
+                        if (!vs) {
+                            vs = {
+                                label: c.version,
+                                data: Array(supports.labels.length).fill(0)
+                            };
+
+                            vs.data[supports.labels.indexOf(label)] = c.spent;
+                            supports.versionSets.push(vs);
+                        } else {
+                            vs.data[supports.labels.indexOf(label)] += c.spent;
                         }
                     }
                 });

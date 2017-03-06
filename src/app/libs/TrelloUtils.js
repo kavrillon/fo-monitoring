@@ -118,7 +118,7 @@ export default class TrelloUtils extends Trello {
         c.url = card.shortUrl;
 
         c.type = null;
-        c.version = null;
+        c.version = 'V2'; // V2 when not precised
         c.labels = [];
         card.labels.forEach((l) => {
             if (types.includes(l.name)) {
