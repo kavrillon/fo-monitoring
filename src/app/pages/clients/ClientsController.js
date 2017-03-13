@@ -170,7 +170,7 @@ export default class ClientsController extends Controller {
         document.querySelector('[js-clients-stats-worked-imple]').innerHTML = `${DateUtils.pointsToDays(avgImpleSpent, 10, false)}`;
         document.querySelector('[js-clients-stats-worked-review]').innerHTML = `${DateUtils.pointsToDays(avgReviewSpent, 10, false)}`;
 
-        document.querySelector('[js-clients-stats-duration]').innerHTML = `${(avgImpleDuration + avgReviewDuration)} weeks`;
+        document.querySelector('[js-clients-stats-duration]').innerHTML = `${(Math.round((avgImpleDuration + avgReviewDuration) * 10) / 10)} weeks`;
         document.querySelector('[js-clients-stats-duration-imple]').innerHTML = `${avgImpleDuration}`;
         document.querySelector('[js-clients-stats-duration-review]').innerHTML = `${avgReviewDuration}`;
 
