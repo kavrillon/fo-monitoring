@@ -67,7 +67,7 @@ export default class TrelloUtils extends Trello {
                     const weekNumber = parseInt(matches[1]);
                     const weekPoints = parseInt(matches[2]);
 
-                    const w = new WeekModel(year + '-' + weekNumber);
+                    const w = new WeekModel(year + '-' + (weekNumber < 10 ? '0' + weekNumber : weekNumber));
                     w.year = year;
                     w.number = weekNumber;
                     w.startDate = DateUtils.getDateOfISOWeek(weekNumber, year);
