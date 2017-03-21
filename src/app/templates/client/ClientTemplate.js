@@ -53,12 +53,12 @@ export default class ClientTemplate {
         if (data.isLive) {
             this.content.querySelector('[js-client-live-link]').setAttribute('href', data.urlLive);
             this.content.querySelector('[js-client-live]').removeAttribute('hidden');
+        }
 
-            if (data.versionLive) {
-                this.content.querySelector('[js-client-version]').classList.add(data.versionLive.toLowerCase());
-                this.content.querySelector('[js-client-version]').innerHTML = data.versionLive.toString();
-                this.content.querySelector('[js-client-version]').removeAttribute('hidden');
-            }
+        if (data.version) {
+            this.content.querySelector('[js-client-version]').classList.add(data.version.toLowerCase());
+            this.content.querySelector('[js-client-version]').innerHTML = data.version.toString();
+            this.content.querySelector('[js-client-version]').removeAttribute('hidden');
         }
 
         if (data.implementationStart !== 0) {
