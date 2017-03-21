@@ -20,7 +20,7 @@ export default class ClientModel extends Model {
             implementation: 0,
             review: 0
         };
-        this.versionLive = null;
+        this.version = null;
         this.isLive = false;
         this.urlLive = null;
         this.implementationStart = 0;

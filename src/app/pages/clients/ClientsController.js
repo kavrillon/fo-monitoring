@@ -112,13 +112,13 @@ export default class ClientsController extends Controller {
 
         if (this.filterV2) {
             results = _filter(results, (o) => {
-                return o.versionLive === 'V2';
+                return o.version === 'V2';
             });
         }
 
         if (this.filterV3) {
             results = _filter(results, (o) => {
-                return o.versionLive === 'V3';
+                return o.version === 'V3';
             });
         }
 
@@ -215,7 +215,9 @@ export default class ClientsController extends Controller {
                         if (isLive) {
                             p.isLive = isLive;
                             p.urlLive = c.desc;
-                            p.versionLive = c.version;
+                        }
+                        if (p.version === null && c.version !== null) {
+                            p.version = c.version;
                         }
 
                         if(isImplementation) {
@@ -266,7 +268,7 @@ export default class ClientsController extends Controller {
                             implementationEnd: isImplementation ? w.key : 0,
                             isLive: isLive,
                             urlLive: isLive ? c.desc : null,
-                            versionLive: isLive ? c.version : null,
+                            version: c.version,
                             reviewStart: isReview ? w.key : 0,
                             reviewEnd: isReview ? w.key : 0,
                             reviewsCount: 0,
